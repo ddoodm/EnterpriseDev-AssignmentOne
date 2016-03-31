@@ -5,16 +5,32 @@ VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ENETCare-IMS", "ENETCare-IMS\ENETCare-IMS.csproj", "{29BC6FCA-C92D-4336-A962-3885B2E6A486}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ENETCare-IMS-Tests", "ENETCare-IMS-Tests\ENETCare-IMS-Tests.csproj", "{61A39387-C998-45B6-A365-FF16E8AAD74B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
+		Debug|x86 = Debug|x86
 		Release|Any CPU = Release|Any CPU
+		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{29BC6FCA-C92D-4336-A962-3885B2E6A486}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{29BC6FCA-C92D-4336-A962-3885B2E6A486}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{29BC6FCA-C92D-4336-A962-3885B2E6A486}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{29BC6FCA-C92D-4336-A962-3885B2E6A486}.Debug|x86.Build.0 = Debug|Any CPU
 		{29BC6FCA-C92D-4336-A962-3885B2E6A486}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{29BC6FCA-C92D-4336-A962-3885B2E6A486}.Release|Any CPU.Build.0 = Release|Any CPU
+		{29BC6FCA-C92D-4336-A962-3885B2E6A486}.Release|x86.ActiveCfg = Release|Any CPU
+		{29BC6FCA-C92D-4336-A962-3885B2E6A486}.Release|x86.Build.0 = Release|Any CPU
+		{61A39387-C998-45B6-A365-FF16E8AAD74B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{61A39387-C998-45B6-A365-FF16E8AAD74B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{61A39387-C998-45B6-A365-FF16E8AAD74B}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{61A39387-C998-45B6-A365-FF16E8AAD74B}.Debug|x86.Build.0 = Debug|Any CPU
+		{61A39387-C998-45B6-A365-FF16E8AAD74B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{61A39387-C998-45B6-A365-FF16E8AAD74B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{61A39387-C998-45B6-A365-FF16E8AAD74B}.Release|x86.ActiveCfg = Release|Any CPU
+		{61A39387-C998-45B6-A365-FF16E8AAD74B}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

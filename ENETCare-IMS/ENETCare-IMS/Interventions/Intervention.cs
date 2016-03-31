@@ -8,13 +8,14 @@ using ENETCare.IMS.Users;
 
 namespace ENETCare.IMS.Interventions
 {
-    class Intervention
+    public class Intervention
     {
         /// <summary>
         /// The ID number (primary key) of this Intervention
         /// </summary>
         private uint id;
 
+        #region Core Information
         /// <summary>
         /// The type of Intervention to be performed
         /// </summary>
@@ -28,17 +29,7 @@ namespace ENETCare.IMS.Interventions
         /// <summary>
         /// The Site Engineer who proposed the Intervention
         /// </summary>
-        private SiteEngineer engineer;
-
-        /// <summary>
-        /// Describes the state of this intervention
-        /// </summary>
-        private InterventionApproval approval;
-
-        /// <summary>
-        /// Describes the 'progress' and 'health' of the intervention
-        /// </summary>
-        private InterventionQualityControl qualityControl;
+        private SiteEngineer siteEngineer;
 
         /// <summary>
         /// The date on which the intervention shall be performed
@@ -56,5 +47,61 @@ namespace ENETCare.IMS.Interventions
         /// Default: interventionType.Cost; can be overridden by the Site Engineer
         /// </summary>
         private decimal cost;
+
+        #endregion
+
+        #region Administrative Information
+
+        /// <summary>
+        /// Describes the state of this intervention
+        /// </summary>
+        private InterventionApproval approval;
+
+        #endregion
+
+        #region Quality Management Information
+
+        /// <summary>
+        /// Describes the 'progress' and 'health' of the intervention
+        /// </summary>
+        private InterventionQualityControl qualityControl;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private string notes;
+
+        #endregion
+
+        private Intervention (
+                InterventionType interventionType,
+                Client client,
+                SiteEngineer siteEngineer,
+                decimal labour,
+                decimal cost,
+                DateTime date)
+        {
+            this.interventionType = interventionType;
+            this.client = client;
+            this.siteEngineer = siteEngineer;
+            this.labour = labour;
+            this.cost = cost;
+            this.date = date;
+        }
+
+        public class Factory
+        {
+            public static Intervention CreateIntervention (
+                InterventionType type,
+                Client client,
+                SiteEngineer siteEngineer,
+                decimal labour,
+                decimal cost,
+                DateTime date
+                )
+            {
+                return new Intervention(type, client, siteEngineer, labour, cost, date);
+            }
+        }
     }
 }

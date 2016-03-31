@@ -44,10 +44,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Client.cs" />
+    <Compile Include="District.cs" />
+    <Compile Include="Districts.cs" />
     <Compile Include="Interventions\Intervention.cs" />
     <Compile Include="Interventions\InterventionApproval.cs" />
     <Compile Include="Interventions\InterventionQualityControl.cs" />
     <Compile Include="Interventions\InterventionType.cs" />
+    <Compile Include="Interventions\InterventionTypes.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Users\SiteEngineer.cs" />

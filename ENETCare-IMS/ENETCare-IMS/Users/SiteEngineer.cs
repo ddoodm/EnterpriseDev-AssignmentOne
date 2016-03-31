@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ENETCare.IMS.Users
 {
-    class SiteEngineer : User
+    public class SiteEngineer : User
     {
     }
 }
