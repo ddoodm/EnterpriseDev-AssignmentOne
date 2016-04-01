@@ -64,7 +64,7 @@ namespace ENETCare.IMS.Interventions
         /// <summary>
         /// Describes the 'progress' and 'health' of the intervention
         /// </summary>
-        private InterventionQualityControl qualityControl;
+        private InterventionQualityManagement qualityControl;
 
         /// <summary>
         /// 
@@ -91,6 +91,16 @@ namespace ENETCare.IMS.Interventions
 
         public class Factory
         {
+            /// <summary>
+            /// Instantiates an Intervention given all optional data
+            /// </summary>
+            /// <param name="type">The type of the intervention</param>
+            /// <param name="client">The client associated with the intervention</param>
+            /// <param name="siteEngineer">The staff proposing the intervention</param>
+            /// <param name="labour">The required labour (in hours) - overrides 'type'</param>
+            /// <param name="cost">The required cost (in AUD) - overrides 'type'</param>
+            /// <param name="date">The date of the intervention - overrides the present date</param>
+            /// <returns>A new Intervention</returns>
             public static Intervention CreateIntervention (
                 InterventionType type,
                 Client client,
@@ -100,6 +110,22 @@ namespace ENETCare.IMS.Interventions
                 DateTime date
                 )
             {
+                return new Intervention(type, client, siteEngineer, labour, cost, date);
+            }
+
+            public static Intervention CreateIntervention (
+                InterventionType type,
+                Client client,
+                SiteEngineer siteEngineer
+                )
+            {
+                // Use default values from the specified Intervention Type
+                decimal labour = type.Labour;
+                decimal cost = type.Cost;
+
+                // Use the present date
+                DateTime date = DateTime.Now;
+
                 return new Intervention(type, client, siteEngineer, labour, cost, date);
             }
         }
