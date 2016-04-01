@@ -9,13 +9,18 @@ namespace ENETCare.IMS.Tests
     [TestClass]
     public class InterventionsTests
     {
+        private Client testClient;
+        private SiteEngineer testEngineer;
+        private District testDistrict;
+
+        private InterventionTypes interventionTypes;
+        private Districts districts;
+
         private InterventionType CreateTestInterventionType()
         {
-            // Obtain the InterventionTypes database 
-            InterventionTypes types = new InterventionTypes();
-            Assert.IsTrue(types.Count >= 1, "There are no pre-defined Intervention Types");
+            Assert.IsTrue(interventionTypes.Count >= 1, "There are no Intervention Types");
 
-            return types[0];
+            return interventionTypes[0];
         }
 
         private Client CreateTestClient()
@@ -24,13 +29,39 @@ namespace ENETCare.IMS.Tests
                 (
                 "Foobar Family",
                 "1 Madeup Lane, Fakeland",
-                Districts.UrbanIndonesia
+                testDistrict
                 );
+        }
+
+        private District CreateTestDistrict()
+        {
+            Assert.IsTrue(districts.Count >= 1, "There are no Districts");
+
+            return districts[0];
         }
 
         private SiteEngineer CreateTestSiteEngineer()
         {
-            return new SiteEngineer();
+            return new SiteEngineer
+                (
+                "Robert Markson",
+                "markson.robert",
+                "plaintextPassword",
+                testDistrict,
+                6,
+                500
+                );
+        }
+
+        [TestInitialize]
+        public void Setup()
+        {
+            interventionTypes = new InterventionTypes();
+            districts = new Districts();
+
+            testDistrict = CreateTestDistrict();
+            testClient = CreateTestClient();
+            testEngineer = CreateTestSiteEngineer();
         }
 
         /// <summary>
@@ -41,15 +72,11 @@ namespace ENETCare.IMS.Tests
         {
             InterventionType interventionType = CreateTestInterventionType();
 
-            Client client = CreateTestClient();
-
-            SiteEngineer siteEngineer = CreateTestSiteEngineer();
-
             Intervention intervention = Intervention.Factory.CreateIntervention
                 (
                 interventionType,
-                client,
-                siteEngineer,
+                testClient,
+                testEngineer,
                 2,
                 400,
                 DateTime.Now.AddDays(10)
@@ -66,15 +93,11 @@ namespace ENETCare.IMS.Tests
         {
             InterventionType interventionType = CreateTestInterventionType();
 
-            Client client = CreateTestClient();
-
-            SiteEngineer siteEngineer = CreateTestSiteEngineer();
-
             Intervention intervention = Intervention.Factory.CreateIntervention
                 (
                 interventionType,
-                client,
-                siteEngineer
+                testClient,
+                testEngineer
                 );
 
             Assert.IsNotNull(intervention);

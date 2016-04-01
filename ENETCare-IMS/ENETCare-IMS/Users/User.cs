@@ -6,7 +6,19 @@ using System.Threading.Tasks;
 
 namespace ENETCare.IMS.Users
 {
-    public class User
+    public abstract class User
     {
+        public string Name { get; protected set; }
+        public string Username { get; protected set; }
+
+        protected User(string name, string username, string plaintextPassword)
+        {
+            this.Name = name;
+            this.Username = username;
+
+            /* TODO: Encrypt and store the password.
+               Shall we try Salted Password Hashing?
+               MD5s aren't cool anymore. */
+        }
     }
 }
