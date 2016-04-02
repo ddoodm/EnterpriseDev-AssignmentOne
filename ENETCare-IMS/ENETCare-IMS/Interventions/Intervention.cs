@@ -110,9 +110,21 @@ namespace ENETCare.IMS.Interventions
                 DateTime date
                 )
             {
+                // The Client must exist in the same district as the Engineer.
+                // The User Interface should disallow this operation.
+                if (client.District != siteEngineer.District)
+                    throw new ArgumentException("Cannot create Intervention.\nThe Client must exist in the same district as the Site Engineer.");
+
                 return new Intervention(type, client, siteEngineer, labour, cost, date);
             }
 
+            /// <summary>
+            /// Instantiates an Intervention given no additional data
+            /// </summary>
+            /// <param name="type">The type of Intervention to create</param>
+            /// <param name="client">The client associated with the Intervention</param>
+            /// <param name="siteEngineer">The engineer proposing the Intervention</param>
+            /// <returns></returns>
             public static Intervention CreateIntervention (
                 InterventionType type,
                 Client client,
@@ -126,7 +138,7 @@ namespace ENETCare.IMS.Interventions
                 // Use the present date
                 DateTime date = DateTime.Now;
 
-                return new Intervention(type, client, siteEngineer, labour, cost, date);
+                return CreateIntervention(type, client, siteEngineer, labour, cost, date);
             }
         }
     }

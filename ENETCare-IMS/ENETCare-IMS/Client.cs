@@ -8,15 +8,15 @@ namespace ENETCare.IMS
 {
     public class Client
     {
-        private District district;
-        private string name;
-        private string location;
+        public string Name          { get; private set; }
+        public District District    { get; private set; }
+        public string Location      { get; private set; }
 
         public Client(string name, string location, District district)
         {
-            this.name = name;
-            this.location = location;
-            this.district = district;
+            this.Name = name;
+            this.Location = location;
+            this.District = district;
         }
     }
 }
