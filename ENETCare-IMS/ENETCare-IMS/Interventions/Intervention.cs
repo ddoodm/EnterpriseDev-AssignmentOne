@@ -10,43 +10,38 @@ namespace ENETCare.IMS.Interventions
 {
     public class Intervention
     {
-        /// <summary>
-        /// The ID number (primary key) of this Intervention
-        /// </summary>
-        private uint id;
-
         #region Core Information
         /// <summary>
         /// The type of Intervention to be performed
         /// </summary>
-        private InterventionType interventionType;
+        public InterventionType InterventionType { get; private set; }
 
         /// <summary>
         /// The client for whom the intervention was created
         /// </summary>
-        private Client client;
+        public Client Client { get; private set; }
 
         /// <summary>
         /// The Site Engineer who proposed the Intervention
         /// </summary>
-        private SiteEngineer siteEngineer;
+        public SiteEngineer SiteEngineer { get; private set; }
 
         /// <summary>
         /// The date on which the intervention shall be performed
         /// </summary>
-        private DateTime date;
+        public DateTime Date { get; private set; }
 
         /// <summary>
         /// The labour required (in hours).
         /// The value is stored as decimal in order to permit fractional values.
         /// </summary>
-        private decimal labour;
+        public decimal Labour { get; private set; }
 
         /// <summary>
         /// The projected cost of the Intervention.
         /// Default: interventionType.Cost; can be overridden by the Site Engineer
         /// </summary>
-        private decimal cost;
+        public decimal Cost { get; private set; }
 
         #endregion
 
@@ -73,6 +68,21 @@ namespace ENETCare.IMS.Interventions
 
         #endregion
 
+        public District District
+        {
+            get { return Client.District; }
+        }
+
+        public void Approve(SiteEngineer engineer)
+        {
+            approval.Approve(engineer);
+        }
+
+        public void Approve(Manager manager)
+        {
+            approval.Approve(manager);
+        }
+
         private Intervention (
                 InterventionType interventionType,
                 Client client,
@@ -81,12 +91,15 @@ namespace ENETCare.IMS.Interventions
                 decimal cost,
                 DateTime date)
         {
-            this.interventionType = interventionType;
-            this.client = client;
-            this.siteEngineer = siteEngineer;
-            this.labour = labour;
-            this.cost = cost;
-            this.date = date;
+            this.InterventionType = interventionType;
+            this.Client = client;
+            this.SiteEngineer = siteEngineer;
+            this.Labour = labour;
+            this.Cost = cost;
+            this.Date = date;
+
+            // Initialize the Approval
+            approval = new InterventionApproval(this);
         }
 
         public class Factory
