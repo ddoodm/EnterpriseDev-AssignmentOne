@@ -48,9 +48,17 @@ namespace ENETCare.IMS.Interventions
         #region Administrative Information
 
         /// <summary>
-        /// Describes the state of this intervention
+        /// Stores an maintains the Approval State of this Intervention
         /// </summary>
         private InterventionApproval approval;
+
+        /// <summary>
+        /// Describes the Approval state of this intervention
+        /// </summary>
+        public InterventionApprovalState ApprovalState
+        {
+            get { return approval.State; }
+        }
 
         #endregion
 

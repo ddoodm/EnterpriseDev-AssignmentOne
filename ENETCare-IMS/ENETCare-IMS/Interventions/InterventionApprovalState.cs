@@ -13,26 +13,26 @@ namespace ENETCare.IMS.Interventions
 
     public class InterventionApprovalStateWrapper
     {
-        private InterventionApprovalState currentState;
+        public InterventionApprovalState CurrentState { get; private set; }
 
         public void ChangeState(InterventionApprovalState targetState)
         {
             // Check whether the requested state change is permitted
             if (!TryChangeState(targetState))
                 throw new InvalidOperationException(
-                    String.Format("Cannot change state from {0} to {1}",
-                    Enum.GetName(typeof(InterventionApprovalState), currentState),
+                    String.Format("Cannot change Intervention Approval State from {0} to {1}",
+                    Enum.GetName(typeof(InterventionApprovalState), CurrentState),
                     Enum.GetName(typeof(InterventionApprovalState), targetState)));
         }
 
         public bool TryChangeState(InterventionApprovalState targetState)
         {
             // Permit no change
-            if (currentState == targetState)
+            if (CurrentState == targetState)
                 return true;
 
             // Use a State Machine to determine permitted state changes
-            switch (currentState)
+            switch (CurrentState)
             {
                 case InterventionApprovalState.Proposed:
                     // Cannot complete a proposed intervention
@@ -53,7 +53,7 @@ namespace ENETCare.IMS.Interventions
             }
 
             // Allow change at this point
-            currentState = targetState;
+            CurrentState = targetState;
             return true;
         }
     }
