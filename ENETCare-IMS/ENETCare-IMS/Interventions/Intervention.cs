@@ -91,6 +91,26 @@ namespace ENETCare.IMS.Interventions
             approval.Approve(manager);
         }
 
+        public void Cancel(SiteEngineer engineer)
+        {
+            approval.Cancel(engineer);
+        }
+
+        public void Cancel(Manager manager)
+        {
+            approval.Cancel(manager);
+        }
+
+        public void Complete(SiteEngineer engineer)
+        {
+            approval.Complete(engineer);
+        }
+
+        public void Complete(Manager manager)
+        {
+            approval.Complete(manager);
+        }
+
         private Intervention (
                 InterventionType interventionType,
                 Client client,

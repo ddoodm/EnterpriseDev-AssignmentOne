@@ -258,19 +258,52 @@ namespace ENETCare.IMS.Tests
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
+        public void Intervention_State_Change_Proposed_To_Cancelled_Success()
+        {
+            // Create the Intervention
+            SiteEngineer testEngineer = CreateTestSiteEngineer();
+            Intervention intervention = CreateTestIntervention(testEngineer);
+
+            // Try to cancel
+            intervention.Cancel(testEngineer);
+
+            // Check that the state changed
+            if (intervention.ApprovalState != InterventionApprovalState.Cancelled)
+                Assert.Fail("Intervention.Cancel() executed successfully, but the Intervention was not cancelled.");
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(InvalidOperationException))]
         public void Intervention_State_Change_Proposed_To_Completed_Failure()
         {
             // Create the Intervention
             SiteEngineer testEngineer = CreateTestSiteEngineer();
             Intervention intervention = CreateTestIntervention(testEngineer);
 
-            // Try to approve
+            // Try to complete
+            // Should throw an InvalidOperationException,
+            // because the Intervention has not been approved yet.
+            intervention.Complete(testEngineer);
+
+            Assert.Fail("An Intervention was permitted to Complete when it was in its Proposed state.");
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(InvalidOperationException))]
+        public void Intervention_State_Change_Cancelled_To_Approved_Failure()
+        {
+            // Create the Intervention
+            SiteEngineer testEngineer = CreateTestSiteEngineer();
+            Intervention intervention = CreateTestIntervention(testEngineer);
+
+            // Cancel the Intervention
             intervention.Cancel(testEngineer);
 
-            // Check that the state changed
-            if (intervention.ApprovalState != InterventionApprovalState.Approved)
-                Assert.Fail("Intervention.Approve() executed successfully, but the Intervention was not approved.");
+            // Try to approve
+            // Should throw an InvalidOperationException
+            intervention.Approve(testEngineer);
+
+            Assert.Fail("An Intervention was permitted to be approved when it was in its Cancelled state.");
         }
         #endregion
     }
