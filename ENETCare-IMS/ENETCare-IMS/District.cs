@@ -13,7 +13,7 @@ namespace ENETCare.IMS
 
         public District(int id, string name)
         {
-            int ID = id;
+            this.ID = id;
             this.Name = name;
         }
     }
