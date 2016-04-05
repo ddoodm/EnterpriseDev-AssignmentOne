@@ -8,15 +8,25 @@ namespace ENETCare.IMS
 {
     public class Client
     {
+        public int ID               { get; private set; }
         public string Name          { get; private set; }
         public District District    { get; private set; }
         public string Location      { get; private set; }
 
-        public Client(string name, string location, District district)
+        public Client(int ID, string name, string location, District district)
         {
+            this.ID = ID;
             this.Name = name;
             this.Location = location;
             this.District = district;
+        }
+
+        public Client(int ID, string name, string location, int districtID)
+        {
+            this.ID = ID;
+            this.Name = name;
+            this.Location = location;
+            this.District = Districts.GetDistrictByID(districtID);
         }
     }
 }

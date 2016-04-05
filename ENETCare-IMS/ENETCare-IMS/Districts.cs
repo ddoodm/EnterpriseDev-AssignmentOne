@@ -7,42 +7,41 @@ using System.Threading.Tasks;
 
 namespace ENETCare.IMS
 {
-    public class Districts : IReadOnlyList<District>
+    public static class Districts
     {
-        private List<District> districts;
+        private static List<District> districts = new List<District>();
 
-        public Districts()
+        public static void PopulateDistricts()
         {
             districts = new List<District>();
 
             // TODO: This will retrieve ENETCare's operating districts from
             // the database. These are temporary placeholders.
-            districts.Add(new District("Urban Indonesia"));
-            districts.Add(new District("Rural Indonesia"));
-            districts.Add(new District("Urban Papua New Guinea"));
-            districts.Add(new District("Rural Papua New Guinea"));
-            districts.Add(new District("Sydney"));
-            districts.Add(new District("Rural New South Wales"));
+            districts.Add(new District(0, "Urban Indonesia"));
+            districts.Add(new District(1, "Rural Indonesia"));
+            districts.Add(new District(2, "Urban Papua New Guinea"));
+            districts.Add(new District(3, "Rural Papua New Guinea"));
+            districts.Add(new District(4, "Sydney"));
+            districts.Add(new District(5, "Rural New South Wales"));
         }
 
-        public int Count
+        public static int Count
         {
             get { return districts.Count; }
         }
 
-        public District this[int i]
+        public static District GetDistrictByID(int id)
         {
-            get { return districts[i]; }
-        }
+            foreach(District district in districts)
+            {
+                if (district.ID == id)
+                {
+                    return district;
+                }
+            }
 
-        public IEnumerator<District> GetEnumerator()
-        {
-            return districts.GetEnumerator();
-        }
+            return null;
 
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetEnumerator();
         }
     }
 }
