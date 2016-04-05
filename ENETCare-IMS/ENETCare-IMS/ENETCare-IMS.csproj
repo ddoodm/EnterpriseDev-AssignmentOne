@@ -44,6 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Client.cs" />
+    <Compile Include="Clients.cs" />
     <Compile Include="District.cs" />
     <Compile Include="Districts.cs" />
     <Compile Include="Interventions\Intervention.cs" />

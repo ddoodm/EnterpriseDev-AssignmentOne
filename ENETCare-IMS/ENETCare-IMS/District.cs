@@ -8,10 +8,12 @@ namespace ENETCare.IMS
 {
     public class District
     {
+        public int ID      { get; private set; }
         public string Name { get; private set; }
 
-        public District(string name)
+        public District(int id, string name)
         {
+            int ID = id;
             this.Name = name;
         }
     }
