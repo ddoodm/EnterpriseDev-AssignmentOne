@@ -51,7 +51,7 @@ namespace ENETCare.IMS.Tests
                 testDistrictA, 6, 500);
         }
 
-        private Intervention CreateTestIntervention()
+        private Intervention CreateTestIntervention(SiteEngineer testEngineer)
         {
             InterventionType interventionType = CreateTestInterventionType();
 
@@ -93,7 +93,7 @@ namespace ENETCare.IMS.Tests
         [TestMethod]
         public void Intervention_Create_No_Data_Supplied_Success()
         {
-            Intervention intervention = CreateTestIntervention();
+            Intervention intervention = CreateTestIntervention(testEngineer);
 
             Assert.IsNotNull(intervention);
         }
@@ -143,6 +143,10 @@ namespace ENETCare.IMS.Tests
 
             // Attempt to approve the intervention by the Engineer who proposed it
             intervention.Approve(testEngineer);
+
+            // Check that the state changed
+            if (intervention.ApprovalState != InterventionApprovalState.Approved)
+                Assert.Fail("Intervention.Approve() executed successfully, but the Intervention was not approved.");
         }
 
         /// <summary>
@@ -169,6 +173,10 @@ namespace ENETCare.IMS.Tests
 
             // Attempt to approve the intervention by a Manager of the same district
             intervention.Approve(testManager);
+
+            // Check that the state changed
+            if (intervention.ApprovalState != InterventionApprovalState.Approved)
+                Assert.Fail("Intervention.Approve() executed successfully, but the Intervention was not approved.");
         }
 
         /// <summary>
@@ -181,16 +189,16 @@ namespace ENETCare.IMS.Tests
         [ExpectedException(typeof(ArgumentException))]
         public void Intervention_Approve_By_Distinct_Engineer_Failure()
         {
-            Intervention intervention = CreateTestIntervention();
+            Intervention intervention = CreateTestIntervention(testEngineer);
 
             // Create a new Engineer who would otherwise be permitted to approve the Intervention
-            SiteEngineer testEngineer = new SiteEngineer
+            SiteEngineer newEngineer = new SiteEngineer
                 ("Markus Markson", "markson.markus", "aBcDe_12$45",
                 intervention.District, intervention.Labour + 1, intervention.Cost + 100);
 
             // Attempt to approve the intervention by an Engineer who did not propose it
             // Should throw an Argument Exception
-            intervention.Approve(testEngineer);
+            intervention.Approve(newEngineer);
 
             Assert.Fail("A Site Engineer was permitted to approve an intervention that they did not create.");
         }
@@ -222,7 +230,81 @@ namespace ENETCare.IMS.Tests
         #endregion
 
         #region Approval State Change Tests
+        [TestMethod]
+        public void Intervention_Initial_State_Is_Proposed_Success()
+        {
+            // Create the Intervention
+            SiteEngineer testEngineer = CreateTestSiteEngineer();
+            Intervention intervention = CreateTestIntervention(testEngineer);
 
+            // Check that the initial state is 'Proposed'
+            if (intervention.ApprovalState != InterventionApprovalState.Proposed)
+                Assert.Fail("An Intervention was created with an initial state other than 'Proposed'");
+        }
+
+        [TestMethod]
+        public void Intervention_State_Change_Proposed_To_Approved_Success()
+        {
+            // Create the Intervention
+            SiteEngineer testEngineer = CreateTestSiteEngineer();
+            Intervention intervention = CreateTestIntervention(testEngineer);
+
+            // Try to approve
+            intervention.Approve(testEngineer);
+
+            // Check that the state changed
+            if (intervention.ApprovalState != InterventionApprovalState.Approved)
+                Assert.Fail("Intervention.Approve() executed successfully, but the Intervention was not approved.");
+        }
+
+        [TestMethod]
+        public void Intervention_State_Change_Proposed_To_Cancelled_Success()
+        {
+            // Create the Intervention
+            SiteEngineer testEngineer = CreateTestSiteEngineer();
+            Intervention intervention = CreateTestIntervention(testEngineer);
+
+            // Try to cancel
+            intervention.Cancel(testEngineer);
+
+            // Check that the state changed
+            if (intervention.ApprovalState != InterventionApprovalState.Cancelled)
+                Assert.Fail("Intervention.Cancel() executed successfully, but the Intervention was not cancelled.");
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(InvalidOperationException))]
+        public void Intervention_State_Change_Proposed_To_Completed_Failure()
+        {
+            // Create the Intervention
+            SiteEngineer testEngineer = CreateTestSiteEngineer();
+            Intervention intervention = CreateTestIntervention(testEngineer);
+
+            // Try to complete
+            // Should throw an InvalidOperationException,
+            // because the Intervention has not been approved yet.
+            intervention.Complete(testEngineer);
+
+            Assert.Fail("An Intervention was permitted to Complete when it was in its Proposed state.");
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(InvalidOperationException))]
+        public void Intervention_State_Change_Cancelled_To_Approved_Failure()
+        {
+            // Create the Intervention
+            SiteEngineer testEngineer = CreateTestSiteEngineer();
+            Intervention intervention = CreateTestIntervention(testEngineer);
+
+            // Cancel the Intervention
+            intervention.Cancel(testEngineer);
+
+            // Try to approve
+            // Should throw an InvalidOperationException
+            intervention.Approve(testEngineer);
+
+            Assert.Fail("An Intervention was permitted to be approved when it was in its Cancelled state.");
+        }
         #endregion
     }
 }

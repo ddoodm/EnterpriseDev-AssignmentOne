@@ -8,6 +8,7 @@ namespace ENETCare.IMS.Users
 {
     public abstract class User
     {
+        //basic User Class
         public string Name { get; protected set; }
         public string Username { get; protected set; }
 
@@ -19,6 +20,7 @@ namespace ENETCare.IMS.Users
             /* TODO: Encrypt and store the password.
                Shall we try Salted Password Hashing?
                MD5s aren't cool anymore. */
+
         }
     }
 }

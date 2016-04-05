@@ -48,9 +48,17 @@ namespace ENETCare.IMS.Interventions
         #region Administrative Information
 
         /// <summary>
-        /// Describes the state of this intervention
+        /// Stores an maintains the Approval State of this Intervention
         /// </summary>
         private InterventionApproval approval;
+
+        /// <summary>
+        /// Describes the Approval state of this intervention
+        /// </summary>
+        public InterventionApprovalState ApprovalState
+        {
+            get { return approval.State; }
+        }
 
         #endregion
 
@@ -81,6 +89,26 @@ namespace ENETCare.IMS.Interventions
         public void Approve(Manager manager)
         {
             approval.Approve(manager);
+        }
+
+        public void Cancel(SiteEngineer engineer)
+        {
+            approval.Cancel(engineer);
+        }
+
+        public void Cancel(Manager manager)
+        {
+            approval.Cancel(manager);
+        }
+
+        public void Complete(SiteEngineer engineer)
+        {
+            approval.Complete(engineer);
+        }
+
+        public void Complete(Manager manager)
+        {
+            approval.Complete(manager);
         }
 
         private Intervention (
