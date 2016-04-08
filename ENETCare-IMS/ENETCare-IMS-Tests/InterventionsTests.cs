@@ -17,6 +17,7 @@ namespace ENETCare.IMS.Tests
         private District testDistrictA, testDistrictB, testDistrictC;
 
         private InterventionTypes interventionTypes;
+
         #endregion
 
         #region Helper Data Creation Functions
@@ -69,6 +70,7 @@ namespace ENETCare.IMS.Tests
             CreateTestDistricts();
             testClient = CreateTestClient();
             testEngineer = CreateTestSiteEngineer();
+
         }
 
         #region Creation Tests
