@@ -7,6 +7,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ENETCare-IMS", "ENETCare-IM
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ENETCare-IMS-Tests", "ENETCare-IMS-Tests\ENETCare-IMS-Tests.csproj", "{61A39387-C998-45B6-A365-FF16E8AAD74B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ENETCare-IMS-WebApp", "ENETCare-IMS-WebApp\ENETCare-IMS-WebApp.csproj", "{818F7379-2359-4C08-8433-4140D0065ABE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ENETCare-IMS-WebApp-Tests", "ENETCare-IMS-WebApp-Tests\ENETCare-IMS-WebApp-Tests.csproj", "{2939A7B7-322C-4271-A238-CA47AA6EAE9B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -31,6 +35,22 @@ Global
 		{61A39387-C998-45B6-A365-FF16E8AAD74B}.Release|Any CPU.Build.0 = Release|Any CPU
 		{61A39387-C998-45B6-A365-FF16E8AAD74B}.Release|x86.ActiveCfg = Release|Any CPU
 		{61A39387-C998-45B6-A365-FF16E8AAD74B}.Release|x86.Build.0 = Release|Any CPU
+		{818F7379-2359-4C08-8433-4140D0065ABE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{818F7379-2359-4C08-8433-4140D0065ABE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{818F7379-2359-4C08-8433-4140D0065ABE}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{818F7379-2359-4C08-8433-4140D0065ABE}.Debug|x86.Build.0 = Debug|Any CPU
+		{818F7379-2359-4C08-8433-4140D0065ABE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{818F7379-2359-4C08-8433-4140D0065ABE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{818F7379-2359-4C08-8433-4140D0065ABE}.Release|x86.ActiveCfg = Release|Any CPU
+		{818F7379-2359-4C08-8433-4140D0065ABE}.Release|x86.Build.0 = Release|Any CPU
+		{2939A7B7-322C-4271-A238-CA47AA6EAE9B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2939A7B7-322C-4271-A238-CA47AA6EAE9B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2939A7B7-322C-4271-A238-CA47AA6EAE9B}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{2939A7B7-322C-4271-A238-CA47AA6EAE9B}.Debug|x86.Build.0 = Debug|Any CPU
+		{2939A7B7-322C-4271-A238-CA47AA6EAE9B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2939A7B7-322C-4271-A238-CA47AA6EAE9B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2939A7B7-322C-4271-A238-CA47AA6EAE9B}.Release|x86.ActiveCfg = Release|Any CPU
+		{2939A7B7-322C-4271-A238-CA47AA6EAE9B}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

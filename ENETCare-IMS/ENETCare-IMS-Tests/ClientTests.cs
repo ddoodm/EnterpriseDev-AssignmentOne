@@ -6,7 +6,6 @@ using ENETCare.IMS.Users;
 
 namespace ENETCare.IMS.Tests
 {
-
     [TestClass]
     public class ClientTests
     {
