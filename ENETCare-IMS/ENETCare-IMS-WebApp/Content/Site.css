@@ -1,38 +1,76 @@
-﻿/* Move down content because we have a fixed navbar that is 50px tall */
-body {
-    padding-top: 50px;
-    padding-bottom: 20px;
+﻿body
+{
+    margin: 0;
+    padding: 0;
+    background-color: #F0F0F0;
+    background-image: url("ENETBG.png");
+
+    font-family: "Trebuchet MS", Helvetica, sans-serif;
+    color: #777;
 }
 
-/* Wrapping element */
-/* Set some basic padding to keep content from hitting the edges */
-.body-content {
-    padding-left: 15px;
-    padding-right: 15px;
+#navBar
+{
+    position: fixed;
+    box-sizing:border-box;
+
+    list-style-type: none;
+
+    width: 100%;
+    height: 55px;
+    background-color: #179692;
+
+    vertical-align: middle;
+    margin:0;
+    padding: 0 25% 0 25%;
+    text-align:right;
+
+    border-bottom: 4px solid #11726f;
+
+    color: #FFF;
+    font-size: 18px;
+    text-shadow: 2px 2px 0 #102323;
 }
 
-/* Override the default bootstrap behavior where horizontal description lists 
-   will truncate terms that are too long to fit in the left column 
-*/
-.dl-horizontal dt {
-    white-space: normal;
+#navBar li
+{
+    float: left;
 }
 
-/* Set widths on the form inputs since otherwise they're 100% wide */
-input[type="text"],
-input[type="password"],
-input[type="email"],
-input[type="tel"],
-input[type="select"] {
-    max-width: 280px;
+#navBar li > a
+{
+    display: block;
+    text-align: center;
+    padding: 15px;
+    text-decoration: none;
 }
 
-/* Responsive: Portrait tablets and up */
-@media screen and (min-width: 768px) {
-    .jumbotron {
-        margin-top: 20px;
-    }
-    .body-content {
-        padding: 0;
-    }
+#headerLogo
+{
+    margin-top: 5px;
+}
+
+#contentBody
+{
+    margin: 0 auto;
+    padding: 40px;
+    padding-top: 80px;
+    width: 980px;
+
+    background-color: #FFF;
+}
+
+#footer
+{
+    margin: 0 auto;
+    width: 50%;
+}
+
+#footer p
+{
+    font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
+    text-align: center;
+
+    color: #777;
+    text-shadow: 2px 2px 0 #FFF;
 }
