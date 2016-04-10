@@ -7,10 +7,10 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ENETCare_IMS_WebApp {
+namespace ENETCare.IMS.WebApp {
     
     
-    public partial class Interventions {
+    public partial class InterventionsWebUI {
         
         /// <summary>
         /// Button_CreateNewIntervention control.
@@ -40,12 +40,12 @@ namespace ENETCare_IMS_WebApp {
         protected global::System.Web.UI.WebControls.Button Button_Edit;
         
         /// <summary>
-        /// InterventionsTable control.
+        /// Table_Interventions control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Table InterventionsTable;
+        protected global::System.Web.UI.WebControls.Table Table_Interventions;
     }
 }

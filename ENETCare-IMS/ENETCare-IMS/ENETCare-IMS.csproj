@@ -54,6 +54,7 @@
     <Compile Include="Interventions\InterventionApproval.cs" />
     <Compile Include="Interventions\InterventionApprovalState.cs" />
     <Compile Include="Interventions\InterventionQualityControl.cs" />
+    <Compile Include="Interventions\Interventions.cs" />
     <Compile Include="Interventions\InterventionType.cs" />
     <Compile Include="Interventions\InterventionTypes.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

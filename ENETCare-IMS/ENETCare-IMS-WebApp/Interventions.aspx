@@ -1,4 +1,4 @@
-﻿<%@ Page Title="Interventions" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Interventions.aspx.cs" Inherits="ENETCare_IMS_WebApp.Interventions" %>
+﻿<%@ Page Title="Interventions" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Interventions.aspx.cs" Inherits="ENETCare.IMS.WebApp.InterventionsWebUI" %>
 <asp:Content ID="InterventionsContent" ContentPlaceHolderID="MainContent" runat="server">
     <h1><%: Page.Title %></h1>
 
@@ -11,7 +11,7 @@
     </ul>
 
     <div class="enetImsTableContainer">
-        <asp:Table ID="InterventionsTable" runat="server"
+        <asp:Table ID="Table_Interventions" runat="server"
             CellSpacing="0"
             CssClass="enetImsTable">
             <asp:TableHeaderRow TableSection="TableHeader">
@@ -23,42 +23,6 @@
                 <asp:TableHeaderCell>Life Left</asp:TableHeaderCell>
                 <asp:TableHeaderCell>Notes</asp:TableHeaderCell>
             </asp:TableHeaderRow>
-            <asp:TableRow>
-                <asp:TableCell>Test Cell</asp:TableCell>
-                 <asp:TableCell>Test Cell</asp:TableCell>
-                 <asp:TableCell>Test Cell</asp:TableCell>
-                 <asp:TableCell>Test Cell</asp:TableCell>
-                 <asp:TableCell>Test Cell</asp:TableCell>
-                 <asp:TableCell>Test Cell</asp:TableCell>
-                 <asp:TableCell>Test Cell</asp:TableCell>
-            </asp:TableRow>
-            <asp:TableRow>
-                <asp:TableCell>Test Cell</asp:TableCell>
-                 <asp:TableCell>Test Cell</asp:TableCell>
-                 <asp:TableCell>Test Cell</asp:TableCell>
-                 <asp:TableCell>Test Cell</asp:TableCell>
-                 <asp:TableCell>Test Cell</asp:TableCell>
-                 <asp:TableCell>Test Cell</asp:TableCell>
-                 <asp:TableCell>Test Cell</asp:TableCell>
-            </asp:TableRow>
-                    <asp:TableRow>
-                <asp:TableCell>Test Cell</asp:TableCell>
-                 <asp:TableCell>Test Cell</asp:TableCell>
-                 <asp:TableCell>Test Cell</asp:TableCell>
-                 <asp:TableCell>Test Cell</asp:TableCell>
-                 <asp:TableCell>Test Cell</asp:TableCell>
-                 <asp:TableCell>Test Cell</asp:TableCell>
-                 <asp:TableCell>Test Cell</asp:TableCell>
-            </asp:TableRow>
-            <asp:TableRow>
-                <asp:TableCell>Test Cell</asp:TableCell>
-                 <asp:TableCell>Test Cell</asp:TableCell>
-                 <asp:TableCell>Test Cell</asp:TableCell>
-                 <asp:TableCell>Test Cell</asp:TableCell>
-                 <asp:TableCell>Test Cell</asp:TableCell>
-                 <asp:TableCell>Test Cell</asp:TableCell>
-                 <asp:TableCell>Test Cell</asp:TableCell>
-            </asp:TableRow>
         </asp:Table>
     </div>
 </asp:Content>

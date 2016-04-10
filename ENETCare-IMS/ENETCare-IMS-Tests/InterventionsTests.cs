@@ -57,7 +57,7 @@ namespace ENETCare.IMS.Tests
             InterventionType interventionType = CreateTestInterventionType();
 
             return Intervention.Factory.CreateIntervention
-                (interventionType, testClient, testEngineer);
+                (0, interventionType, testClient, testEngineer);
         }
         #endregion
 
@@ -83,7 +83,7 @@ namespace ENETCare.IMS.Tests
             InterventionType interventionType = CreateTestInterventionType();
 
             Intervention intervention = Intervention.Factory.CreateIntervention
-                (interventionType, testClient, testEngineer,
+                (0, interventionType, testClient, testEngineer,
                 2, 400, DateTime.Now.AddDays(10));
 
             Assert.IsNotNull(intervention);
@@ -119,7 +119,7 @@ namespace ENETCare.IMS.Tests
 
             // Expected argument exception:
             Intervention intervention = Intervention.Factory.CreateIntervention
-                (interventionType, testClient, remoteEngineer);
+                (0, interventionType, testClient, remoteEngineer);
 
             Assert.Fail("Instantiation of Intervention with mismatched districts should result in an ArgumentException");
         }
@@ -141,7 +141,7 @@ namespace ENETCare.IMS.Tests
                 testDistrictA, interventionType.Labour + 1, interventionType.Cost + 100);
 
             Intervention intervention = Intervention.Factory.CreateIntervention
-                ( interventionType, testClient, testEngineer );
+                ( 0, interventionType, testClient, testEngineer );
 
             // Attempt to approve the intervention by the Engineer who proposed it
             intervention.Approve(testEngineer);
@@ -166,7 +166,7 @@ namespace ENETCare.IMS.Tests
                 testDistrictA, interventionType.Labour + 1, interventionType.Cost + 100);
 
             Intervention intervention = Intervention.Factory.CreateIntervention
-                (interventionType, testClient, testEngineer);
+                (0, interventionType, testClient, testEngineer);
 
             // Create a Manager who operates in the same District as the Intervention
             Manager testManager = new Manager
@@ -217,7 +217,7 @@ namespace ENETCare.IMS.Tests
                 testDistrictA, interventionType.Labour + 1, interventionType.Cost + 100);
 
             Intervention intervention = Intervention.Factory.CreateIntervention
-                (interventionType, testClient, testEngineer);
+                (0, interventionType, testClient, testEngineer);
 
             // Create a Manager who does not operate in the same district as the Intervention
             Manager testManager = new Manager
