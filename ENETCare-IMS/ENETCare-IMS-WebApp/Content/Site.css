@@ -54,10 +54,70 @@
 {
     margin: 0 auto;
     padding: 40px;
-    padding-top: 80px;
-    width: 980px;
+    padding-top: 60px;
+    width: 900px;
 
     background-color: #FFF;
+}
+
+#contentBody h1
+{
+    text-align: center;
+}
+
+.buttonBar
+{
+    list-style-type: none;
+    width: 95%;
+    height: 35px;
+    margin: 0 auto;
+    padding: 0;
+}
+
+.buttonBar li
+{
+    float: left;
+    text-align: center;
+    margin: 5px;
+}
+
+.buttonBar > li > *
+{
+    display: block;
+}
+
+.enetImsTableContainer
+{
+    width: 95%;
+    overflow-x: auto;
+    margin: 0 auto;
+}
+
+.enetImsTable
+{
+    width: 1080px;
+    margin: 0 auto;
+    background-color:#FFF;
+}
+
+.enetImsTable thead
+{
+    background-color: #EEE;
+}
+
+.enetImsTable th
+{
+    padding: 20px;
+}
+
+.enetImsTable tr:hover
+{
+    background-color: #EEE;
+}
+
+.enetImsTable td
+{
+    border: 2px solid #EEE;
 }
 
 #footer
