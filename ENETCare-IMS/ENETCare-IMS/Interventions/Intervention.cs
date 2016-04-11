@@ -69,7 +69,17 @@ namespace ENETCare.IMS.Interventions
         /// <summary>
         /// Describes the 'progress' and 'health' of the intervention
         /// </summary>
-        private InterventionQualityManagement quality;
+        private InterventionQualityManagement Quality;
+
+        public Percentage Health
+        {
+            get { return (Quality == null)? null : Quality.Health; }
+        }
+
+        public DateTime? LastVisit
+        {
+            get { return (Quality == null)? (DateTime?)null : Quality.LastVisit; }
+        }
 
         /// <summary>
         /// Notes

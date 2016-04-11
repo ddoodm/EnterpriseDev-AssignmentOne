@@ -19,8 +19,8 @@
         <asp:TextBox ID="TextBox_Notes" TextMode="MultiLine" runat="server" Height="104px" Rows="8" Width="380px"></asp:TextBox>
         <br />
 
-        <asp:Button ID="Button_Create" runat="server" Text="Create Intervention" />
         <asp:Button ID="Button_Cancel" runat="server" Text="Cancel" />
+        <asp:Button ID="Button_Create" runat="server" Text="Create Intervention" OnClick="Button_Create_Click" />
     </div>
 
 </asp:Content>

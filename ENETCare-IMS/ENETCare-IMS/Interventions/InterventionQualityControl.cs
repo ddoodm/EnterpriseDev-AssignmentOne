@@ -6,7 +6,20 @@ using System.Threading.Tasks;
 
 namespace ENETCare.IMS.Interventions
 {
-    class InterventionQualityManagement
+    public class InterventionQualityManagement
     {
+        /// <summary>
+        /// The health of the work completed for the Intervention.
+        /// Stored as a percentage from 0 to 100.
+        /// Values outside 0 to 100 are clamped.
+        /// </summary>
+        public Percentage Health;
+
+        public DateTime LastVisit;
+
+        public InterventionQualityManagement()
+        {
+            Health = 100.0m;
+        }
     }
 }

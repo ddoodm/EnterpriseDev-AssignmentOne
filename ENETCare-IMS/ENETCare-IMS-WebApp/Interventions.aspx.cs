@@ -11,14 +11,27 @@ namespace ENETCare.IMS.WebApp
 {
     public partial class InterventionsWebUI : System.Web.UI.Page
     {
-        Interventions.Interventions interventions;
+        Interventions.Interventions interventions
+        {
+            get
+            {
+                return 
+                    (Interventions.Interventions)
+                    Session[Interventions.Interventions.INTERVENTIONS_SESSION_INSTANCE_KEY]; }
+            set
+            {
+                Session[Interventions.Interventions.INTERVENTIONS_SESSION_INSTANCE_KEY]
+                  = value;
+            }
+        }
 
         protected void Page_Load(object sender, EventArgs e)
         {
             Districts.PopulateDistricts();
             Clients.PopulateClients();
 
-            interventions = new Interventions.Interventions();
+            if(interventions == null)
+                interventions = new Interventions.Interventions();
 
             PopulateInterventionsTable();
         }
@@ -50,7 +63,10 @@ namespace ENETCare.IMS.WebApp
                 approvalCell.Text = intervention.ApprovalState.ToString();
                 row.Cells.Add(approvalCell);
                 TableCell lifeCell = new TableCell();
-                lifeCell.Text = "Fix this";
+                if (intervention.Health != null)
+                    lifeCell.Text = intervention.Health.ToString();
+                else
+                    lifeCell.Text = "---";
                 row.Cells.Add(lifeCell);
                 TableCell notesCell = new TableCell();
                 notesCell.Text = intervention.Notes;

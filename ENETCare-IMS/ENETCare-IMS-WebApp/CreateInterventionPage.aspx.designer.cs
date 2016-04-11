@@ -58,15 +58,6 @@ namespace ENETCare.IMS.WebApp {
         protected global::System.Web.UI.WebControls.TextBox TextBox_Notes;
         
         /// <summary>
-        /// Button_Create control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Button_Create;
-        
-        /// <summary>
         /// Button_Cancel control.
         /// </summary>
         /// <remarks>
@@ -74,5 +65,14 @@ namespace ENETCare.IMS.WebApp {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button Button_Cancel;
+        
+        /// <summary>
+        /// Button_Create control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button Button_Create;
     }
 }
