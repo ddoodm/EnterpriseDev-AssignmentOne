@@ -204,6 +204,7 @@
     <Content Include="Content\ENETBG.png" />
     <Content Include="Content\ENETCare-Logo.png" />
     <Content Include="Content\Site.css" />
+    <Content Include="CreateInterventionPage.aspx" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
@@ -386,6 +387,13 @@
     </Compile>
     <Compile Include="Contact.aspx.designer.cs">
       <DependentUpon>Contact.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="CreateInterventionPage.aspx.cs">
+      <DependentUpon>CreateInterventionPage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CreateInterventionPage.aspx.designer.cs">
+      <DependentUpon>CreateInterventionPage.aspx</DependentUpon>
     </Compile>
     <Compile Include="Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>

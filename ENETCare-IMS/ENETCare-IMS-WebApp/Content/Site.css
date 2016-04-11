@@ -58,11 +58,18 @@
     width: 980px;
 
     background-color: #FFF;
+
+    box-shadow: #AAA 0 10px 20px;
 }
 
 #contentBody h1
 {
     text-align: center;
+}
+
+#contentBody input
+{
+    margin: 5px;
 }
 
 .buttonBar
@@ -122,6 +129,37 @@
 
 .enetImsTable td
 {
+    border: 2px solid #EEE;
+}
+
+input[type=button], input[type=submit], button
+{
+    display: inline-block;
+    height: 30px;
+    background: #F1F1F1;
+    text-align: center;
+    font-size: 15px;
+    border-radius: 5px;
+    border: 1px solid #e1e1e2;
+    color: #000;
+    font-weight: bold;
+}
+
+.button:hover, input[type=button]:hover, input[type=submit]:hover, button:hover
+{
+    background: #DDD;
+}
+
+.button:active, input[type=button]:active, input[type=submit]:active, button:active
+{
+    background: #BBB;
+}
+
+.formDataContainer
+{
+    width: 60%;
+    padding: 10px;
+    margin: 10px auto;
     border: 2px solid #EEE;
 }
 

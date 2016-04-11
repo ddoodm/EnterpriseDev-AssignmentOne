@@ -69,12 +69,12 @@ namespace ENETCare.IMS.Interventions
         /// <summary>
         /// Describes the 'progress' and 'health' of the intervention
         /// </summary>
-        private InterventionQualityManagement qualityControl;
+        private InterventionQualityManagement quality;
 
         /// <summary>
-        /// 
+        /// Notes
         /// </summary>
-        private string notes;
+        public string Notes { get; private set; }
 
         #endregion
 

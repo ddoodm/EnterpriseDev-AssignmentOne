@@ -53,9 +53,14 @@ namespace ENETCare.IMS.WebApp
                 lifeCell.Text = "Fix this";
                 row.Cells.Add(lifeCell);
                 TableCell notesCell = new TableCell();
-                notesCell.Text = "Blar";
+                notesCell.Text = intervention.Notes;
                 row.Cells.Add(notesCell);
             }
+        }
+
+        protected void Button_CreateNewIntervention_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("CreateInterventionPage.aspx");
         }
     }
 }
