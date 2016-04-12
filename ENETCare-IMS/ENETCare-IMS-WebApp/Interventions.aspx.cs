@@ -43,7 +43,7 @@ namespace ENETCare.IMS.WebApp
                 clientCell.Text = intervention.Client.Name;
                 row.Cells.Add(clientCell);
                 TableCell startDateCell = new TableCell();
-                startDateCell.Text = intervention.Date.ToString();
+                startDateCell.Text = intervention.Date.ToString("dd MMMM, yyyy");
                 row.Cells.Add(startDateCell);
                 TableCell lastVisitDateCell = new TableCell();
                 lastVisitDateCell.Text = "?";
@@ -66,6 +66,11 @@ namespace ENETCare.IMS.WebApp
         protected void Button_CreateNewIntervention_Click(object sender, EventArgs e)
         {
             Response.Redirect("CreateInterventionPage.aspx");
+        }
+
+        protected void Button_Clients_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("Clients.aspx");
         }
     }
 }

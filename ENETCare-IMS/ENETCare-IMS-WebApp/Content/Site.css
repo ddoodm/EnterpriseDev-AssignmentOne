@@ -102,7 +102,7 @@
 
 .enetImsTable
 {
-    width: 1080px;
+    min-width: 99%;
     margin: 0 auto;
     background-color:#FFF;
 }
@@ -130,6 +130,7 @@
 .enetImsTable td
 {
     border: 2px solid #EEE;
+    padding: 4px 8px;
 }
 
 input[type=button], input[type=submit], button

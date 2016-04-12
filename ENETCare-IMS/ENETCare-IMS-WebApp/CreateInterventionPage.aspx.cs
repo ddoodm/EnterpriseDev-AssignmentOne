@@ -24,19 +24,26 @@ namespace ENETCare.IMS.WebApp
             Clients.PopulateClients();
 
             // TODO: Do not use test data to create an Intervention
-            Client client = Clients.GetClientByID(1);
+            Client client = Clients.GetClientByID(0);
             InterventionTypes types = new InterventionTypes();
-            Users.SiteEngineer engineer = new Users.SiteEngineer
-                ("Test Engineer", "testengineer", "1234abcd",
-                client.District, 24, 1024);
+
+            Users.SiteEngineer engineer =
+                SiteEngineerSession.Current.User;
 
             // TODO: Fix the Intervention ID here
             Intervention newIntervention = Intervention.Factory.CreateIntervention
                 (0, types[1], client, engineer);
 
+            newIntervention.UpdateNotes(engineer, TextBox_Notes.Text);
+
             interventions.Add(newIntervention);
 
             // Redirect to Interventions table
+            Response.Redirect("Interventions.aspx");
+        }
+
+        protected void Button_Cancel_Click(object sender, EventArgs e)
+        {
             Response.Redirect("Interventions.aspx");
         }
     }
