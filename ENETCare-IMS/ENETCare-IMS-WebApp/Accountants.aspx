@@ -1,4 +1,4 @@
-﻿<%@ Page Title="Home Page" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Accountants.aspx.cs" Inherits="ENETCare_IMS_WebApp._Default" %>
+﻿<%@ Page Title="Home Page" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Accountants.aspx.cs" Inherits="ENETCare_IMS_WebApp.AccountantsPage" %>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
 
@@ -16,7 +16,7 @@
 
         <ul class="buttonBar">
             <li>
-                <asp:Button ID="Button_GenerateReport" runat="server" Text="Generate Report" OnClick="Button_CreateNewIntervention_Click" /></li>
+                <asp:Button ID="Button_GenerateReport" runat="server" Text="Generate Report" /></li>
             <li style="float: right;">
                 <asp:Button ID="Button_Edit_Accountant" runat="server" Text="Edit ..." />
             </li>

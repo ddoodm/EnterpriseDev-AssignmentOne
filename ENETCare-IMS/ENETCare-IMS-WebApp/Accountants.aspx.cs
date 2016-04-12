@@ -7,7 +7,7 @@ using System.Web.UI.WebControls;
 
 namespace ENETCare_IMS_WebApp
 {
-    public partial class _Default : Page
+    public partial class AccountantsPage : Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {

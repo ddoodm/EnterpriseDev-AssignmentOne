@@ -10,7 +10,7 @@
 namespace ENETCare_IMS_WebApp {
     
     
-    public partial class _Default {
+    public partial class AccountantsPage {
         
         /// <summary>
         /// Image_User control.
