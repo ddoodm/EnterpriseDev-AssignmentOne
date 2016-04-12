@@ -6,15 +6,14 @@ using ENETCare.IMS.Users;
 
 namespace ENETCare.IMS.Tests
 {
-
     [TestClass]
     public class ClientTests
     {
         [TestInitialize]
         public void Setup()
         {
-            Clients.PopulateClients();
             Districts.PopulateDistricts();
+            Clients.PopulateClients();
         }
 
         [TestMethod]

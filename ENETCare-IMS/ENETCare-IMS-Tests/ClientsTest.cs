@@ -9,8 +9,8 @@ namespace ENETCare.IMS.Tests
         [TestInitialize]
         public void Setup()
         {
-            Clients.PopulateClients();
             Districts.PopulateDistricts();
+            Clients.PopulateClients();
         }
 
         [TestMethod]

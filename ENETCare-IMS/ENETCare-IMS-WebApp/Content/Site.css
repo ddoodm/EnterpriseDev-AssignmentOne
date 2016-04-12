@@ -1,0 +1,179 @@
+﻿body
+{
+    margin: 0;
+    padding: 0;
+    background-color: #F0F0F0;
+    background-image: url("ENETBG.png");
+
+    font-family: "Trebuchet MS", Helvetica, sans-serif;
+    color: #777;
+}
+
+#navBar
+{
+    position: fixed;
+    box-sizing:border-box;
+
+    list-style-type: none;
+
+    width: 100%;
+    height: 55px;
+    background-color: #179692;
+
+    vertical-align: middle;
+    margin:0;
+    padding: 0 25% 0 25%;
+    text-align:right;
+
+    border-bottom: 4px solid #11726f;
+
+    color: #FFF;
+    font-size: 18px;
+    text-shadow: 2px 2px 0 #102323;
+}
+
+#navBar li
+{
+    float: left;
+}
+
+#navBar li > a
+{
+    display: block;
+    text-align: center;
+    padding: 15px;
+    text-decoration: none;
+}
+
+#headerLogo
+{
+    margin-top: 5px;
+}
+
+#contentBody
+{
+    margin: 0 auto;
+    padding: 40px;
+    padding-top: 60px;
+    width: 980px;
+
+    background-color: #FFF;
+
+    box-shadow: #AAA 0 10px 20px;
+}
+
+#contentBody h1
+{
+    text-align: center;
+}
+
+#contentBody input
+{
+    margin: 5px;
+}
+
+.buttonBar
+{
+    list-style-type: none;
+    width: 95%;
+    height: 35px;
+    margin: 0 auto;
+    padding: 0;
+}
+
+.buttonBar li
+{
+    float: left;
+    text-align: center;
+    margin: 5px;
+}
+
+.buttonBar > li > *
+{
+    display: block;
+}
+
+.enetImsTableContainer
+{
+    width: 95%;
+    overflow-x: auto;
+    margin: 0 auto;
+}
+
+.enetImsTable
+{
+    width: 1080px;
+    margin: 0 auto;
+    background-color:#FFF;
+}
+
+.enetImsTable thead
+{
+    background-color: #EEE;
+}
+
+.enetImsTable th
+{
+    padding: 20px;
+}
+
+.enetImsTable tr:nth-child(2n)
+{
+    background-color: #F8F8F8;
+}
+
+.enetImsTable tr:hover
+{
+    background-color: #EEE;
+}
+
+.enetImsTable td
+{
+    border: 2px solid #EEE;
+}
+
+input[type=button], input[type=submit], button
+{
+    display: inline-block;
+    height: 30px;
+    background: #F1F1F1;
+    text-align: center;
+    font-size: 15px;
+    border-radius: 5px;
+    border: 1px solid #e1e1e2;
+    color: #000;
+    font-weight: bold;
+}
+
+.button:hover, input[type=button]:hover, input[type=submit]:hover, button:hover
+{
+    background: #DDD;
+}
+
+.button:active, input[type=button]:active, input[type=submit]:active, button:active
+{
+    background: #BBB;
+}
+
+.formDataContainer
+{
+    width: 60%;
+    padding: 10px;
+    margin: 10px auto;
+    border: 2px solid #EEE;
+}
+
+#footer
+{
+    margin: 0 auto;
+    width: 50%;
+}
+
+#footer p
+{
+    font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
+    text-align: center;
+
+    color: #777;
+    text-shadow: 2px 2px 0 #FFF;
+}

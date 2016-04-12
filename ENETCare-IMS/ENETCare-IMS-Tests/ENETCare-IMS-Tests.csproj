@@ -56,7 +56,9 @@
     <Compile Include="ClientTests.cs" />
     <Compile Include="DistrictsTests.cs" />
     <Compile Include="InterventionsTests.cs" />
+    <Compile Include="MiscTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UsersTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ENETCare-IMS\ENETCare-IMS.csproj">

@@ -10,6 +10,8 @@ namespace ENETCare.IMS.Interventions
 {
     public class Intervention
     {
+        public int ID { get; private set; }
+
         #region Core Information
         /// <summary>
         /// The type of Intervention to be performed
@@ -67,12 +69,22 @@ namespace ENETCare.IMS.Interventions
         /// <summary>
         /// Describes the 'progress' and 'health' of the intervention
         /// </summary>
-        private InterventionQualityManagement qualityControl;
+        private InterventionQualityManagement Quality;
+
+        public Percentage Health
+        {
+            get { return (Quality == null)? null : Quality.Health; }
+        }
+
+        public DateTime? LastVisit
+        {
+            get { return (Quality == null)? (DateTime?)null : Quality.LastVisit; }
+        }
 
         /// <summary>
-        /// 
+        /// Notes
         /// </summary>
-        private string notes;
+        public string Notes { get; private set; }
 
         #endregion
 
@@ -112,6 +124,7 @@ namespace ENETCare.IMS.Interventions
         }
 
         private Intervention (
+                int ID,
                 InterventionType interventionType,
                 Client client,
                 SiteEngineer siteEngineer,
@@ -119,6 +132,7 @@ namespace ENETCare.IMS.Interventions
                 decimal cost,
                 DateTime date)
         {
+            this.ID = ID;
             this.InterventionType = interventionType;
             this.Client = client;
             this.SiteEngineer = siteEngineer;
@@ -143,6 +157,7 @@ namespace ENETCare.IMS.Interventions
             /// <param name="date">The date of the intervention - overrides the present date</param>
             /// <returns>A new Intervention</returns>
             public static Intervention CreateIntervention (
+                int ID,
                 InterventionType type,
                 Client client,
                 SiteEngineer siteEngineer,
@@ -156,7 +171,7 @@ namespace ENETCare.IMS.Interventions
                 if (client.District != siteEngineer.District)
                     throw new ArgumentException("Cannot create Intervention.\nThe Client must exist in the same district as the Site Engineer.");
 
-                return new Intervention(type, client, siteEngineer, labour, cost, date);
+                return new Intervention(ID, type, client, siteEngineer, labour, cost, date);
             }
 
             /// <summary>
@@ -167,6 +182,7 @@ namespace ENETCare.IMS.Interventions
             /// <param name="siteEngineer">The engineer proposing the Intervention</param>
             /// <returns></returns>
             public static Intervention CreateIntervention (
+                int ID,
                 InterventionType type,
                 Client client,
                 SiteEngineer siteEngineer
@@ -179,7 +195,7 @@ namespace ENETCare.IMS.Interventions
                 // Use the present date
                 DateTime date = DateTime.Now;
 
-                return CreateIntervention(type, client, siteEngineer, labour, cost, date);
+                return CreateIntervention(ID, type, client, siteEngineer, labour, cost, date);
             }
         }
     }

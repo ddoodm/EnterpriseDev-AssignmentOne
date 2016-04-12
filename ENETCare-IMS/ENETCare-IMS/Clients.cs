@@ -26,15 +26,7 @@ namespace ENETCare.IMS
 
         public static Client GetClientByID(int id)
         {
-            foreach (Client client in clients)
-            {
-                if (client.ID == id)
-                {
-                    return client;
-                }
-            }
-
-            return null;
+            return clients.First<Client>(c => c.ID == id);
         }
     }
 }

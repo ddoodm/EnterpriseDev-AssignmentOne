@@ -32,16 +32,7 @@ namespace ENETCare.IMS
 
         public static District GetDistrictByID(int id)
         {
-            foreach(District district in districts)
-            {
-                if (district.ID == id)
-                {
-                    return district;
-                }
-            }
-
-            return null;
-
+            return districts.First<District>(d => d.ID == id);
         }
     }
 }
