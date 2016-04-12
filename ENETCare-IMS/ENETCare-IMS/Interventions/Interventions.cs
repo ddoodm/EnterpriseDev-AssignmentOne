@@ -10,8 +10,6 @@ namespace ENETCare.IMS.Interventions
 {
     public class Interventions
     {
-        public const string INTERVENTIONS_SESSION_INSTANCE_KEY = "Interventions";
-
         private static List<Intervention> interventions = new List<Intervention>();
 
         public Interventions()
@@ -31,6 +29,11 @@ namespace ENETCare.IMS.Interventions
                 1, types[1], Clients.GetClientByID(0), testEngineer));
             interventions.Add(Intervention.Factory.CreateIntervention(
                 2, types[0], Clients.GetClientByID(0), testEngineer));
+        }
+
+        public void Add(Intervention intervention)
+        {
+            interventions.Add(intervention);
         }
 
         public int Count

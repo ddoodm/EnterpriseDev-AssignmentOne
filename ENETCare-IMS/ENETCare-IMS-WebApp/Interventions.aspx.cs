@@ -11,27 +11,16 @@ namespace ENETCare.IMS.WebApp
 {
     public partial class InterventionsWebUI : System.Web.UI.Page
     {
-        Interventions.Interventions interventions
-        {
-            get
-            {
-                return 
-                    (Interventions.Interventions)
-                    Session[Interventions.Interventions.INTERVENTIONS_SESSION_INSTANCE_KEY]; }
-            set
-            {
-                Session[Interventions.Interventions.INTERVENTIONS_SESSION_INSTANCE_KEY]
-                  = value;
-            }
-        }
+        private Interventions.Interventions interventions;
 
         protected void Page_Load(object sender, EventArgs e)
         {
             Districts.PopulateDistricts();
             Clients.PopulateClients();
 
-            if(interventions == null)
-                interventions = new Interventions.Interventions();
+            // Obtain interventions from the session
+            // TODO: Do not use a SiteEngineerSession here
+            interventions = SiteEngineerSession.Current.Interventions;
 
             PopulateInterventionsTable();
         }
