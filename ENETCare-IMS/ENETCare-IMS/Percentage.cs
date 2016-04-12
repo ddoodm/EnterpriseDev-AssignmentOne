@@ -13,7 +13,7 @@ namespace ENETCare.IMS
         private Percentage (decimal value)
         {
             // Constrains the percentage value to 0...100
-            this.value = value.Clamp(0m, 100.0m);
+            this.value = value;//.Clamp(0m, 100.0m);
         }
 
         public static implicit operator Percentage (decimal value)
