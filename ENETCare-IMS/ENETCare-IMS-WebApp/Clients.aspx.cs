@@ -17,5 +17,10 @@ namespace ENETCare.IMS.WebApp
         {
             SiteEngineer = SiteEngineerSession.Current.User;
         }
+
+        protected void Button_Interventions_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("Interventions.aspx");
+        }
     }
 }
