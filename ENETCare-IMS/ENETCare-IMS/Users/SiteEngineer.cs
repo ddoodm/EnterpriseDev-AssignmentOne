@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ENETCare.IMS.Users
 {
-    public class SiteEngineer : User
+    public class SiteEngineer : User, ILocalizedUser
     {
         public District District { get; private set; }
         public decimal MaxApprovableLabour { get; private set; }

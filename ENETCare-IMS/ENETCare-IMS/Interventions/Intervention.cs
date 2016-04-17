@@ -93,6 +93,25 @@ namespace ENETCare.IMS.Interventions
             get { return Client.District; }
         }
 
+        /// <summary>
+        /// Updates the notes for this Intervention.
+        /// Only a Site Engineer is permitted to modify notes.
+        /// </summary>
+        /// <param name="editorEngineer">The Site Engineer who created this Intervention</param>
+        /// <param name="newNotes">The updated notes</param>
+        public void UpdateNotes(SiteEngineer editorEngineer, string newNotes)
+        {
+            if (editorEngineer != this.SiteEngineer)
+                throw new InvalidOperationException("Notes may only be edited by the Site Engineer who proposed the Intervention.");
+
+            this.Notes = newNotes;
+        }
+
+        public bool UserCanChangeState(User user)
+        {
+            return approval.CanChangeState(user);
+        }
+
         public void Approve(SiteEngineer engineer)
         {
             approval.Approve(engineer);
@@ -121,6 +140,21 @@ namespace ENETCare.IMS.Interventions
         public void Complete(Manager manager)
         {
             approval.Complete(manager);
+        }
+
+
+
+        public bool UserCanChangeQuality(User user)
+        {
+            if (user is SiteEngineer)
+            {
+                SiteEngineer engineer = (SiteEngineer)user;
+                return (engineer.District == SiteEngineer.District);
+            }
+            else
+            {
+                return false;
+            }
         }
 
         private Intervention (

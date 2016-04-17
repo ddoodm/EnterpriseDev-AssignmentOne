@@ -25,6 +25,11 @@ namespace ENETCare.IMS.WebApp
             Clients.PopulateClients();
 
             Interventions = new IMS.Interventions.Interventions();
+
+            // TODO: Initialize the User as an actual user
+            User = new SiteEngineer
+                ("Joe Blogs", "joeblogs", "abc123!",
+                Districts.GetDistrictByID(0), 12, 1500);
         }
 
         /// <summary>

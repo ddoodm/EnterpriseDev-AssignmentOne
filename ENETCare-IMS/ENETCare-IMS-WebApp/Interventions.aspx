@@ -4,9 +4,9 @@
 
     <ul class="buttonBar">
         <li><asp:Button ID="Button_CreateNewIntervention" runat="server" Text="Create New ..." OnClick="Button_CreateNewIntervention_Click" /></li>
-        <li><asp:Button ID="Button_Clients" runat="server" Text="Clients ..." /></li>
+        <li><asp:Button ID="Button_Clients" runat="server" Text="Clients ..." OnClick="Button_Clients_Click" /></li>
         <li style="float: right;">
-            <asp:Button ID="Button_Edit" runat="server" Text="Edit ..." />
+            <asp:Button ID="Button_Edit" runat="server" Text="Edit ..." OnClick="Button_Edit_Click" />
         </li>
     </ul>
 

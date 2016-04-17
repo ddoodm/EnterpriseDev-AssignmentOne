@@ -96,5 +96,10 @@ namespace ENETCare.IMS.Interventions
         {
             get { return interventions[i]; }
         }
+
+        public List<Intervention> GetInterventionsWithClient(int clientID)
+        {
+            return interventions.Where(x => x.Client.ID == clientID).ToList<Intervention>();
+        }
     }
 }

@@ -35,7 +35,7 @@
         </asp:ScriptManager>
 
         <ul id="navBar">
-            <li><a>[Login Box Here Maybe?]</a></li>
+            <li><a>[Navigation + Account Here]</a></li>
             <li style="float: right;">
                 <img id="headerLogo" src="Content/ENETCare-Logo.png" alt="ENET Care" />
             </li>

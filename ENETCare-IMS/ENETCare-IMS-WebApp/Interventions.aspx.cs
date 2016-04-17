@@ -12,7 +12,7 @@ namespace ENETCare.IMS.WebApp
     public partial class InterventionsWebUI : System.Web.UI.Page
     {
         private Interventions.Interventions interventions;
-
+        private int selectedRowIndex;
         protected void Page_Load(object sender, EventArgs e)
         {
             Districts.PopulateDistricts();
@@ -35,6 +35,7 @@ namespace ENETCare.IMS.WebApp
 
                 TableRow row = new TableRow();
                 Table_Interventions.Rows.Add(row);
+               
 
                 TableCell typeCell = new TableCell();
                 typeCell.Text = intervention.InterventionType.Name;
@@ -43,7 +44,7 @@ namespace ENETCare.IMS.WebApp
                 clientCell.Text = intervention.Client.Name;
                 row.Cells.Add(clientCell);
                 TableCell startDateCell = new TableCell();
-                startDateCell.Text = intervention.Date.ToString();
+                startDateCell.Text = intervention.Date.ToString("dd MMMM, yyyy");
                 row.Cells.Add(startDateCell);
                 TableCell lastVisitDateCell = new TableCell();
                 lastVisitDateCell.Text = "?";
@@ -60,12 +61,32 @@ namespace ENETCare.IMS.WebApp
                 TableCell notesCell = new TableCell();
                 notesCell.Text = intervention.Notes;
                 row.Cells.Add(notesCell);
+                row.Attributes.Add("onClick", "Row_Click");
             }
+        }
+
+        protected void Row_Click(object sender, EventArgs e)
+        {
+            TableRow row = (TableRow)sender;
+            
+            selectedRowIndex = Table_Interventions.Rows.GetRowIndex(row);
+
         }
 
         protected void Button_CreateNewIntervention_Click(object sender, EventArgs e)
         {
             Response.Redirect("CreateInterventionPage.aspx");
+        }
+
+        protected void Button_Clients_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("Clients.aspx");
+        }
+
+        protected void Button_Edit_Click(object sender, EventArgs e)
+        {
+            Session[SessionConstants.INTERVENTION_TO_EDIT] = interventions[selectedRowIndex];
+            Response.Redirect("InterventionsEditPage.aspx");
         }
     }
 }

@@ -34,5 +34,16 @@ namespace ENETCare.IMS
         {
             return districts.First<District>(d => d.ID == id);
         }
+
+        public static bool IsPopulated()
+        {
+            return districts.Count == 0;
+        }
+
+        public static List<District> DistrictList
+        {
+            get
+            { return districts; }
+        }
     }
 }

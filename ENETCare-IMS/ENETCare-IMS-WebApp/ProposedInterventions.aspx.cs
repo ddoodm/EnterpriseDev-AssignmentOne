@@ -9,10 +9,12 @@ using ENETCare.IMS.Interventions;
 
 namespace ENETCare.IMS.WebApp
 {
+    
     public partial class ProposedInterventionsWebUI : System.Web.UI.Page
     {
         private Interventions.Interventions interventions;
         private bool isDisplayingProposed = true;
+        private int selectedRowIndex = 0;
 
         private List<Intervention> proposedInterventions = new List<Intervention>();
         private List<Intervention> approvedInterventions = new List<Intervention>();
@@ -121,6 +123,12 @@ namespace ENETCare.IMS.WebApp
                 notesCell.Text = intervention.Notes;
                 row.Cells.Add(notesCell);
             
+        }
+
+        protected void Button_Edit_Click(object sender, EventArgs e)
+        {
+            Session[SessionConstants.INTERVENTION_TO_EDIT] = interventions[selectedRowIndex];
+            Response.Redirect("InterventionsEditPage.aspx");
         }
     }
 }
