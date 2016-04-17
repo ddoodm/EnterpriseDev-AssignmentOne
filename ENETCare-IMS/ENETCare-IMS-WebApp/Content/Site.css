@@ -95,9 +95,10 @@
 
 .enetImsTableContainer
 {
-    width: 95%;
+    width: 100%;
     overflow-x: auto;
     margin: 0 auto;
+    height: 41px;
 }
 
 .enetImsTable
