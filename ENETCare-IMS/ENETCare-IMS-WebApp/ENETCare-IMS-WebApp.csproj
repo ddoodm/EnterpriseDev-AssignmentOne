@@ -202,9 +202,11 @@
     <Content Include="Contact.aspx" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\EditTableItem.png" />
     <Content Include="Content\ENETBG.png" />
     <Content Include="Content\ENETCare-Logo.png" />
     <Content Include="Content\Site.css" />
+    <Content Include="Controls\EditTableItemButton.ascx" />
     <Content Include="CreateInterventionPage.aspx" />
     <Content Include="Accountants.aspx" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -398,6 +400,13 @@
     </Compile>
     <Compile Include="Contact.aspx.designer.cs">
       <DependentUpon>Contact.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\EditTableItemButton.ascx.cs">
+      <DependentUpon>EditTableItemButton.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\EditTableItemButton.ascx.designer.cs">
+      <DependentUpon>EditTableItemButton.ascx</DependentUpon>
     </Compile>
     <Compile Include="CreateInterventionPage.aspx.cs">
       <DependentUpon>CreateInterventionPage.aspx</DependentUpon>

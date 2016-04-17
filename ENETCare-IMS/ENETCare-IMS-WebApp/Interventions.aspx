@@ -1,13 +1,11 @@
 ﻿<%@ Page Title="Interventions" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Interventions.aspx.cs" Inherits="ENETCare.IMS.WebApp.InterventionsWebUI" %>
+<%@ Reference Control="~/Controls/EditTableItemButton.ascx" %>
 <asp:Content ID="InterventionsContent" ContentPlaceHolderID="MainContent" runat="server">
     <h1><%: Page.Title %></h1>
 
     <ul class="buttonBar">
         <li><asp:Button ID="Button_CreateNewIntervention" runat="server" Text="Create New ..." OnClick="Button_CreateNewIntervention_Click" /></li>
         <li><asp:Button ID="Button_Clients" runat="server" Text="Clients ..." OnClick="Button_Clients_Click" /></li>
-        <li style="float: right;">
-            <asp:Button ID="Button_Edit" runat="server" Text="Edit ..." />
-        </li>
     </ul>
 
     <div class="enetImsTableContainer">
@@ -15,6 +13,7 @@
             CellSpacing="0"
             CssClass="enetImsTable">
             <asp:TableHeaderRow TableSection="TableHeader">
+                <asp:TableHeaderCell></asp:TableHeaderCell>
                 <asp:TableHeaderCell>Intervention Type</asp:TableHeaderCell>
                 <asp:TableHeaderCell>Client</asp:TableHeaderCell>
                 <asp:TableHeaderCell>Date Started</asp:TableHeaderCell>

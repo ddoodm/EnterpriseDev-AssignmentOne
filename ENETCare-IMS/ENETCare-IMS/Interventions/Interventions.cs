@@ -49,31 +49,33 @@ namespace ENETCare.IMS.Interventions
             // Populate interventions with fake data
             InterventionTypes types = new InterventionTypes();
 
+            // Testing only!
+            int id = 0;
             interventions.Add(Intervention.Factory.CreateIntervention(
-                0, types[0], Clients.GetClientByID(0), testEngineerDistrict0)); //0
+                id++, types[0], Clients.GetClientByID(0), testEngineerDistrict0)); //0
             interventions.Add(Intervention.Factory.CreateIntervention(
-                1, types[1], Clients.GetClientByID(4), testEngineerDistrict4)); //1
+                id++, types[1], Clients.GetClientByID(4), testEngineerDistrict4)); //1
             interventions.Add(Intervention.Factory.CreateIntervention(
-                2, types[0], Clients.GetClientByID(3), testEngineerDistrict3)); //2
+                id++, types[0], Clients.GetClientByID(3), testEngineerDistrict3)); //2
             interventions.Add(Intervention.Factory.CreateIntervention(
-                2, types[2], Clients.GetClientByID(2), testEngineerDistrict2)); //3
+                id++, types[2], Clients.GetClientByID(2), testEngineerDistrict2)); //3
             interventions.Add(Intervention.Factory.CreateIntervention(
-                2, types[1], Clients.GetClientByID(0), testEngineerDistrict0)); //4
+                id++, types[1], Clients.GetClientByID(0), testEngineerDistrict0)); //4
             interventions.Add(Intervention.Factory.CreateIntervention(
-                2, types[0], Clients.GetClientByID(1), testEngineerDistrict1)); //5
+                id++, types[0], Clients.GetClientByID(1), testEngineerDistrict1)); //5
 
             interventions.Add(Intervention.Factory.CreateIntervention(
-                0, types[0], Clients.GetClientByID(5), testEngineerDistrict5)); //6
+                id++, types[0], Clients.GetClientByID(5), testEngineerDistrict5)); //6
             interventions.Add(Intervention.Factory.CreateIntervention(
-                1, types[1], Clients.GetClientByID(1), testEngineerDistrict1)); //7
+                id++, types[1], Clients.GetClientByID(1), testEngineerDistrict1)); //7
             interventions.Add(Intervention.Factory.CreateIntervention(
-                2, types[0], Clients.GetClientByID(3), testEngineerDistrict3)); //8
+                id++, types[0], Clients.GetClientByID(3), testEngineerDistrict3)); //8
             interventions.Add(Intervention.Factory.CreateIntervention(
-                2, types[2], Clients.GetClientByID(2), testEngineerDistrict2)); //9
+                id++, types[2], Clients.GetClientByID(2), testEngineerDistrict2)); //9
             interventions.Add(Intervention.Factory.CreateIntervention(
-                2, types[1], Clients.GetClientByID(0), testEngineerDistrict0)); //10
+                id++, types[1], Clients.GetClientByID(0), testEngineerDistrict0)); //10
             interventions.Add(Intervention.Factory.CreateIntervention(
-                2, types[0], Clients.GetClientByID(5), testEngineerDistrict5)); //11
+                id++, types[0], Clients.GetClientByID(5), testEngineerDistrict5)); //11
 
             //Approve a few interventions
             interventions[4].Approve(testEngineerDistrict0);
