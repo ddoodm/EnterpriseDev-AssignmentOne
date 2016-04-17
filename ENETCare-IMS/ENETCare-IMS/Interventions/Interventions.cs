@@ -54,32 +54,31 @@ namespace ENETCare.IMS.Interventions
             InterventionTypes types = new InterventionTypes();
 
             // Testing only!
-            int id = 0;
-            interventions.Add(Intervention.Factory.CreateIntervention(
-                id++, types[0], application.Clients.GetClientByID(0), testEngineerDistrict0)); //0
-            interventions.Add(Intervention.Factory.CreateIntervention(
-                id++, types[1], application.Clients.GetClientByID(4), testEngineerDistrict4)); //1
-            interventions.Add(Intervention.Factory.CreateIntervention(
-                id++, types[0], application.Clients.GetClientByID(3), testEngineerDistrict3)); //2
-            interventions.Add(Intervention.Factory.CreateIntervention(
-                id++, types[2], application.Clients.GetClientByID(2), testEngineerDistrict2)); //3
-            interventions.Add(Intervention.Factory.CreateIntervention(
-                id++, types[1], application.Clients.GetClientByID(0), testEngineerDistrict0)); //4
-            interventions.Add(Intervention.Factory.CreateIntervention(
-                id++, types[0], application.Clients.GetClientByID(1), testEngineerDistrict1)); //5
+            CreateIntervention(
+                types[0], application.Clients.GetClientByID(0), testEngineerDistrict0); //0
+            CreateIntervention(
+                types[1], application.Clients.GetClientByID(4), testEngineerDistrict4); //1
+            CreateIntervention(
+                types[0], application.Clients.GetClientByID(3), testEngineerDistrict3); //2
+            CreateIntervention(
+                types[2], application.Clients.GetClientByID(2), testEngineerDistrict2); //3
+            CreateIntervention(
+                types[1], application.Clients.GetClientByID(0), testEngineerDistrict0); //4
+            CreateIntervention(
+                types[0], application.Clients.GetClientByID(1), testEngineerDistrict1); //5
 
-            interventions.Add(Intervention.Factory.CreateIntervention(
-                id++, types[0], application.Clients.GetClientByID(5), testEngineerDistrict5)); //6
-            interventions.Add(Intervention.Factory.CreateIntervention(
-                id++, types[1], application.Clients.GetClientByID(1), testEngineerDistrict1)); //7
-            interventions.Add(Intervention.Factory.CreateIntervention(
-                id++, types[0], application.Clients.GetClientByID(3), testEngineerDistrict3)); //8
-            interventions.Add(Intervention.Factory.CreateIntervention(
-                id++, types[2], application.Clients.GetClientByID(2), testEngineerDistrict2)); //9
-            interventions.Add(Intervention.Factory.CreateIntervention(
-                id++, types[1], application.Clients.GetClientByID(0), testEngineerDistrict0)); //10
-            interventions.Add(Intervention.Factory.CreateIntervention(
-                id++, types[0], application.Clients.GetClientByID(5), testEngineerDistrict5)); //11
+            CreateIntervention(
+                types[0], application.Clients.GetClientByID(5), testEngineerDistrict5); //6
+            CreateIntervention(
+                types[1], application.Clients.GetClientByID(1), testEngineerDistrict1); //7
+            CreateIntervention(
+                types[0], application.Clients.GetClientByID(3), testEngineerDistrict3); //8
+            CreateIntervention(
+                types[2], application.Clients.GetClientByID(2), testEngineerDistrict2); //9
+            CreateIntervention(
+                types[1], application.Clients.GetClientByID(0), testEngineerDistrict0); //10
+            CreateIntervention(
+                types[0], application.Clients.GetClientByID(5), testEngineerDistrict5); //11
 
             //Approve a few interventions
             interventions[4].Approve(testEngineerDistrict0);
@@ -88,7 +87,33 @@ namespace ENETCare.IMS.Interventions
             interventions[10].Approve(testEngineerDistrict0);
         }
 
-        public void Add(Intervention intervention)
+        /// <summary>
+        /// Computes the next available ID number
+        /// </summary>
+        private int NextID
+        {
+            get
+            {
+                if (interventions.Count < 1)
+                    return 0;
+
+                var highestIntervention
+                    = interventions.OrderByDescending(i => i.ID)
+                    .FirstOrDefault();
+                return highestIntervention.ID + 1;
+            }
+        }
+
+        public Intervention CreateIntervention(InterventionType type, Client client, SiteEngineer siteEngineer)
+        {
+            int id = NextID;
+            Intervention newIntervention = Intervention.Factory.CreateIntervention(
+                id, type, client, siteEngineer);
+            Add(newIntervention);
+            return newIntervention;
+        }
+
+        private void Add(Intervention intervention)
         {
             interventions.Add(intervention);
         }
@@ -98,9 +123,18 @@ namespace ENETCare.IMS.Interventions
             get { return interventions.Count; }
         }
 
-        public Intervention this[int i]
+        /// <summary>
+        /// Retrieves the Intervention with the given ID
+        /// </summary>
+        /// <param name="ID">The ID of the Intervention to retrieve</param>
+        /// <returns>The Intervention with the given ID</returns>
+        public Intervention this[int ID]
         {
-            get { return interventions[i]; }
+            get
+            {
+                return interventions.First<Intervention>(
+                    intervention => intervention.ID == ID);
+            }
         }
     }
 }

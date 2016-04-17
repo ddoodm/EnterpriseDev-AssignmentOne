@@ -10,7 +10,7 @@ namespace ENETCare.IMS
     {
         private ENETCareDAO application;
 
-        private static List<Client> clients;
+        private List<Client> clients;
 
         public Clients(ENETCareDAO application)
         {
@@ -18,6 +18,15 @@ namespace ENETCare.IMS
             clients = new List<Client>();
 
             PopulateClients();
+        }
+
+        /// <summary>
+        /// Initializes a Clients DTO with a pre-defined collection of Clients.
+        /// </summary>
+        private Clients(ENETCareDAO application, List<Client> clients)
+        {
+            this.application = application;
+            this.clients = clients;
         }
 
         private void PopulateClients()
@@ -36,6 +45,30 @@ namespace ENETCare.IMS
         public Client GetClientByID(int id)
         {
             return clients.First<Client>(c => c.ID == id);
+        }
+
+        public Clients FilterByName(string name)
+        {
+            name = name.ToLower();
+            var results =
+                from client in clients
+                where client.Name.ToLower().Contains(name)
+                select client;
+            return new Clients(application, results.ToList<Client>());
+        }
+
+        public Clients FilterByDistrict(District district)
+        {
+            var results =
+                from client in clients
+                where client.District == district
+                select client;
+            return new Clients(application, results.ToList<Client>());
+        }
+
+        public List<Client> CopyAsList()
+        {
+            return new List<Client>(clients);
         }
     }
 }
