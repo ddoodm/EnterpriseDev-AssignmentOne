@@ -50,6 +50,7 @@
     <Compile Include="Clients.cs" />
     <Compile Include="District.cs" />
     <Compile Include="Districts.cs" />
+    <Compile Include="ENETCareDAO.cs" />
     <Compile Include="ExtensionMethods.cs" />
     <Compile Include="Interventions\Intervention.cs" />
     <Compile Include="Interventions\InterventionApproval.cs" />

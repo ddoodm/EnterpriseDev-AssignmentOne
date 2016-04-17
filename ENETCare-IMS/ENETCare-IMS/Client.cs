@@ -20,13 +20,5 @@ namespace ENETCare.IMS
             this.Location = location;
             this.District = district;
         }
-
-        public Client(int ID, string name, string location, int districtID)
-        {
-            this.ID = ID;
-            this.Name = name;
-            this.Location = location;
-            this.District = Districts.GetDistrictByID(districtID);
-        }
     }
 }

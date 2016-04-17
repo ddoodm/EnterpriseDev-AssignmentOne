@@ -15,7 +15,7 @@ namespace ENETCare.IMS.WebApp
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            SiteEngineer = SiteEngineerSession.Current.User;
+            SiteEngineer = UserSession<SiteEngineer>.Current.User;
         }
 
         protected void Button_Interventions_Click(object sender, EventArgs e)

@@ -6,29 +6,27 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 
 using ENETCare.IMS.Interventions;
+using ENETCare.IMS.Users;
 
 namespace ENETCare.IMS.WebApp
 {
     public partial class CreateInterventionPage : System.Web.UI.Page
     {
-        Interventions.Interventions interventions;
+        private ENETCareDAO application;
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            interventions = SiteEngineerSession.Current.Interventions;
+            application = UserSession<SiteEngineer>.Current.Application;
         }
 
         protected void Button_Create_Click(object sender, EventArgs e)
         {
-            Districts.PopulateDistricts();
-            Clients.PopulateClients();
-
             // TODO: Do not use test data to create an Intervention
-            Client client = Clients.GetClientByID(0);
+            Client client = application.Clients.GetClientByID(0);
             InterventionTypes types = new InterventionTypes();
 
-            Users.SiteEngineer engineer =
-                SiteEngineerSession.Current.User;
+            SiteEngineer engineer =
+                UserSession<SiteEngineer>.Current.User;
 
             // TODO: Fix the Intervention ID here
             Intervention newIntervention = Intervention.Factory.CreateIntervention
@@ -36,7 +34,7 @@ namespace ENETCare.IMS.WebApp
 
             newIntervention.UpdateNotes(engineer, TextBox_Notes.Text);
 
-            interventions.Add(newIntervention);
+            application.Interventions.Add(newIntervention);
 
             // Redirect to Interventions table
             Response.Redirect("Interventions.aspx");

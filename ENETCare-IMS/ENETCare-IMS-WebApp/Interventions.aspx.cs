@@ -6,22 +6,21 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 
 using ENETCare.IMS.Interventions;
+using ENETCare.IMS.Users;
 using ENETCare.IMS.WebApp.Controls;
 
 namespace ENETCare.IMS.WebApp
 {
     public partial class InterventionsWebUI : System.Web.UI.Page
     {
+        private ENETCareDAO application;
         private Interventions.Interventions interventions;
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            Districts.PopulateDistricts();
-            Clients.PopulateClients();
-
-            // Obtain interventions from the session
-            // TODO: Do not use a SiteEngineerSession here
-            interventions = SiteEngineerSession.Current.Interventions;
+            // Obtain interventions from the session's application instance
+            application = UserSession<SiteEngineer>.Current.Application;
+            interventions = application.Interventions;
 
             PopulateInterventionsTable();
         }
@@ -39,7 +38,9 @@ namespace ENETCare.IMS.WebApp
 
                 TableCell editCell = new TableCell();
                 string targetURL =
-                    String.Format("EditIntervention.aspx/{0}", intervention.ID);
+                    String.Format("EditIntervention.aspx?{0}={1}",
+                    EditInterventionPage.INTERVENTION_ID_GET_PARAMETER,
+                    intervention.ID);
                 EditTableItemButton editButton =
                     EditTableItemButton.InstantiateControl(this, targetURL);
                 editCell.Controls.Add(editButton);

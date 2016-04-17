@@ -6,25 +6,34 @@ using System.Threading.Tasks;
 
 namespace ENETCare.IMS
 {
-    public static class Clients
+    public class Clients
     {
+        private ENETCareDAO application;
+
         private static List<Client> clients;
 
-        public static void PopulateClients()
+        public Clients(ENETCareDAO application)
         {
+            this.application = application;
             clients = new List<Client>();
 
-            // TODO: This will retrieve ENETCare's clients from
-            // the database. These are temporary placeholders.
-            clients.Add(new Client(0, "John Smith", "1234 Alphabet Street", 0));
-            clients.Add(new Client(1, "John Doe", "1 Alpha Road", 1));
-            clients.Add(new Client(2, "Jane Smith", "2 Beta Lane", 2));
-            clients.Add(new Client(3, "Jane Doe", "3 Gamma Plaza", 3));
-            clients.Add(new Client(4, "John Doe Smith", "4 Delta Place", 4));
-            clients.Add(new Client(5, "Jane Doe Smith", "5 Epsilon Boulevarde", 5));
+            PopulateClients();
         }
 
-        public static Client GetClientByID(int id)
+        private void PopulateClients()
+        {
+            // TODO: This will retrieve ENETCare's clients from
+            // the database. These are temporary placeholders.
+            Districts districts = application.Districts;
+            clients.Add(new Client(0, "John Smith", "1234 Alphabet Street",     districts.GetDistrictByID(0)));
+            clients.Add(new Client(1, "John Doe", "1 Alpha Road",               districts.GetDistrictByID(1)));
+            clients.Add(new Client(2, "Jane Smith", "2 Beta Lane",              districts.GetDistrictByID(2)));
+            clients.Add(new Client(3, "Jane Doe", "3 Gamma Plaza",              districts.GetDistrictByID(3)));
+            clients.Add(new Client(4, "John Doe Smith", "4 Delta Place",        districts.GetDistrictByID(4)));
+            clients.Add(new Client(5, "Jane Doe Smith", "5 Epsilon Boulevarde", districts.GetDistrictByID(5)));
+        }
+
+        public Client GetClientByID(int id)
         {
             return clients.First<Client>(c => c.ID == id);
         }
