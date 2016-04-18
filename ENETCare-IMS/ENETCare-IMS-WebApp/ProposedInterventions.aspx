@@ -1,4 +1,4 @@
-﻿<%@ Page Title="ProposedInterventions" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="True" CodeBehind="ProposedInterventions.aspx.cs" Inherits="ENETCare.IMS.WebApp.ProposedInterventionsWebUI" %>
+﻿<%@ Page Title="Proposed Interventions" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="True" CodeBehind="ProposedInterventions.aspx.cs" Inherits="ENETCare.IMS.WebApp.ProposedInterventionsWebUI" %>
 
 <asp:Content ID="ProposedInterventionsContent" ContentPlaceHolderID="MainContent" runat="server">
     <h1><%: Page.Title %></h1>
@@ -7,7 +7,7 @@
         <li><asp:Button ID="Button_ProposedInterventions" runat="server" Text="Proposed" OnClick="Button_ProposedInterventions_Click" /></li>
         <li><asp:Button ID="Button_ApprovedInterventions" runat="server" Text="Approved" OnClick="Button_ApprovedInterventions_Click"/></li>
         <li style="float: right;">
-            <asp:Button ID="Button_Edit" runat="server" Text="Edit ..." />
+            <asp:Button ID="Button_Edit" runat="server" Text="Edit ..." OnClick="Button_Edit_Click"/>
         </li>
     </ul>
 

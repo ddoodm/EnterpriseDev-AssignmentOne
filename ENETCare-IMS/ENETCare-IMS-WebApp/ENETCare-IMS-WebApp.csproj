@@ -209,6 +209,7 @@
     <Content Include="Controls\EditTableItemButton.ascx" />
     <Content Include="CreateInterventionPage.aspx" />
     <Content Include="Accountants.aspx" />
+    <Content Include="CreateNewClient.aspx" />
     <Content Include="EditInterventionPage.aspx" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -220,6 +221,7 @@
     </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Interventions.aspx" />
+    <Content Include="InterventionsEditPage.aspx" />
     <Content Include="Login.aspx" />
     <Content Include="ProposedInterventions.aspx" />
     <Content Include="Scripts\ai.0.15.0-build58334.js" />
@@ -423,6 +425,13 @@
     <Compile Include="Accountants.aspx.designer.cs">
       <DependentUpon>Accountants.aspx</DependentUpon>
     </Compile>
+    <Compile Include="CreateNewClient.aspx.cs">
+      <DependentUpon>CreateNewClient.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CreateNewClient.aspx.designer.cs">
+      <DependentUpon>CreateNewClient.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -447,6 +456,13 @@
     <Compile Include="Interventions.aspx.designer.cs">
       <DependentUpon>Interventions.aspx</DependentUpon>
     </Compile>
+    <Compile Include="InterventionsEditPage.aspx.cs">
+      <DependentUpon>InterventionsEditPage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="InterventionsEditPage.aspx.designer.cs">
+      <DependentUpon>InterventionsEditPage.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Login.aspx.cs">
       <DependentUpon>Login.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -463,6 +479,7 @@
     <Compile Include="ProposedInterventions.aspx.designer.cs">
       <DependentUpon>ProposedInterventions.aspx</DependentUpon>
     </Compile>
+    <Compile Include="SessionConstants.cs" />
     <Compile Include="Site.Master.cs">
       <DependentUpon>Site.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

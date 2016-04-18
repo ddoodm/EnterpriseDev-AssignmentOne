@@ -56,5 +56,10 @@ namespace ENETCare.IMS.Interventions
             CurrentState = targetState;
             return true;
         }
+
+        public override string ToString()
+        {
+            return Enum.GetName(typeof(InterventionApprovalState), CurrentState);
+        }
     }
 }

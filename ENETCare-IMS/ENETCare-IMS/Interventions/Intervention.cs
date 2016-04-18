@@ -107,6 +107,11 @@ namespace ENETCare.IMS.Interventions
             this.Notes = newNotes;
         }
 
+        public bool UserCanChangeState(User user)
+        {
+            return approval.CanChangeState(user);
+        }
+
         public void Approve(SiteEngineer engineer)
         {
             approval.Approve(engineer);
@@ -135,6 +140,21 @@ namespace ENETCare.IMS.Interventions
         public void Complete(Manager manager)
         {
             approval.Complete(manager);
+        }
+
+
+
+        public bool UserCanChangeQuality(User user)
+        {
+            if (user is SiteEngineer)
+            {
+                SiteEngineer engineer = (SiteEngineer)user;
+                return (engineer.District == SiteEngineer.District);
+            }
+            else
+            {
+                return false;
+            }
         }
 
         private Intervention (

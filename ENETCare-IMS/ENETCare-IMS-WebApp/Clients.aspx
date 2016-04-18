@@ -5,7 +5,7 @@
 
     <ul class="buttonBar">
         <li><asp:Button ID="Button_Interventions" runat="server" Text="< Interventions" OnClick="Button_Interventions_Click" /></li>
-        <li><asp:Button ID="Button_AddClient" runat="server" Text="Add a New Client" /></li>
+        <li><asp:Button ID="Button_AddClient" runat="server" Text="Add a New Client" OnClick="Button_AddClient_Click"/></li>
     </ul>
 
     <div class="enetImsTableContainer">
@@ -39,6 +39,13 @@
             LeafNodeStyle-CssClass="treeLeafNode"
             ShowLines="true">
             <Nodes>
+                <asp:TreeNode Expanded="True" Text="Clients">
+                </asp:TreeNode>
+            </Nodes>
+            
+        </asp:TreeView>
+        <!--
+            <Nodes>
                 <asp:TreeNode Expanded="True" Text="Stevens Family - 32 Fakelane Rd, Placearea">
                     <asp:TreeNode Text="Hepatitis Avoidance Training" />
                 </asp:TreeNode>
@@ -51,8 +58,7 @@
                     <asp:TreeNode Text="Hepatitis Avoidance Training" />
                 </asp:TreeNode>
             </Nodes>
-        </asp:TreeView>
-
+            -->
     </div>
 
 </asp:Content>

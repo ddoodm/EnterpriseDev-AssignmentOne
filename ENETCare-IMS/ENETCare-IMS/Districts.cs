@@ -43,5 +43,10 @@ namespace ENETCare.IMS
         {
             return districts.First<District>(d => d.ID == id);
         }
+
+        public List<District> GetListCopy()
+        {
+            return new List<District>(districts);
+        }
     }
 }

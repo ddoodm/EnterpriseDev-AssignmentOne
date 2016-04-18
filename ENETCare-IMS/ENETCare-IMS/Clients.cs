@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using ENETCare.IMS.Interventions;
 namespace ENETCare.IMS
 {
     public class Clients
@@ -64,6 +64,36 @@ namespace ENETCare.IMS
                 where client.District == district
                 select client;
             return new Clients(application, results.ToList<Client>());
+        }
+
+        /// <summary>
+        /// Computes the next available ID number
+        /// </summary>
+        private int NextID
+        {
+            get
+            {
+                if (clients.Count < 1)
+                    return 0;
+
+                var highestClient
+                    = clients.OrderByDescending(i => i.ID)
+                    .FirstOrDefault();
+                return highestClient.ID + 1;
+            }
+        }
+
+        private void Add(Client client)
+        {
+            clients.Add(client);
+        }
+
+        public Client CreateClient(string name, string location, District district)
+        {
+            int id = NextID;
+            Client newClient = new Client(id, name, location, district);
+            Add(newClient);
+            return newClient;
         }
 
         public List<Client> CopyAsList()
