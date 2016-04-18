@@ -9,17 +9,19 @@ namespace ENETCare.IMS.Tests
     [TestClass]
     public class UsersTest
     {
+        ENETCareDAO application;
+
         [TestInitialize]
         public void Setup()
         {
-            Districts.PopulateDistricts();
+            application = new ENETCareDAO();
         }
 
         [TestMethod]
         public void Check_Manager_District()
         {
             Manager testManager = new Manager("Bob Bobson", "bobson.bob", "dCmEp_98T65",
-                Districts.GetDistrictByID(1), 50, 50);
+                application.Districts.GetDistrictByID(1), 50, 50);
 
             Assert.IsTrue(testManager.District.Name == "Rural Indonesia");
         }

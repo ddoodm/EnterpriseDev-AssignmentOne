@@ -95,7 +95,7 @@
 
 .enetImsTableContainer
 {
-    width: 95%;
+    width: 100%;
     overflow-x: auto;
     margin: 0 auto;
 }
@@ -183,9 +183,16 @@ input[type=button], input[type=submit], button
     background-color: #DDD;
 }
 
-.treeLeafNode
+/* ===== Login ===== */
+#loginContainer
 {
+    width: 50%;
+    margin: 40px auto;
+    padding: 40px;
+    text-align: center;
 
+    background-color: #F9F9F9;
+    border-radius: 10px;
 }
 
 #footer

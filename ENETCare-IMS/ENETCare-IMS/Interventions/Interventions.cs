@@ -10,70 +10,75 @@ namespace ENETCare.IMS.Interventions
 {
     public class Interventions
     {
+        private ENETCareDAO application;
+
         private static List<Intervention> interventions = new List<Intervention>();
 
-        public Interventions()
+        public Interventions(ENETCareDAO application)
         {
+            this.application = application;
+
             interventions = new List<Intervention>();
 
             SetUpData();
         }
 
-        public void SetUpData()
+        private void SetUpData()
         {
             // Test engineer
             SiteEngineer testEngineerDistrict0 = new SiteEngineer
                 ("Bill Williams", "williams.bill", "abc1234",
-                Clients.GetClientByID(0).District, 12, 1000);
+                application.Clients.GetClientByID(0).District, 12, 1000);
 
             SiteEngineer testEngineerDistrict1 = new SiteEngineer
                 ("Ted Edwardson", "edwardson.ted", "abc1234",
-                Clients.GetClientByID(1).District, 12, 1000);
+                application.Clients.GetClientByID(1).District, 12, 1000);
 
             SiteEngineer testEngineerDistrict2 = new SiteEngineer
                 ("Richard Dickson", "dickson.richard", "abc1234",
-                Clients.GetClientByID(2).District, 12, 1000);
+                application.Clients.GetClientByID(2).District, 12, 1000);
 
             SiteEngineer testEngineerDistrict3 = new SiteEngineer
                 ("James \"Jimmy\" Jameson", "jameson.jim", "abc1234",
-                Clients.GetClientByID(3).District, 12, 1000);
+                application.Clients.GetClientByID(3).District, 12, 1000);
 
             SiteEngineer testEngineerDistrict4 = new SiteEngineer
                 ("Rupert von Ochtag Gon", "octhaggon.rupert", "abc1234",
-                Clients.GetClientByID(4).District, 12, 1000);
+                application.Clients.GetClientByID(4).District, 12, 1000);
 
             SiteEngineer testEngineerDistrict5  = new SiteEngineer
                 ("Dr. Byron Orpheus", "orpheus.byron", "abc1234",
-                Clients.GetClientByID(5).District, 12, 1000);
+                application.Clients.GetClientByID(5).District, 12, 1000);
 
             // Populate interventions with fake data
             InterventionTypes types = new InterventionTypes();
 
-            interventions.Add(Intervention.Factory.CreateIntervention(
-                0, types[0], Clients.GetClientByID(0), testEngineerDistrict0)); //0
-            interventions.Add(Intervention.Factory.CreateIntervention(
-                1, types[1], Clients.GetClientByID(4), testEngineerDistrict4)); //1
-            interventions.Add(Intervention.Factory.CreateIntervention(
-                2, types[0], Clients.GetClientByID(3), testEngineerDistrict3)); //2
-            interventions.Add(Intervention.Factory.CreateIntervention(
-                2, types[2], Clients.GetClientByID(2), testEngineerDistrict2)); //3
-            interventions.Add(Intervention.Factory.CreateIntervention(
-                2, types[1], Clients.GetClientByID(0), testEngineerDistrict0)); //4
-            interventions.Add(Intervention.Factory.CreateIntervention(
-                2, types[0], Clients.GetClientByID(1), testEngineerDistrict1)); //5
+            // Testing only!
+            CreateIntervention(
+                types[0], application.Clients.GetClientByID(0), testEngineerDistrict0); //0
+            CreateIntervention(
+                types[1], application.Clients.GetClientByID(4), testEngineerDistrict4); //1
+            CreateIntervention(
+                types[0], application.Clients.GetClientByID(3), testEngineerDistrict3); //2
+            CreateIntervention(
+                types[2], application.Clients.GetClientByID(2), testEngineerDistrict2); //3
+            CreateIntervention(
+                types[1], application.Clients.GetClientByID(0), testEngineerDistrict0); //4
+            CreateIntervention(
+                types[0], application.Clients.GetClientByID(1), testEngineerDistrict1); //5
 
-            interventions.Add(Intervention.Factory.CreateIntervention(
-                0, types[0], Clients.GetClientByID(5), testEngineerDistrict5)); //6
-            interventions.Add(Intervention.Factory.CreateIntervention(
-                1, types[1], Clients.GetClientByID(1), testEngineerDistrict1)); //7
-            interventions.Add(Intervention.Factory.CreateIntervention(
-                2, types[0], Clients.GetClientByID(3), testEngineerDistrict3)); //8
-            interventions.Add(Intervention.Factory.CreateIntervention(
-                2, types[2], Clients.GetClientByID(2), testEngineerDistrict2)); //9
-            interventions.Add(Intervention.Factory.CreateIntervention(
-                2, types[1], Clients.GetClientByID(0), testEngineerDistrict0)); //10
-            interventions.Add(Intervention.Factory.CreateIntervention(
-                2, types[0], Clients.GetClientByID(5), testEngineerDistrict5)); //11
+            CreateIntervention(
+                types[0], application.Clients.GetClientByID(5), testEngineerDistrict5); //6
+            CreateIntervention(
+                types[1], application.Clients.GetClientByID(1), testEngineerDistrict1); //7
+            CreateIntervention(
+                types[0], application.Clients.GetClientByID(3), testEngineerDistrict3); //8
+            CreateIntervention(
+                types[2], application.Clients.GetClientByID(2), testEngineerDistrict2); //9
+            CreateIntervention(
+                types[1], application.Clients.GetClientByID(0), testEngineerDistrict0); //10
+            CreateIntervention(
+                types[0], application.Clients.GetClientByID(5), testEngineerDistrict5); //11
 
             //Approve a few interventions
             interventions[4].Approve(testEngineerDistrict0);
@@ -82,7 +87,33 @@ namespace ENETCare.IMS.Interventions
             interventions[10].Approve(testEngineerDistrict0);
         }
 
-        public void Add(Intervention intervention)
+        /// <summary>
+        /// Computes the next available ID number
+        /// </summary>
+        private int NextID
+        {
+            get
+            {
+                if (interventions.Count < 1)
+                    return 0;
+
+                var highestIntervention
+                    = interventions.OrderByDescending(i => i.ID)
+                    .FirstOrDefault();
+                return highestIntervention.ID + 1;
+            }
+        }
+
+        public Intervention CreateIntervention(InterventionType type, Client client, SiteEngineer siteEngineer)
+        {
+            int id = NextID;
+            Intervention newIntervention = Intervention.Factory.CreateIntervention(
+                id, type, client, siteEngineer);
+            Add(newIntervention);
+            return newIntervention;
+        }
+
+        private void Add(Intervention intervention)
         {
             interventions.Add(intervention);
         }
@@ -92,9 +123,18 @@ namespace ENETCare.IMS.Interventions
             get { return interventions.Count; }
         }
 
-        public Intervention this[int i]
+        /// <summary>
+        /// Retrieves the Intervention with the given ID
+        /// </summary>
+        /// <param name="ID">The ID of the Intervention to retrieve</param>
+        /// <returns>The Intervention with the given ID</returns>
+        public Intervention this[int ID]
         {
-            get { return interventions[i]; }
+            get
+            {
+                return interventions.First<Intervention>(
+                    intervention => intervention.ID == ID);
+            }
         }
 
         public List<Intervention> GetInterventionsWithClient(int clientID)

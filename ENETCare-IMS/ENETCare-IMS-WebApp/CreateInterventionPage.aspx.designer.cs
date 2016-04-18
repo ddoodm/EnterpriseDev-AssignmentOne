@@ -13,6 +13,15 @@ namespace ENETCare.IMS.WebApp {
     public partial class CreateInterventionPage {
         
         /// <summary>
+        /// InterventionTypeLinqDataSource control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinqDataSource InterventionTypeLinqDataSource;
+        
+        /// <summary>
         /// Dropdown_InterventionType control.
         /// </summary>
         /// <remarks>

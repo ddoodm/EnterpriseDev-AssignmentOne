@@ -16,8 +16,10 @@ namespace ENETCare.IMS.Tests
         private const uint NUM_TEST_DISTRICTS = 3;
         private District testDistrictA, testDistrictB, testDistrictC;
 
+        private ENETCareDAO application;
+        private Clients clients;
+        private Districts districts;
         private InterventionTypes interventionTypes;
-
         #endregion
 
         #region Helper Data Creation Functions
@@ -36,13 +38,12 @@ namespace ENETCare.IMS.Tests
 
         private void CreateTestDistricts()
         {
-            Districts.PopulateDistricts();
-            Assert.IsTrue(Districts.Count >= NUM_TEST_DISTRICTS,
+            Assert.IsTrue(districts.Count >= NUM_TEST_DISTRICTS,
                 "There are not enough districts for testing.");
 
-            testDistrictA = Districts.GetDistrictByID(0);
-            testDistrictB = Districts.GetDistrictByID(1);
-            testDistrictC = Districts.GetDistrictByID(2);
+            testDistrictA = districts.GetDistrictByID(0);
+            testDistrictB = districts.GetDistrictByID(1);
+            testDistrictC = districts.GetDistrictByID(2);
         }
 
         private SiteEngineer CreateTestSiteEngineer()
@@ -64,13 +65,14 @@ namespace ENETCare.IMS.Tests
         [TestInitialize]
         public void Setup()
         {
-            interventionTypes = new InterventionTypes();
-            //districts = new DistrictsTests();
+            application = new ENETCareDAO();
+            districts = application.Districts;
+            clients = application.Clients;
+            interventionTypes = application.InterventionTypes;
 
             CreateTestDistricts();
             testClient = CreateTestClient();
             testEngineer = CreateTestSiteEngineer();
-
         }
 
         #region Creation Tests

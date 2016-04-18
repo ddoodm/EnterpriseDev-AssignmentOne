@@ -8,26 +8,27 @@ using System.Web.UI.WebControls;
 using ENETCare.IMS.Users;
 using ENETCare.IMS.Interventions;
 
-
 namespace ENETCare.IMS.WebApp
 {
     public partial class ClientsList : System.Web.UI.Page
     {
+        private ENETCareDAO application;
+
+        private Interventions.Interventions interventions;
+
         protected SiteEngineer SiteEngineer { get; private set; }
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!Clients.IsPopulated())
-            {
-                Clients.PopulateClients();
-            }
+            application = UserSession<SiteEngineer>.Current.Application;
+            SiteEngineer = UserSession<SiteEngineer>.Current.User;
+
+            interventions = application.Interventions;
 
             SetUpTreeNode();
-            SiteEngineer = SiteEngineerSession.Current.User;
 
             TreeView_Clients.ExpandAll();
         }
-
 
         void SetUpTreeNode()
         {
@@ -35,19 +36,17 @@ namespace ENETCare.IMS.WebApp
             TreeView_Clients.Nodes.Add(new TreeNode("Clients"));
 
             TreeNode rootNode = TreeView_Clients.Nodes.Cast<TreeNode>().ToList().Find(n => n.Text.Equals("Clients"));
-            List<Client> clients = Clients.ClientList;
+            List<Client> clients = application.Clients.CopyAsList();
             foreach (Client client in clients)
             {
                 string nodeText = client.Name + " - " + client.Location;
                 TreeNode node = new TreeNode(nodeText);
-                Interventions.Interventions interventions = new Interventions.Interventions();
 
                 foreach (Intervention intervention in interventions.GetInterventionsWithClient(client.ID))
                 {
                     node.ChildNodes.Add(new TreeNode(intervention.InterventionType.Name));
                 }
                 node.Collapse();
-
 
                 TreeNode existingNode = TreeView_Clients.Nodes.Cast<TreeNode>().ToList().Find(n => n.Text.Equals(nodeText));
                 if (existingNode == null)

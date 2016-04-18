@@ -10,27 +10,24 @@ namespace ENETCare.IMS.WebApp
 {
     public partial class CreateNewClientWebUI : System.Web.UI.Page
     {
-        
+        ENETCareDAO application;
+        Districts districts;
+        Clients clients;
+
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!Districts.IsPopulated())
-            {
-                Districts.PopulateDistricts();
-            }
+            application = UserSession<User>.Current.Application;
+            districts = application.Districts;
+            clients = application.Clients;
 
-            foreach(District district in Districts.DistrictList)
+            foreach(District district in districts.GetListCopy())
             {
                 ClientDistrict.Items.Add(district.Name);
             }
-
         }
 
         protected void Button_Create_Click(object sender, EventArgs e)
         {
-            
-
-            int ID = Clients.GetNewClientID();
-
             if(ClientNameText.Text.Trim() == string.Empty)
             {
                 throw new ArgumentException("Client must have a name");
@@ -43,12 +40,9 @@ namespace ENETCare.IMS.WebApp
             string name = ClientNameText.Text.Trim();
             string location = ClientLocationText.Text.Trim();
 
-            District district = Districts.GetDistrictByID(ClientDistrict.SelectedIndex);
+            District district = districts.GetDistrictByID(ClientDistrict.SelectedIndex);
 
-            Client client = new Client(ID, name, location, district);
-
-            //TODO:
-            Clients.AddClient(client);
+            Client client = clients.CreateClient(name, location, district);
 
             Response.Redirect("Clients.aspx");
         }

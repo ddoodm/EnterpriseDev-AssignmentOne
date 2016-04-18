@@ -13,20 +13,21 @@ namespace ENETCare.IMS
         public District District    { get; private set; }
         public string Location      { get; private set; }
 
+        public string DescriptiveName
+        {
+            get
+            {
+                string format = "{0} ({1}, {2})";
+                return String.Format(format, Name, Location, District);
+            }
+        }
+
         public Client(int ID, string name, string location, District district)
         {
             this.ID = ID;
             this.Name = name;
             this.Location = location;
             this.District = district;
-        }
-
-        public Client(int ID, string name, string location, int districtID)
-        {
-            this.ID = ID;
-            this.Name = name;
-            this.Location = location;
-            this.District = Districts.GetDistrictByID(districtID);
         }
     }
 }

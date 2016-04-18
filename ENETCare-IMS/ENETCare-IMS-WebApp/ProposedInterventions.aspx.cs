@@ -6,13 +6,16 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 
 using ENETCare.IMS.Interventions;
+using ENETCare.IMS.Users;
 
 namespace ENETCare.IMS.WebApp
 {
     
     public partial class ProposedInterventionsWebUI : System.Web.UI.Page
     {
+        private ENETCareDAO application;
         private Interventions.Interventions interventions;
+
         private bool isDisplayingProposed = true;
         private int selectedRowIndex = 0;
 
@@ -21,13 +24,10 @@ namespace ENETCare.IMS.WebApp
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            
-            Districts.PopulateDistricts();
-            Clients.PopulateClients();
-
-            // Obtain interventions from the session
-            // TODO: Do not use a SiteEngineerSession here
-            interventions = SiteEngineerSession.Current.Interventions;
+            // Obtain the Application instance
+            // TODO: Do not use a Site Engineer session here; use Manager.
+            application = UserSession<SiteEngineer>.Current.Application;
+            interventions = application.Interventions;
 
             SortInterventions();
             PopulateInterventionsTable();
