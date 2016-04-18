@@ -31,13 +31,13 @@ namespace ENETCare_IMS_WebApp {
         protected global::System.Web.UI.WebControls.DropDownList Dropdown_User;
         
         /// <summary>
-        /// Button_GenerateReport control.
+        /// Button_Generate control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Button_GenerateReport;
+        protected global::System.Web.UI.WebControls.Button Button_Generate;
         
         /// <summary>
         /// Button_Edit_Accountant control.

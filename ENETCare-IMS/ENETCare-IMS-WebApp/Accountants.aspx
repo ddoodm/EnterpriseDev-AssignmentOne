@@ -16,9 +16,9 @@
 
         <ul class="buttonBar">
             <li>
-                <asp:Button ID="Button_GenerateReport" runat="server" Text="Generate Report" /></li>
+                <asp:Button ID="Button_Generate" runat="server" Text="Generate Report" OnClick="Button_Generate_Click" /></li>
             <li style="float: right;">
-                <asp:Button ID="Button_Edit_Accountant" runat="server" Text="Edit ..." />
+                <asp:Button ID="Button_Edit_Accountant" runat="server" Text="Edit ..." OnClick ="Button_Edit_Click" />
             </li>
         </ul>
     </div>
@@ -28,7 +28,7 @@
             CellSpacing="0"
             CssClass="enetImsTable" Width="925px">
             <asp:TableHeaderRow TableSection="TableHeader">
-                <asp:TableHeaderCell>Account Type</asp:TableHeaderCell>
+                <asp:TableHeaderCell>Type</asp:TableHeaderCell>
                 <asp:TableHeaderCell>Name</asp:TableHeaderCell>
                 <asp:TableHeaderCell>District</asp:TableHeaderCell>
                 <asp:TableHeaderCell>Cost</asp:TableHeaderCell>

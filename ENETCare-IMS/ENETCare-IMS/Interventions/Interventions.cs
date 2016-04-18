@@ -27,27 +27,27 @@ namespace ENETCare.IMS.Interventions
         {
             // Test engineer
             SiteEngineer testEngineerDistrict0 = new SiteEngineer
-                ("Bill Williams", "williams.bill", "abc1234",
+                ("Bill Williams", "williams.bill", "abc1234", User.accType.SiteEngineer,
                 application.Clients.GetClientByID(0).District, 12, 1000);
 
             SiteEngineer testEngineerDistrict1 = new SiteEngineer
-                ("Ted Edwardson", "edwardson.ted", "abc1234",
+                ("Ted Edwardson", "edwardson.ted", "abc1234", User.accType.SiteEngineer,
                 application.Clients.GetClientByID(1).District, 12, 1000);
 
             SiteEngineer testEngineerDistrict2 = new SiteEngineer
-                ("Richard Dickson", "dickson.richard", "abc1234",
+                ("Richard Dickson", "dickson.richard", "abc1234", User.accType.SiteEngineer,
                 application.Clients.GetClientByID(2).District, 12, 1000);
 
             SiteEngineer testEngineerDistrict3 = new SiteEngineer
-                ("James \"Jimmy\" Jameson", "jameson.jim", "abc1234",
+                ("James \"Jimmy\" Jameson", "jameson.jim", "abc1234", User.accType.SiteEngineer,
                 application.Clients.GetClientByID(3).District, 12, 1000);
 
             SiteEngineer testEngineerDistrict4 = new SiteEngineer
-                ("Rupert von Ochtag Gon", "octhaggon.rupert", "abc1234",
+                ("Rupert von Ochtag Gon", "octhaggon.rupert", "abc1234", User.accType.SiteEngineer,
                 application.Clients.GetClientByID(4).District, 12, 1000);
 
             SiteEngineer testEngineerDistrict5  = new SiteEngineer
-                ("Dr. Byron Orpheus", "orpheus.byron", "abc1234",
+                ("Dr. Byron Orpheus", "orpheus.byron", "abc1234", User.accType.SiteEngineer,
                 application.Clients.GetClientByID(5).District, 12, 1000);
 
             // Populate interventions with fake data
