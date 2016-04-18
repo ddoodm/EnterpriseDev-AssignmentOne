@@ -10,51 +10,33 @@
 namespace ENETCare_IMS_WebApp {
     
     
-    public partial class AccountantsPage {
+    public partial class ReportPage {
         
         /// <summary>
-        /// Image_User control.
+        /// DetailedReport control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Image Image_User;
+        protected global::System.Web.UI.WebControls.PlaceHolder DetailedReport;
         
         /// <summary>
-        /// Dropdown_User control.
+        /// Button_Cancel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList Dropdown_User;
+        protected global::System.Web.UI.WebControls.Button Button_Cancel;
         
         /// <summary>
-        /// Button_Generate control.
+        /// Button_Print control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Button_Generate;
-        
-        /// <summary>
-        /// Button_Edit_Accountant control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Button_Edit_Accountant;
-        
-        /// <summary>
-        /// Table_Accountants control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Table Table_Accountants;
+        protected global::System.Web.UI.WebControls.Button Button_Print;
     }
 }

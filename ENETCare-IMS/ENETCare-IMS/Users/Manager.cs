@@ -16,14 +16,17 @@ namespace ENETCare.IMS.Users
             string name,
             string username,
             string plaintextPassword,
+            accType type,
             District district,
             decimal maxApprovableLabour,
             decimal maxApprovableCost)
-            : base(name, username, plaintextPassword)
+            : base(name, username, plaintextPassword, type)
         {
             this.District = district;
             this.MaxApprovableLabour = maxApprovableLabour;
             this.MaxApprovableCost = maxApprovableCost;
         }
+
+
     }
 }

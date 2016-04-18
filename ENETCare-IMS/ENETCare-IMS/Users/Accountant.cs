@@ -11,10 +11,12 @@ namespace ENETCare.IMS.Users
         public Accountant(
             string name,
             string username,
-            string plaintextPassword)
-            : base (name,username,plaintextPassword)
+            string plaintextPassword,
+            accType type)
+            : base (name,username,plaintextPassword, type)
         {
 
         }
+
     }
 }
