@@ -40,13 +40,5 @@ namespace ENETCare.IMS.Interventions
         {
             return GetEnumerator();
         }
-
-        public List<InterventionType> Types
-        {
-            get
-            {
-                return types;
-            }
-        }
     }
 }

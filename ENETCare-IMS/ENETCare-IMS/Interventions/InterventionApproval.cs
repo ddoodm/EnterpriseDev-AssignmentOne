@@ -41,27 +41,6 @@ namespace ENETCare.IMS.Interventions
             this.state = new InterventionApprovalStateWrapper();
         }
 
-        /*public void ChangeState(InterventionApprovalState targetState, SiteEngineer siteEngineer)
-        {
-            // Check that the Site Engineer is the creator of the Intervention
-            if(!CanChangeState(siteEngineer))   //if (siteEngineer != intervention.SiteEngineer)
-                throw new ArgumentException("Cannot modify an Intervention by a Site Engineer who did not propose the Intervention.");
-
-            // Request to change states. Will throw an exception if current state is invalid.
-            this.state.ChangeState(targetState);
-        }
-        */
-        //public void ChangeState(InterventionApprovalState targetState, Manager manager)
-        //{
-        //    /* Check that the Manager operates in the same District as
-        //       the Intervention's client */
-        //    if(!CanChangeState(manager))     // if(manager.District != intervention.District)
-        //        throw new ArgumentException("Cannot modify an Intervention by a Manager of a different district.");
-
-        //    // Request to change states. Will throw an exception if current state is invalid.
-        //    this.state.ChangeState(targetState);
-        //}
-
         public void ChangeState(InterventionApprovalState targetState, User user)
         {
             // Check that the user can change the state of the Intervention
@@ -71,7 +50,6 @@ namespace ENETCare.IMS.Interventions
             // Request to change states. Will throw an exception if current state is invalid.
             this.state.ChangeState(targetState);
         }
-
 
         public void Approve(User user)
         {
@@ -89,61 +67,19 @@ namespace ENETCare.IMS.Interventions
             ChangeState(InterventionApprovalState.Completed, user);
         }
 
-        /*
-        public void Approve(SiteEngineer siteEngineer)
-        {
-            ChangeState(InterventionApprovalState.Approved, siteEngineer);
-            ApprovingUser = siteEngineer;
-        }
-
-        public void Approve(Manager manager)
-        {
-            ChangeState(InterventionApprovalState.Approved, manager);
-            ApprovingUser = manager;
-        }
-        */
-
-        /*
-        public void Cancel(SiteEngineer siteEngineer)
-        {
-            ChangeState(InterventionApprovalState.Cancelled, siteEngineer);
-        }
-
-        public void Cancel(Manager manager)
-        {
-            ChangeState(InterventionApprovalState.Cancelled, manager);
-        }
-        
-
-        public void Complete(SiteEngineer siteEngineer)
-        {
-            ChangeState(InterventionApprovalState.Completed, siteEngineer);
-        }
-
-        public void Complete(Manager manager)
-        {
-            ChangeState(InterventionApprovalState.Completed, manager);
-        }
-        */
-
         public bool CanChangeState(User user)
         {
-            if(user is Manager)
+            if (user is Manager)
             {
                 Manager manager = (Manager)user;
                 return (manager.District == intervention.District);
-               
             }
-            else if(user is SiteEngineer)
+            else if (user is SiteEngineer)
             {
                 SiteEngineer engineer = (SiteEngineer)user;
                 return engineer == intervention.SiteEngineer;
-              
             }
-            else
-            {
-                return false;
-            }
+            else return false;
         }
     }
 

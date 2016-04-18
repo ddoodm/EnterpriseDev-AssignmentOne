@@ -42,7 +42,7 @@ namespace ENETCare.IMS.WebApp
                 string nodeText = client.Name + " - " + client.Location;
                 TreeNode node = new TreeNode(nodeText);
 
-                foreach (Intervention intervention in interventions.GetInterventionsWithClient(client.ID))
+                foreach (Intervention intervention in interventions.GetInterventionsWithClient(client))
                 {
                     node.ChildNodes.Add(new TreeNode(intervention.InterventionType.Name));
                 }

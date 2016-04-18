@@ -32,8 +32,8 @@ namespace ENETCare_IMS_WebApp
             TODO: Remove this method*/
             users = new List<User>();
 
-            users.Add(new Manager("SmithJohnes", "Smith", "1234", (User.accType)1, application.Districts.GetDistrictByID(3), 12, 1000));
-            users.Add(new SiteEngineer("JohnSmith", "John", "1234", (User.accType)0, application.Districts.GetDistrictByID(2), 12, 1000));
+            users.Add(new Manager("SmithJohnes", "Smith", "1234", application.Districts.GetDistrictByID(3), 12, 1000));
+            users.Add(new SiteEngineer("JohnSmith", "John", "1234", application.Districts.GetDistrictByID(2), 12, 1000));
 
         }
 
@@ -45,7 +45,7 @@ namespace ENETCare_IMS_WebApp
                 Table_Accountants.Rows.Add(row);
 
                 TableCell typeCell = new TableCell();
-                typeCell.Text = users[i].Type.ToString();
+                typeCell.Text = users[i].Title;
                 row.Cells.Add(typeCell);
 
                 TableCell nameCell = new TableCell();

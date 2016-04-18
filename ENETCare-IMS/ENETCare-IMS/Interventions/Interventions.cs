@@ -27,27 +27,27 @@ namespace ENETCare.IMS.Interventions
         {
             // Test engineer
             SiteEngineer testEngineerDistrict0 = new SiteEngineer
-                ("Bill Williams", "williams.bill", "abc1234", User.accType.SiteEngineer,
+                ("Bill Williams", "williams.bill", "abc1234",
                 application.Clients.GetClientByID(0).District, 12, 1000);
 
             SiteEngineer testEngineerDistrict1 = new SiteEngineer
-                ("Ted Edwardson", "edwardson.ted", "abc1234", User.accType.SiteEngineer,
+                ("Ted Edwardson", "edwardson.ted", "abc1234",
                 application.Clients.GetClientByID(1).District, 12, 1000);
 
             SiteEngineer testEngineerDistrict2 = new SiteEngineer
-                ("Richard Dickson", "dickson.richard", "abc1234", User.accType.SiteEngineer,
+                ("Richard Dickson", "dickson.richard", "abc1234",
                 application.Clients.GetClientByID(2).District, 12, 1000);
 
             SiteEngineer testEngineerDistrict3 = new SiteEngineer
-                ("James \"Jimmy\" Jameson", "jameson.jim", "abc1234", User.accType.SiteEngineer,
+                ("James \"Jimmy\" Jameson", "jameson.jim", "abc1234",
                 application.Clients.GetClientByID(3).District, 12, 1000);
 
             SiteEngineer testEngineerDistrict4 = new SiteEngineer
-                ("Rupert von Ochtag Gon", "octhaggon.rupert", "abc1234", User.accType.SiteEngineer,
+                ("Rupert von Ochtag Gon", "octhaggon.rupert", "abc1234",
                 application.Clients.GetClientByID(4).District, 12, 1000);
 
             SiteEngineer testEngineerDistrict5  = new SiteEngineer
-                ("Dr. Byron Orpheus", "orpheus.byron", "abc1234", User.accType.SiteEngineer,
+                ("Dr. Byron Orpheus", "orpheus.byron", "abc1234",
                 application.Clients.GetClientByID(5).District, 12, 1000);
 
             // Populate interventions with fake data
@@ -137,9 +137,12 @@ namespace ENETCare.IMS.Interventions
             }
         }
 
-        public List<Intervention> GetInterventionsWithClient(int clientID)
+        // TODO: Have this return an Interventions collection as a standardized "Filter" method
+        public List<Intervention> GetInterventionsWithClient(Client client)
         {
-            return interventions.Where(x => x.Client.ID == clientID).ToList<Intervention>();
+            return interventions
+                .Where(x => x.Client.ID == client.ID)
+                .ToList<Intervention>();
         }
     }
 }

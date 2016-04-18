@@ -24,7 +24,7 @@ namespace ENETCare.IMS.WebApp
 
             // TODO: Initialize the User as an actual user
             User testUser = new SiteEngineer
-                ("Joe Blogs", "joeblogs", "abc123!", 0,
+                ("Joe Blogs", "joeblogs", "abc123!",
                 Application.Districts.GetDistrictByID(0), 12, 1500);
             User = (UserType)testUser;
         }
