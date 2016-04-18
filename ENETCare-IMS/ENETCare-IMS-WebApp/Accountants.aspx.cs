@@ -73,7 +73,7 @@ namespace ENETCare_IMS_WebApp
 
         protected void Button_Generate_Click(object sender, EventArgs e)
         {
-            Debug.WriteLine("ButtonGeneratePressed");
+            Response.Redirect("Report.aspx");
         }
 
         protected void Button_Edit_Click(object sender, EventArgs e)
