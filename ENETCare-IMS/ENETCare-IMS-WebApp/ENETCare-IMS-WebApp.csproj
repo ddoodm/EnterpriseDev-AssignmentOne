@@ -211,7 +211,6 @@
     <Content Include="CreateInterventionPage.aspx" />
     <Content Include="Accountants.aspx" />
     <Content Include="CreateNewClient.aspx" />
-    <Content Include="EditInterventionPage.aspx" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
@@ -446,13 +445,6 @@
     </Compile>
     <Compile Include="Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="EditInterventionPage.aspx.cs">
-      <DependentUpon>EditInterventionPage.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="EditInterventionPage.aspx.designer.cs">
-      <DependentUpon>EditInterventionPage.aspx</DependentUpon>
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

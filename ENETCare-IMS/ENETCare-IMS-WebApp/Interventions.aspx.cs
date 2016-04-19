@@ -38,8 +38,8 @@ namespace ENETCare.IMS.WebApp
 
                 TableCell editCell = new TableCell();
                 string targetURL =
-                    String.Format("~/EditInterventionPage.aspx?{0}={1}",
-                    EditInterventionPage.INTERVENTION_ID_GET_PARAMETER,
+                    String.Format("~/InterventionsEditPage.aspx?{0}={1}",
+                    InterventionEditPageWebUI.INTERVENTION_ID_GET_PARAMETER,
                     intervention.ID);
                 EditTableItemButton editButton =
                     EditTableItemButton.InstantiateControl(this, targetURL);
