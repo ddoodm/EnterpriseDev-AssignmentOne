@@ -16,22 +16,29 @@ namespace ENETCare.IMS.WebApp
         private ENETCareDAO application;
         private Interventions.Interventions interventions;
 
+        protected ILocalizedUser User;
+
         protected void Page_Load(object sender, EventArgs e)
         {
             // Obtain interventions from the session's application instance
             application = UserSession.Current.Application;
             interventions = application.Interventions;
+            User = (ILocalizedUser)UserSession.Current.User;
 
             PopulateInterventionsTable();
         }
 
         private void PopulateInterventionsTable()
         {
+            // Filter Interventions by the user's district
+            List<Intervention> filteredInterventions =
+                interventions.FilterByDistrict(User.District);
+
             // TODO: This population code will be replaced with a
             // DataSource and a DataGrid
-            for(int i = 0; i < interventions.Count; i++)
+            for(int i = 0; i < filteredInterventions.Count; i++)
             {
-                Intervention intervention = interventions[i];
+                Intervention intervention = filteredInterventions[i];
 
                 TableRow row = new TableRow();
                 Table_Interventions.Rows.Add(row);

@@ -36,8 +36,11 @@ namespace ENETCare.IMS.WebApp
             TreeView_Clients.Nodes.Add(new TreeNode("Clients"));
 
             TreeNode rootNode = TreeView_Clients.Nodes.Cast<TreeNode>().ToList().Find(n => n.Text.Equals("Clients"));
-            List<Client> clients = application.Clients.CopyAsList();
-            foreach (Client client in clients)
+
+            // Filter clients list be the user's district
+            Clients clients = application.Clients.FilterByDistrict(User.District);
+
+            foreach (Client client in clients.CopyAsList())
             {
                 string nodeText = client.Name + " - " + client.Location;
                 TreeNode node = new TreeNode(nodeText);

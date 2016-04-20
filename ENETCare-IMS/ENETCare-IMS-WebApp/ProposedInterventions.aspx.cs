@@ -124,5 +124,10 @@ namespace ENETCare.IMS.WebApp
                 row.Cells.Add(notesCell);
             
         }
+
+        protected void Button_Edit_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

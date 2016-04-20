@@ -1,7 +1,7 @@
 ﻿<%@ Page Title="Interventions" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Interventions.aspx.cs" Inherits="ENETCare.IMS.WebApp.InterventionsWebUI" %>
 <%@ Reference Control="~/Controls/EditTableItemButton.ascx" %>
 <asp:Content ID="InterventionsContent" ContentPlaceHolderID="MainContent" runat="server">
-    <h1><%: Page.Title %></h1>
+    <h1>Interventions in <%: User.District %></h1>
 
     <ul class="buttonBar">
         <li><asp:Button ID="Button_CreateNewIntervention" runat="server" Text="Create New ..." OnClick="Button_CreateNewIntervention_Click" /></li>

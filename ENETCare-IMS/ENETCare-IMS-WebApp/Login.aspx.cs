@@ -34,17 +34,11 @@ namespace ENETCare.IMS.WebApp
             else
             {
                 if (selectedUser is SiteEngineer)
-                {
                     Response.Redirect("Interventions.aspx");
-                }
                 else if (selectedUser is Manager)
-                {
-                    Response.Redirect("Clients.aspx");
-                }
+                    Response.Redirect("ProposedInterventions.aspx");
                 else if (selectedUser is Accountant)
-                {
                     Response.Redirect("Accountants.aspx");
-                }
             }
         }
 
