@@ -16,12 +16,12 @@ namespace ENETCare.IMS.WebApp
 
         private Interventions.Interventions interventions;
 
-        protected SiteEngineer SiteEngineer { get; private set; }
+        protected ILocalizedUser User { get; private set; }
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            application = UserSession<SiteEngineer>.Current.Application;
-            SiteEngineer = UserSession<SiteEngineer>.Current.User;
+            application = UserSession.Current.Application;
+            User = (ILocalizedUser)UserSession.Current.User;
 
             interventions = application.Interventions;
 

@@ -26,7 +26,7 @@ namespace ENETCare.IMS.WebApp
         {
             // Obtain the Application instance
             // TODO: Do not use a Site Engineer session here; use Manager.
-            application = UserSession<SiteEngineer>.Current.Application;
+            application = UserSession.Current.Application;
             interventions = application.Interventions;
 
             SortInterventions();
@@ -123,12 +123,6 @@ namespace ENETCare.IMS.WebApp
                 notesCell.Text = intervention.Notes;
                 row.Cells.Add(notesCell);
             
-        }
-
-        protected void Button_Edit_Click(object sender, EventArgs e)
-        {
-            Session[SessionConstants.INTERVENTION_TO_EDIT] = interventions[selectedRowIndex];
-            Response.Redirect("InterventionsEditPage.aspx");
         }
     }
 }

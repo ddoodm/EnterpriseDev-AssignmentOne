@@ -19,7 +19,7 @@ namespace ENETCare.IMS.WebApp
         protected void Page_Load(object sender, EventArgs e)
         {
             // Obtain interventions from the session's application instance
-            application = UserSession<SiteEngineer>.Current.Application;
+            application = UserSession.Current.Application;
             interventions = application.Interventions;
 
             PopulateInterventionsTable();

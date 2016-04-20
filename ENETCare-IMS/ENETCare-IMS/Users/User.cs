@@ -9,8 +9,11 @@ namespace ENETCare.IMS.Users
     public abstract class User
     {
         //basic User Class
-        public string Name { get; protected set; }
-        public string Username { get; protected set; }
+        public string Name { get; private set; }
+        public string Username { get; private set; }
+
+        // TODO: Do not store password in plain-text
+        public string PlaintextPassword { get; private set; }
 
         /// <summary>
         /// The User's position (title), ie "Site Engineer"
@@ -25,6 +28,7 @@ namespace ENETCare.IMS.Users
             /* TODO: Encrypt and store the password.
                Shall we try Salted Password Hashing?
                MD5s aren't cool anymore. */
+            this.PlaintextPassword = plaintextPassword;
         }
     }
 }

@@ -17,8 +17,8 @@ namespace ENETCare.IMS.WebApp
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            application = UserSession<SiteEngineer>.Current.Application;
-            engineer = UserSession<SiteEngineer>.Current.User;
+            application = UserSession.Current.Application;
+            engineer = (SiteEngineer)UserSession.Current.User;
         }
 
         private InterventionType GetSelectedInterventionType()

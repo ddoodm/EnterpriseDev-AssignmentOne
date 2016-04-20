@@ -5,74 +5,52 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
+using ENETCare.IMS.Users;
+
 namespace ENETCare.IMS.WebApp
 {
-
-
     /*
      * Temporary login stub until database stuff is sorted out. Login details
      * are checked against local credential lists
-     * */
+     */
     public partial class Login : System.Web.UI.Page
     {
-        enum userTypes
-        {
-            none = -1, siteEngineer, manager, accountant
-        }
-        int selectedUser;
-        List<string> tempUserList;
-        List<string> tempPassList;
-        List<int> tempUserTypeList;
+        ENETCareDAO application;
+        Users.Users users;
+
         protected void Page_Load(object sender, EventArgs e)
         {
-            tempUserList = new List<string>();
-            tempPassList = new List<string>();
-            tempUserTypeList = new List<int>();
-            selectedUser = (int)userTypes.none;
-
-            addTempUser("henry", "1234", (int)userTypes.siteEngineer);
-            addTempUser("daum", "1234", (int)userTypes.manager);
-            addTempUser("yiannis", "1234", (int)userTypes.accountant);
-            addTempUser("deinyon", "1234", (int)userTypes.siteEngineer);
+            application = UserSession.Current.Application;
+            users = new Users.Users(application);
         }
 
         protected void buttonLogin_Click(object sender, EventArgs e)
         {
-            selectedUser = loginUser(textName.Text, textPass.Text);
+            User selectedUser = LoginUser(textName.Text, textPass.Text);
+            UserSession.Current.Login(selectedUser);
 
-            if(selectedUser == (int)userTypes.none)
-            {
+            if(selectedUser == null)
                 labelError.Text = "Invalid login";
-            }
             else
             {
-                //Change these as you need. The screens that each login type goes to
-                switch(selectedUser)
+                if (selectedUser is SiteEngineer)
                 {
-                    case (int)userTypes.siteEngineer: Response.Redirect("Interventions.aspx");  break;
-                    case (int)userTypes.manager: Response.Redirect("Clients.aspx"); break;
-                    case (int)userTypes.accountant: Response.Redirect("Accountants.aspx"); break;
+                    Response.Redirect("Interventions.aspx");
+                }
+                else if (selectedUser is Manager)
+                {
+                    Response.Redirect("Clients.aspx");
+                }
+                else if (selectedUser is Accountant)
+                {
+                    Response.Redirect("Accountants.aspx");
                 }
             }
         }
 
-        private void addTempUser(string name, string pass, int type)
+        private User LoginUser(string username, string password)
         {
-            tempUserList.Add(name);
-            tempPassList.Add(pass);
-            tempUserTypeList.Add(type);
-        }
-
-        private int loginUser(string name, string pass)
-        {
-            for(int i=0; i<tempUserList.Count;++i)
-            {
-                if(tempUserList[i] == name && tempPassList[i] == pass)
-                {
-                    return tempUserTypeList[i];
-                }
-            }
-            return (int)userTypes.none;
+            return users.Login(username, password);
         }
     }
 }

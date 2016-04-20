@@ -13,7 +13,7 @@ namespace ENETCare.IMS.WebApp
     /// Reference from StackOverflow answer by M4N:
     /// http://stackoverflow.com/questions/621549/how-to-access-session-variables-from-any-class-in-asp-net
     /// </summary>
-    public class UserSession<UserType> where UserType: User
+    public class UserSession
     {
         private const string USER_SESSION_KEY =
             "ENETCare.IMS.WebApp.UserSession";
@@ -21,28 +21,22 @@ namespace ENETCare.IMS.WebApp
         private UserSession()
         {
             Application = new ENETCareDAO();
-
-            // TODO: Initialize the User as an actual user
-            User testUser = new SiteEngineer
-                ("Joe Blogs", "joeblogs", "abc123!",
-                Application.Districts.GetDistrictByID(0), 12, 1500);
-            User = (UserType)testUser;
         }
 
         /// <summary>
         /// The current session
         /// </summary>
-        public static UserSession<UserType> Current
+        public static UserSession Current
         {
             get
             {
-                UserSession<UserType> cSession =
-                    (UserSession<UserType>)HttpContext.Current.Session[USER_SESSION_KEY];
+                UserSession cSession =
+                    (UserSession)HttpContext.Current.Session[USER_SESSION_KEY];
 
                 // If the session is not initialized, initialize it
                 if(cSession == null)
                 {
-                    cSession = new UserSession<UserType>();
+                    cSession = new UserSession();
                     HttpContext.Current.Session[USER_SESSION_KEY] = cSession;
                 }
 
@@ -50,7 +44,12 @@ namespace ENETCare.IMS.WebApp
             }
         }
 
-        public UserType User { get; private set; }
+        public void Login(User user)
+        {
+            this.User = user;
+        }
+
+        public User User { get; private set; }
         public ENETCareDAO Application { get; private set; }
     }
 }
