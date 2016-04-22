@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Configuration;
+using System.Data;
 using System.Data.SqlClient;
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -14,11 +15,13 @@ namespace ENETCare.IMS.Tests
     [TestClass]
     public class DatabaseTests
     {
+        private string connectionString;
+
         /// <summary>
         /// Sets the path of the Data directory for
-        /// interfacing with the database.
+        /// the Connection String to correctly attach
+        /// the MDF database to the server.
         /// </summary>
-        /// <param name="context"></param>
         [AssemblyInitialize]
         public static void SetupDataDirectory(TestContext context)
         {
@@ -28,16 +31,39 @@ namespace ENETCare.IMS.Tests
             AppDomain.CurrentDomain.SetData("DataDirectory", path);
         }
 
+        [TestInitialize]
+        public void Setup()
+        {
+            this.connectionString = ConfigurationManager
+                .ConnectionStrings["DatabaseConnection"]
+                .ConnectionString;
+        }
+
         [TestMethod]
         public void Connection_OpenClose_Success()
         {
-            string connectionString = ConfigurationManager
-                .ConnectionStrings["DatabaseConnection"]
-                .ConnectionString;
-
             SqlConnection conn = new SqlConnection(connectionString);
             conn.Open();
             conn.Close();
+        }
+
+        [TestMethod]
+        public void Database_Client_1_Is_JohnSmith_Success()
+        {
+            using (SqlConnection c = new SqlConnection(connectionString))
+            {
+                string query = "SELECT Name FROM Clients WHERE ClientId = 1";
+                SqlDataAdapter adapter =
+                    new SqlDataAdapter(query, c);
+
+                DataSet result = new DataSet();
+                adapter.Fill(result);
+
+                string clientName =
+                    result.Tables[0].Rows[0][0].ToString();
+
+                Assert.AreEqual(clientName, "John Smith");
+            }
         }
     }
 }
