@@ -9,7 +9,7 @@ using System.Diagnostics;
 using ENETCare.IMS;
 using ENETCare.IMS.Users;
 
-namespace ENETCare_IMS_WebApp
+namespace ENETCare.IMS.WebApp
 {
     public partial class AccountantsPage : Page
     {

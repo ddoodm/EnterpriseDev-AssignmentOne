@@ -4,8 +4,8 @@ using System.IO;
 using Microsoft.Owin;
 using Owin;
 
-[assembly: OwinStartupAttribute(typeof(ENETCare_IMS_WebApp.Startup))]
-namespace ENETCare_IMS_WebApp
+[assembly: OwinStartupAttribute(typeof(ENETCare.IMS.WebApp.Startup))]
+namespace ENETCare.IMS.WebApp
 {
     public partial class Startup {
         public void Configuration(IAppBuilder app) {

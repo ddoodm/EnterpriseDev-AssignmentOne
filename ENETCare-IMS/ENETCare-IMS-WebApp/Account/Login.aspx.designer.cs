@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ENETCare_IMS_WebApp.Account {
+namespace ENETCare.IMS.WebApp.Account {
     
     
     public partial class Login {
@@ -73,6 +73,6 @@ namespace ENETCare_IMS_WebApp.Account {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::ENETCare_IMS_WebApp.Account.OpenAuthProviders OpenAuthLogin;
+        protected global::ENETCare.IMS.WebApp.Account.OpenAuthProviders OpenAuthLogin;
     }
 }

@@ -1,4 +1,4 @@
-﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.master.cs" Inherits="ENETCare_IMS_WebApp.SiteMaster" %>
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.master.cs" Inherits="ENETCare.IMS.WebApp.SiteMaster" %>
 
 <!DOCTYPE html>
 

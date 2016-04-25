@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.Optimization;
 using System.Web.UI;
 
-namespace ENETCare_IMS_WebApp
+namespace ENETCare.IMS.WebApp
 {
     public class BundleConfig
     {

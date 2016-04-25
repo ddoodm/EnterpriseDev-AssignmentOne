@@ -27,7 +27,6 @@ namespace ENETCare.IMS
 
         public ENETCareDAO()
         {
-            SetupDataDirectory();
             string sqlConnectionString = GetConnectionString();
 
             using (SqlConnection sqlLink = new SqlConnection(sqlConnectionString))
@@ -37,14 +36,6 @@ namespace ENETCare.IMS
                 InterventionTypes = new InterventionTypes();
                 Interventions = LoadInterventions(sqlLink);
             }
-        }
-
-        private void SetupDataDirectory()
-        {
-            string path = Path.GetFullPath(Path.Combine(
-                AppDomain.CurrentDomain.BaseDirectory,
-                @"..\..\..\ENETCare-IMS-Data"));
-            AppDomain.CurrentDomain.SetData("DataDirectory", path);
         }
 
         private string GetConnectionString()
