@@ -16,8 +16,6 @@ namespace ENETCare.IMS
         {
             this.application = application;
             clients = new List<Client>();
-
-            PopulateClients();
         }
 
         /// <summary>
@@ -27,19 +25,6 @@ namespace ENETCare.IMS
         {
             this.application = application;
             this.clients = clients;
-        }
-
-        private void PopulateClients()
-        {
-            // TODO: This will retrieve ENETCare's clients from
-            // the database. These are temporary placeholders.
-            Districts districts = application.Districts;
-            clients.Add(new Client(0, "John Smith", "1234 Alphabet Street",     districts.GetDistrictByID(0)));
-            clients.Add(new Client(1, "John Doe", "1 Alpha Road",               districts.GetDistrictByID(1)));
-            clients.Add(new Client(2, "Jane Smith", "2 Beta Lane",              districts.GetDistrictByID(2)));
-            clients.Add(new Client(3, "Jane Doe", "3 Gamma Plaza",              districts.GetDistrictByID(1)));
-            clients.Add(new Client(4, "John Doe Smith", "4 Delta Place",        districts.GetDistrictByID(2)));
-            clients.Add(new Client(5, "Jane Doe Smith", "5 Epsilon Boulevarde", districts.GetDistrictByID(1)));
         }
 
         public Client GetClientByID(int id)
@@ -83,7 +68,7 @@ namespace ENETCare.IMS
             }
         }
 
-        private void Add(Client client)
+        public void Add(Client client)
         {
             clients.Add(client);
         }

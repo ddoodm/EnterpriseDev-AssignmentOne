@@ -31,31 +31,7 @@ namespace ENETCare.IMS.Interventions
 
         private void SetUpData()
         {
-            // Test engineers
-            IMS.Users.Users users = new IMS.Users.Users(application);
-            SiteEngineer testEngineer1 = (SiteEngineer)users.Login("deinyon", "1234");
-            SiteEngineer testEngineer2 = (SiteEngineer)users.Login("henry", "1234");
 
-            // Populate interventions with fake data
-            InterventionTypes types = new InterventionTypes();
-
-            // Testing only!
-            CreateIntervention(
-                types[0], application.Clients.GetClientByID(1), testEngineer1); //0
-            CreateIntervention(
-                types[1], application.Clients.GetClientByID(2), testEngineer2); //1
-            CreateIntervention(
-                types[0], application.Clients.GetClientByID(3), testEngineer1); //2
-            CreateIntervention(
-                types[2], application.Clients.GetClientByID(4), testEngineer2); //3
-            CreateIntervention(
-                types[1], application.Clients.GetClientByID(1), testEngineer1); //4
-            CreateIntervention(
-                types[0], application.Clients.GetClientByID(2), testEngineer2); //5
-
-            //Approve a few interventions
-            interventions[4].Approve(testEngineer1);
-            interventions[5].Approve(testEngineer2);
         }
 
         /// <summary>

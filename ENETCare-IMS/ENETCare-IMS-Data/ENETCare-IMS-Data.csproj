@@ -7,7 +7,7 @@
     <ProjectGuid>{F65771E4-D2DF-47F8-9BDC-47B27643639D}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ENETCare_IMS_Data</RootNamespace>
+    <RootNamespace>ENETCare.IMS.Data</RootNamespace>
     <AssemblyName>ENETCare-IMS-Data</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
