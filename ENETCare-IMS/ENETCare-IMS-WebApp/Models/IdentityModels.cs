@@ -6,9 +6,9 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
-using ENETCare_IMS_WebApp.Models;
+using ENETCare.IMS.WebApp.Models;
 
-namespace ENETCare_IMS_WebApp.Models
+namespace ENETCare.IMS.WebApp.Models
 {
     // You can add User data for the user by adding more properties to your User class, please visit http://go.microsoft.com/fwlink/?LinkID=317594 to learn more.
     public class ApplicationUser : IdentityUser
@@ -42,7 +42,7 @@ namespace ENETCare_IMS_WebApp.Models
 }
 
 #region Helpers
-namespace ENETCare_IMS_WebApp
+namespace ENETCare.IMS.WebApp
 {
     public static class IdentityHelper
     {

@@ -8,7 +8,7 @@ using System.Web.UI.WebControls;
 using ENETCare.IMS;
 using ENETCare.IMS.Users;
 
-namespace ENETCare_IMS_WebApp
+namespace ENETCare.IMS.WebApp
 {
     public partial class ReportPage : Page
     {

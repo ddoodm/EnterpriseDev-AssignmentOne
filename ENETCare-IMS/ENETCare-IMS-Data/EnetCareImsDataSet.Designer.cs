@@ -10,7 +10,7 @@
 
 #pragma warning disable 1591
 
-namespace ENETCare_IMS_Data {
+namespace ENETCare.IMS.Data {
     
     
     /// <summary>
@@ -4504,7 +4504,7 @@ namespace ENETCare_IMS_Data {
         }
     }
 }
-namespace ENETCare_IMS_Data.EnetCareImsDataSetTableAdapters {
+namespace ENETCare.IMS.Data.EnetCareImsDataSetTableAdapters {
     
     
     /// <summary>
@@ -4671,7 +4671,7 @@ SELECT ClientId, Name, Location, DistrictId FROM Clients WHERE (ClientId = @Clie
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         private void InitConnection() {
             this._connection = new global::System.Data.SqlClient.SqlConnection();
-            this._connection.ConnectionString = global::ENETCare_IMS_Data.Properties.Settings.Default.EnetCareImsConnectionString;
+            this._connection.ConnectionString = global::ENETCare.IMS.Data.Properties.Settings.Default.EnetCareImsConnectionString;
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -5006,7 +5006,7 @@ SELECT ClientId, Name, Location, DistrictId FROM Clients WHERE (ClientId = @Clie
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         private void InitConnection() {
             this._connection = new global::System.Data.SqlClient.SqlConnection();
-            this._connection.ConnectionString = global::ENETCare_IMS_Data.Properties.Settings.Default.EnetCareImsConnectionString;
+            this._connection.ConnectionString = global::ENETCare.IMS.Data.Properties.Settings.Default.EnetCareImsConnectionString;
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -5252,7 +5252,7 @@ SELECT ClientId, Name, Location, DistrictId FROM Clients WHERE (ClientId = @Clie
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         private void InitConnection() {
             this._connection = new global::System.Data.SqlClient.SqlConnection();
-            this._connection.ConnectionString = global::ENETCare_IMS_Data.Properties.Settings.Default.EnetCareImsConnectionString;
+            this._connection.ConnectionString = global::ENETCare.IMS.Data.Properties.Settings.Default.EnetCareImsConnectionString;
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -5581,7 +5581,7 @@ SELECT InterventionApprovalId, InterventionId, State, ApprovingUserId FROM Inter
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         private void InitConnection() {
             this._connection = new global::System.Data.SqlClient.SqlConnection();
-            this._connection.ConnectionString = global::ENETCare_IMS_Data.Properties.Settings.Default.EnetCareImsConnectionString;
+            this._connection.ConnectionString = global::ENETCare.IMS.Data.Properties.Settings.Default.EnetCareImsConnectionString;
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -5899,7 +5899,7 @@ SELECT InterventionQualityId, InterventionId, Health, LastVisit FROM Interventio
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         private void InitConnection() {
             this._connection = new global::System.Data.SqlClient.SqlConnection();
-            this._connection.ConnectionString = global::ENETCare_IMS_Data.Properties.Settings.Default.EnetCareImsConnectionString;
+            this._connection.ConnectionString = global::ENETCare.IMS.Data.Properties.Settings.Default.EnetCareImsConnectionString;
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -6236,7 +6236,7 @@ SELECT InterventionId, InterventionTypeId, ClientId, ProposingEngineerId, Date, 
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         private void InitConnection() {
             this._connection = new global::System.Data.SqlClient.SqlConnection();
-            this._connection.ConnectionString = global::ENETCare_IMS_Data.Properties.Settings.Default.EnetCareImsConnectionString;
+            this._connection.ConnectionString = global::ENETCare.IMS.Data.Properties.Settings.Default.EnetCareImsConnectionString;
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -6626,7 +6626,7 @@ SELECT InterventionTypeId, Name, Cost, Labour FROM InterventionTypes WHERE (Inte
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         private void InitConnection() {
             this._connection = new global::System.Data.SqlClient.SqlConnection();
-            this._connection.ConnectionString = global::ENETCare_IMS_Data.Properties.Settings.Default.EnetCareImsConnectionString;
+            this._connection.ConnectionString = global::ENETCare.IMS.Data.Properties.Settings.Default.EnetCareImsConnectionString;
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -6938,7 +6938,7 @@ SELECT InterventionTypeId, Name, Cost, Labour FROM InterventionTypes WHERE (Inte
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         private void InitConnection() {
             this._connection = new global::System.Data.SqlClient.SqlConnection();
-            this._connection.ConnectionString = global::ENETCare_IMS_Data.Properties.Settings.Default.EnetCareImsConnectionString;
+            this._connection.ConnectionString = global::ENETCare.IMS.Data.Properties.Settings.Default.EnetCareImsConnectionString;
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -7190,7 +7190,7 @@ SELECT InterventionTypeId, Name, Cost, Labour FROM InterventionTypes WHERE (Inte
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         private void InitConnection() {
             this._connection = new global::System.Data.SqlClient.SqlConnection();
-            this._connection.ConnectionString = global::ENETCare_IMS_Data.Properties.Settings.Default.EnetCareImsConnectionString;
+            this._connection.ConnectionString = global::ENETCare.IMS.Data.Properties.Settings.Default.EnetCareImsConnectionString;
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]

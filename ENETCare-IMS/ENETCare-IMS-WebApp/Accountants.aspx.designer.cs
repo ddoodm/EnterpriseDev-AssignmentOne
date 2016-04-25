@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ENETCare_IMS_WebApp {
+namespace ENETCare.IMS.WebApp {
     
     
     public partial class AccountantsPage {

@@ -4,9 +4,9 @@ using System.Web.UI;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Owin;
-using ENETCare_IMS_WebApp.Models;
+using ENETCare.IMS.WebApp.Models;
 
-namespace ENETCare_IMS_WebApp.Account
+namespace ENETCare.IMS.WebApp.Account
 {
     public partial class Confirm : Page
     {

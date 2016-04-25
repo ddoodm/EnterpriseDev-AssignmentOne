@@ -17,11 +17,10 @@ namespace ENETCare.IMS.Tests
         [TestMethod]
         public void Clients_Get_Client_By_ID_Method_Returns_Client()
         {
-            int id = 0;
+            int id = 2;
             Client client = application.Clients.GetClientByID(id);
 
             Assert.IsTrue(client.ID == id);
-
         }
     }
 }
