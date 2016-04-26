@@ -182,6 +182,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Report.aspx" />
     <Content Include="About.aspx" />
     <Content Include="Account\AddPhoneNumber.aspx" />
     <Content Include="Account\Confirm.aspx" />
@@ -202,9 +203,11 @@
     <Content Include="Contact.aspx" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\EditTableItem.png" />
     <Content Include="Content\ENETBG.png" />
     <Content Include="Content\ENETCare-Logo.png" />
     <Content Include="Content\Site.css" />
+    <Content Include="Controls\EditTableItemButton.ascx" />
     <Content Include="CreateInterventionPage.aspx" />
     <Content Include="Accountants.aspx" />
     <Content Include="CreateNewClient.aspx" />
@@ -271,6 +274,13 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Report.aspx.cs">
+      <DependentUpon>Report.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Report.aspx.designer.cs">
+      <DependentUpon>Report.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Account\AddPhoneNumber.aspx.cs">
       <DependentUpon>AddPhoneNumber.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -401,6 +411,13 @@
     <Compile Include="Contact.aspx.designer.cs">
       <DependentUpon>Contact.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Controls\EditTableItemButton.ascx.cs">
+      <DependentUpon>EditTableItemButton.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Controls\EditTableItemButton.ascx.designer.cs">
+      <DependentUpon>EditTableItemButton.ascx</DependentUpon>
+    </Compile>
     <Compile Include="CreateInterventionPage.aspx.cs">
       <DependentUpon>CreateInterventionPage.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -462,7 +479,6 @@
     <Compile Include="ProposedInterventions.aspx.designer.cs">
       <DependentUpon>ProposedInterventions.aspx</DependentUpon>
     </Compile>
-    <Compile Include="SessionConstants.cs" />
     <Compile Include="Site.Master.cs">
       <DependentUpon>Site.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -477,7 +493,7 @@
     <Compile Include="Site.Mobile.Master.designer.cs">
       <DependentUpon>Site.Mobile.Master</DependentUpon>
     </Compile>
-    <Compile Include="SiteEngineerSession.cs" />
+    <Compile Include="UserSession.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="ViewSwitcher.ascx.cs">
       <DependentUpon>ViewSwitcher.ascx</DependentUpon>
@@ -489,6 +505,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="DataAccess\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ENETCare-IMS\ENETCare-IMS.csproj">

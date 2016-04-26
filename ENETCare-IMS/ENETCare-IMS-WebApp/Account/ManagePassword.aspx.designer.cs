@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ENETCare_IMS_WebApp.Account {
+namespace ENETCare.IMS.WebApp.Account {
     
     
     public partial class ManagePassword {

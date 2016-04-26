@@ -1,4 +1,4 @@
-﻿<%@ Page Title="Two-Factor Authentication" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="TwoFactorAuthenticationSignIn.aspx.cs" Inherits="ENETCare_IMS_WebApp.Account.TwoFactorAuthenticationSignIn" %>
+﻿<%@ Page Title="Two-Factor Authentication" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="TwoFactorAuthenticationSignIn.aspx.cs" Inherits="ENETCare.IMS.WebApp.Account.TwoFactorAuthenticationSignIn" %>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
         <h2><%: Title %>.</h2>

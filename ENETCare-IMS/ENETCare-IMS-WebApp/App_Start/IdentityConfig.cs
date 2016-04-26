@@ -6,9 +6,9 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security;
-using ENETCare_IMS_WebApp.Models;
+using ENETCare.IMS.WebApp.Models;
 
-namespace ENETCare_IMS_WebApp
+namespace ENETCare.IMS.WebApp
 {
     public class EmailService : IIdentityMessageService
     {

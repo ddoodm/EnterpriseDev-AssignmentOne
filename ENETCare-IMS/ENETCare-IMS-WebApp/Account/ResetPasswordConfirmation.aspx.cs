@@ -1,6 +1,6 @@
 ﻿using System.Web.UI;
 
-namespace ENETCare_IMS_WebApp.Account
+namespace ENETCare.IMS.WebApp.Account
 {
     public partial class ResetPasswordConfirmation : Page
     {

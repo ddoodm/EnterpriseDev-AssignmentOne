@@ -8,9 +8,19 @@ namespace ENETCare.IMS.Users
 {
     public class Manager : User, ILocalizedUser
     {
+        private const string TITLE = "Manager";
+
         public District District { get; private set; }
         public decimal MaxApprovableLabour { get; private set; }
         public decimal MaxApprovableCost { get; private set; }
+
+        public override string Title
+        {
+            get
+            {
+                return TITLE;
+            }
+        }
 
         public Manager(
             string name,

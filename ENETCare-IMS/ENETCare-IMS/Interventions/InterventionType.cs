@@ -8,12 +8,14 @@ namespace ENETCare.IMS.Interventions
 {
     public struct InterventionType
     {
+        public int ID { get; private set; }
         public string Name { get; private set; }
         public decimal Cost { get; private set; }
         public decimal Labour { get; private set; }
 
-        public InterventionType(string Name, decimal Cost, decimal Labour)
+        public InterventionType(int ID, string Name, decimal Cost, decimal Labour)
         {
+            this.ID = ID;
             this.Name = Name;
             this.Cost = Cost;
             this.Labour = Labour;

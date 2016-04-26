@@ -8,9 +8,19 @@ namespace ENETCare.IMS.Users
 {
     public class SiteEngineer : User, ILocalizedUser
     {
+        private string TITLE = "Site Engineer";
+
         public District District { get; private set; }
         public decimal MaxApprovableLabour { get; private set; }
         public decimal MaxApprovableCost { get; private set; }
+
+        public override string Title
+        {
+            get
+            {
+                return TITLE;
+            }
+        }
 
         public SiteEngineer(
             string name,
@@ -25,5 +35,6 @@ namespace ENETCare.IMS.Users
             this.MaxApprovableLabour = maxApprovableLabour;
             this.MaxApprovableCost = maxApprovableCost;
         }
+
     }
 }

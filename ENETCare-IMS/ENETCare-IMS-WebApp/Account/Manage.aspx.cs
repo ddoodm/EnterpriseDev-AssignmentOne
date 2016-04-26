@@ -8,9 +8,9 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Owin;
-using ENETCare_IMS_WebApp.Models;
+using ENETCare.IMS.WebApp.Models;
 
-namespace ENETCare_IMS_WebApp.Account
+namespace ENETCare.IMS.WebApp.Account
 {
     public partial class Manage : System.Web.UI.Page
     {

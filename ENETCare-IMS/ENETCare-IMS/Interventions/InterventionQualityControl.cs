@@ -21,6 +21,5 @@ namespace ENETCare.IMS.Interventions
         {
             Health = 100.0m;
         }
-        
     }
 }

@@ -10,7 +10,8 @@
 namespace ENETCare.IMS.WebApp {
     
     
-    public partial class InterventionEditPageWebUI {
+    public partial class InterventionEditPageWebUI
+    {
         
         /// <summary>
         /// InterventionIDLabel control.

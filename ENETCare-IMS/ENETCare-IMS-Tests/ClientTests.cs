@@ -9,11 +9,12 @@ namespace ENETCare.IMS.Tests
     [TestClass]
     public class ClientTests
     {
+        private ENETCareDAO application;
+
         [TestInitialize]
         public void Setup()
         {
-            Districts.PopulateDistricts();
-            Clients.PopulateClients();
+            application = new ENETCareDAO();
         }
     }
 }

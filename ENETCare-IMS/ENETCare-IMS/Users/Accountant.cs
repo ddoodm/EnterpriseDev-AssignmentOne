@@ -8,6 +8,16 @@ namespace ENETCare.IMS.Users
 {
     public class Accountant : User
     {
+        private const string TITLE = "Accountant";
+
+        public override string Title
+        {
+            get
+            {
+                return TITLE;
+            }
+        }
+
         public Accountant(
             string name,
             string username,

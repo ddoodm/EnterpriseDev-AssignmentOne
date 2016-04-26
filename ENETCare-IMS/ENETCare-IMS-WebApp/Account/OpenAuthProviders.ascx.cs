@@ -6,7 +6,7 @@ using System.Web;
 using Microsoft.AspNet.Identity;
 using Microsoft.Owin.Security;
 
-namespace ENETCare_IMS_WebApp.Account
+namespace ENETCare.IMS.WebApp.Account
 {
     public partial class OpenAuthProviders : System.Web.UI.UserControl
     {

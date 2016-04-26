@@ -7,7 +7,7 @@ using System.Web.Routing;
 using System.Web.Security;
 using System.Web.SessionState;
 
-namespace ENETCare_IMS_WebApp
+namespace ENETCare.IMS.WebApp
 {
     public class Global : HttpApplication
     {

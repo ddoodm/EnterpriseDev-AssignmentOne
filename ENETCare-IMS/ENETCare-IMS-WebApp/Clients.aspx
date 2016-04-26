@@ -1,7 +1,7 @@
 ﻿<%@ Page Title="Clients" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Clients.aspx.cs" Inherits="ENETCare.IMS.WebApp.ClientsList" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
 
-    <h1>Clients in <%: SiteEngineer.District %></h1>
+    <h1>Clients in <%: User.District %></h1>
 
     <ul class="buttonBar">
         <li><asp:Button ID="Button_Interventions" runat="server" Text="< Interventions" OnClick="Button_Interventions_Click" /></li>

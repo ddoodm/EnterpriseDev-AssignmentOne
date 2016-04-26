@@ -186,8 +186,9 @@ UpgradeLog*.XML
 UpgradeLog*.htm
 
 # SQL Server files
-*.mdf
-*.ldf
+# MODIFICATION: We will track our databases (for now, at least)
+#*.mdf
+#*.ldf
 
 # Business Intelligence projects
 *.rdl.data

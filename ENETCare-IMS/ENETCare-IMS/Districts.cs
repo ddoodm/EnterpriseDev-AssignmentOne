@@ -7,11 +7,20 @@ using System.Threading.Tasks;
 
 namespace ENETCare.IMS
 {
-    public static class Districts
+    public class Districts
     {
+        private ENETCareDAO application;
+
         private static List<District> districts = new List<District>();
 
-        public static void PopulateDistricts()
+        public Districts(ENETCareDAO application)
+        {
+            this.application = application;
+
+            PopulateDistricts();
+        }
+
+        private void PopulateDistricts()
         {
             districts = new List<District>();
 
@@ -25,25 +34,19 @@ namespace ENETCare.IMS
             districts.Add(new District(5, "Rural New South Wales"));
         }
 
-        public static int Count
+        public int Count
         {
             get { return districts.Count; }
         }
 
-        public static District GetDistrictByID(int id)
+        public District GetDistrictByID(int id)
         {
             return districts.First<District>(d => d.ID == id);
         }
 
-        public static bool IsPopulated()
+        public List<District> GetListCopy()
         {
-            return districts.Count == 0;
-        }
-
-        public static List<District> DistrictList
-        {
-            get
-            { return districts; }
+            return new List<District>(districts);
         }
     }
 }

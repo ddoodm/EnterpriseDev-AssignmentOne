@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-namespace ENETCare_IMS_WebApp.Account
+namespace ENETCare.IMS.WebApp.Account
 {
     public partial class Lockout : System.Web.UI.Page
     {

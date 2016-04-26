@@ -4,25 +4,39 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+
 using ENETCare.IMS.Interventions;
+using ENETCare.IMS.Users;
 
 namespace ENETCare.IMS.WebApp
 {
     public partial class InterventionEditPageWebUI : System.Web.UI.Page
     {
+        public const string INTERVENTION_ID_GET_PARAMETER = "id";
+
+        private ENETCareDAO application;
+
         Intervention editIntervention;
         bool isEditing = false;
+
         protected void Page_Load(object sender, EventArgs e)
         {
-            editIntervention = (Intervention)Session[SessionConstants.INTERVENTION_TO_EDIT];
+            // Obtain application context
+            application = UserSession.Current.Application;
 
-            if (editIntervention == null)
+            // Obtain the ID of the Intervention to be displayed
+            string interventionIdString = Request.QueryString[INTERVENTION_ID_GET_PARAMETER];
+
+            int interventionId;
+            if (!int.TryParse(interventionIdString, out interventionId))
             {
                 throw new NullReferenceException("Intervention to edit should be set.");
             }
 
-            DisplayInterventionData();
+            // Obtain the Intervention given its ID
+            editIntervention = application.Interventions[interventionId];
 
+            DisplayInterventionData();
             SetEditControlsForUserRole();
         }
 

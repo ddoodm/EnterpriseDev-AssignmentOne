@@ -142,8 +142,6 @@ namespace ENETCare.IMS.Interventions
             approval.Complete(manager);
         }
 
-
-
         public bool UserCanChangeQuality(User user)
         {
             if (user is SiteEngineer)
@@ -151,10 +149,7 @@ namespace ENETCare.IMS.Interventions
                 SiteEngineer engineer = (SiteEngineer)user;
                 return (engineer.District == SiteEngineer.District);
             }
-            else
-            {
-                return false;
-            }
+            else return false;
         }
 
         private Intervention (

@@ -31,15 +31,6 @@ namespace ENETCare.IMS.WebApp {
         protected global::System.Web.UI.WebControls.Button Button_Clients;
         
         /// <summary>
-        /// Button_Edit control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Button_Edit;
-        
-        /// <summary>
         /// Table_Interventions control.
         /// </summary>
         /// <remarks>
