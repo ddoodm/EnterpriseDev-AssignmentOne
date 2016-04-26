@@ -62,6 +62,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DatabaseConstants.cs" />
+    <Compile Include="EnetCareImsDataSet.cs">
+      <DependentUpon>EnetCareImsDataSet.xsd</DependentUpon>
+    </Compile>
     <Compile Include="EnetCareImsDataSet.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

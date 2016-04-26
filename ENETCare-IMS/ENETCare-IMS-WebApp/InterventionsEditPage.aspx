@@ -86,13 +86,15 @@
 
         <br />
 
-        <div id="QualityInterventionSection">
+        <div id="QualityInterventionSection" runat="server">
 
             <div>
                 <u><h3>Quality Information</h3></u>
             </div>
 
             <asp:Button ID="EditQualityInterventionButton" runat="server" Text="Edit" />
+            <asp:Button ID="CancelEditQualityInterventionButton" runat="server" Text="Cancel" />
+
             <div class="form-group">
                 <p><b>Notes</b></p>
                  <asp:TextBox ID="Intervention_Notes_Textbox" TextMode="MultiLine" runat="server" Height="104px" Rows="8" Width="380px"></asp:TextBox>
@@ -112,6 +114,8 @@
                     <b>Date of last visit:</b>
                     <asp:Label ID="LastDateLabel" runat="server"></asp:Label>
                 </p>
+
+
             </div>
 
         </div>

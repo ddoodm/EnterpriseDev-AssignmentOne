@@ -23,13 +23,14 @@ namespace ENETCare.IMS.Users
         }
 
         public Manager(
+            int id,
             string name,
             string username,
             string plaintextPassword,
             District district,
             decimal maxApprovableLabour,
             decimal maxApprovableCost)
-            : base(name, username, plaintextPassword)
+            : base(id, name, username, plaintextPassword)
         {
             this.District = district;
             this.MaxApprovableLabour = maxApprovableLabour;

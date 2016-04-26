@@ -1,0 +1,3 @@
+﻿namespace ENETCare.IMS.Data
+{
+}

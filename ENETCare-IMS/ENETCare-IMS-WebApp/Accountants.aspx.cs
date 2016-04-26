@@ -31,8 +31,8 @@ namespace ENETCare.IMS.WebApp
             TODO: Remove this method*/
             users = new List<User>();
 
-            users.Add(new Manager("SmithJohnes", "Smith", "1234", application.Districts.GetDistrictByID(3), 12, 1000));
-            users.Add(new SiteEngineer("JohnSmith", "John", "1234", application.Districts.GetDistrictByID(2), 12, 1000));
+            users.Add(new Manager(1, "SmithJohnes", "Smith", "1234", application.Districts.GetDistrictByID(3), 12, 1000));
+            users.Add(new SiteEngineer(2, "JohnSmith", "John", "1234", application.Districts.GetDistrictByID(2), 12, 1000));
 
         }
 

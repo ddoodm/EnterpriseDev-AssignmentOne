@@ -62,6 +62,12 @@ namespace ENETCare.IMS.Interventions
             get { return approval.State; }
         }
 
+        public User ApprovingUser
+        {
+            get { return approval.ApprovingUser; }
+        }
+
+
         #endregion
 
         #region Quality Management Information
@@ -112,34 +118,19 @@ namespace ENETCare.IMS.Interventions
             return approval.CanChangeState(user);
         }
 
-        public void Approve(SiteEngineer engineer)
+        public void Approve(User user)
         {
-            approval.Approve(engineer);
+            approval.Approve(user);
         }
 
-        public void Approve(Manager manager)
+        public void Cancel(User user)
         {
-            approval.Approve(manager);
+            approval.Cancel(user);
         }
 
-        public void Cancel(SiteEngineer engineer)
+        public void Complete(User user)
         {
-            approval.Cancel(engineer);
-        }
-
-        public void Cancel(Manager manager)
-        {
-            approval.Cancel(manager);
-        }
-
-        public void Complete(SiteEngineer engineer)
-        {
-            approval.Complete(engineer);
-        }
-
-        public void Complete(Manager manager)
-        {
-            approval.Complete(manager);
+            approval.Complete(user);
         }
 
         public bool UserCanChangeQuality(User user)

@@ -56,11 +56,12 @@ namespace ENETCare.IMS.Interventions
             int id = NextID;
             Intervention newIntervention = Intervention.Factory.CreateIntervention(
                 id, type, client, siteEngineer);
+            application.Save(newIntervention);
             Add(newIntervention);
             return newIntervention;
         }
 
-        private void Add(Intervention intervention)
+        public void Add(Intervention intervention)//private void Add(Intervention intervention)
         {
             interventions.Add(intervention);
         }

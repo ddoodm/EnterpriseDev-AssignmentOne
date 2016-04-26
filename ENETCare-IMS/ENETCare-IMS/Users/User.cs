@@ -9,6 +9,7 @@ namespace ENETCare.IMS.Users
     public abstract class User
     {
         //basic User Class
+        public int ID { get; private set; }
         public string Name { get; private set; }
         public string Username { get; private set; }
 
@@ -20,8 +21,9 @@ namespace ENETCare.IMS.Users
         /// </summary>
         public abstract string Title { get; }
 
-        protected User(string name, string username, string plaintextPassword)
+        protected User(int ID, string name, string username, string plaintextPassword)
         {
+            this.ID = ID;
             this.Name = name;
             this.Username = username;
 
