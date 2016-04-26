@@ -9,6 +9,7 @@ using System.Data.SqlClient;
 
 using ENETCare.IMS.Data;
 using ENETCare.IMS.Interventions;
+using ENETCare.IMS.Users;
 
 namespace ENETCare.IMS
 {
@@ -21,6 +22,7 @@ namespace ENETCare.IMS
         public InterventionTypes InterventionTypes { get; private set; }
         public Districts Districts { get; private set; }
         public Clients Clients { get; private set; }
+        public Users.Users EnetUsers { get; private set; }
 
         private const string INTERVENTIONS_TABLE_NAME = "Interventions";
         private const string CLIENTS_TABLE_NAME = "Clients";
@@ -33,6 +35,7 @@ namespace ENETCare.IMS
             {
                 Districts = new Districts(this);
                 Clients = LoadClients(sqlLink);
+                Users = new Users.Users(this);
                 InterventionTypes = new InterventionTypes();
                 Interventions = LoadInterventions(sqlLink);
             }
@@ -82,7 +85,27 @@ namespace ENETCare.IMS
             EnetCareImsDataSet dataSet = new EnetCareImsDataSet();
             adapter.Fill(dataSet, INTERVENTIONS_TABLE_NAME);
 
-            return new IMS.Interventions.Interventions(this);
+            Interventions.Interventions interventions = new Interventions.Interventions(this);
+
+            foreach(EnetCareImsDataSet.InterventionsRow row in dataSet.Interventions)
+            {
+                InterventionType type = InterventionTypes[row.InterventionTypeId];
+                Client client = Clients.GetClientByID(row.ClientId);
+                User siteEngineer = EnetUsers.GetUserById(row.ProposingEngineerId);
+
+                if (!(siteEngineer is SiteEngineer))
+                    throw new InvalidDataException(
+                        String.Format("Database load error\n\nIntervention #{0} references a user who is not a Site Engineer (UserID: {1}).",
+                        row.InterventionId, row.ProposingEngineerId));
+
+                interventions.Add(
+                    Intervention.Factory.CreateIntervention(
+                        row.InterventionId, type, client, (SiteEngineer)siteEngineer,
+                        row.Labour, row.Cost, row.Date
+                        ));
+            }
+
+            return interventions;
         }
     }
 }

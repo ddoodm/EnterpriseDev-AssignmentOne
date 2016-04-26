@@ -37,6 +37,12 @@ namespace ENETCare.IMS.Users
             users.Add(user);
         }
 
+        public User GetUserById(int ID)
+        {
+            return users.First<User>(
+                user => user.ID == ID);
+        }
+
         public User Login(string username, string plaintextPassword)
         {
             var result = from user in users

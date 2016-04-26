@@ -9,6 +9,7 @@ namespace ENETCare.IMS.Users
     public abstract class User
     {
         //basic User Class
+        public int ID { get; private set; }
         public string Name { get; private set; }
         public string Username { get; private set; }
 
