@@ -28,12 +28,12 @@ namespace ENETCare.IMS.WebApp
             TODO: Remove this method*/
             users = new List<User>();
 
-            users.Add(new SiteEngineer("JohnSmith", "John", "1234", application.Districts.GetDistrictByID(2), 12, 1000));
-            users.Add(new SiteEngineer("daum", "da", "1234", application.Districts.GetDistrictByID(2), 12, 1000));
-            users.Add(new SiteEngineer("deinyon", "d", "1234", application.Districts.GetDistrictByID(2), 12, 1000));
-            users.Add(new Manager("yianni", "y", "1234", application.Districts.GetDistrictByID(3), 12, 1000));
-            users.Add(new Manager("henry", "Smith", "he", application.Districts.GetDistrictByID(3), 12, 1000));
-            users.Add(new Manager("SmithJohnes", "Smith", "1234", application.Districts.GetDistrictByID(3), 12, 1000));
+            users.Add(new SiteEngineer(1, "JohnSmith", "John", "1234", application.Districts.GetDistrictByID(2), 12, 1000));
+            users.Add(new SiteEngineer(2, "daum", "da", "1234", application.Districts.GetDistrictByID(2), 12, 1000));
+            users.Add(new SiteEngineer(3, "deinyon", "d", "1234", application.Districts.GetDistrictByID(2), 12, 1000));
+            users.Add(new Manager(4, "yianni", "y", "1234", application.Districts.GetDistrictByID(3), 12, 1000));
+            users.Add(new Manager(5, "henry", "Smith", "he", application.Districts.GetDistrictByID(3), 12, 1000));
+            users.Add(new Manager(6, "SmithJohnes", "Smith", "1234", application.Districts.GetDistrictByID(3), 12, 1000));
 
         }
 

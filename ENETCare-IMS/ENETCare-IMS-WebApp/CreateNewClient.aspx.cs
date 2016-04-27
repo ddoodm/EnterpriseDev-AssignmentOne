@@ -40,9 +40,9 @@ namespace ENETCare.IMS.WebApp
             string name = ClientNameText.Text.Trim();
             string location = ClientLocationText.Text.Trim();
 
-            District district = districts.GetDistrictByID(ClientDistrict.SelectedIndex);
+            District district = districts.GetDistrictByID(ClientDistrict.SelectedIndex + 1); //Changed
 
-            Client client = clients.CreateClient(name, location, district);
+            Client client = application.Clients.CreateClient(name, location, district);
 
             Response.Redirect("Clients.aspx");
         }

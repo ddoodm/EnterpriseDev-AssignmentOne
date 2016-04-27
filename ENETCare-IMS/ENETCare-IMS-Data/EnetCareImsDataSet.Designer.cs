@@ -4646,8 +4646,8 @@ namespace ENETCare.IMS.Data.EnetCareImsDataSetTableAdapters {
             this._adapter.InsertCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.InsertCommand.Connection = this.Connection;
             this._adapter.InsertCommand.CommandText = "INSERT INTO [dbo].[Clients] ([Name], [Location], [DistrictId]) VALUES (@Name, @Lo" +
-                "cation, @DistrictId);\r\nSELECT ClientId, Name, Location, DistrictId FROM Clients " +
-                "WHERE (ClientId = SCOPE_IDENTITY())";
+                "cation, @DistrictId);\nSELECT ClientId, Name, Location, DistrictId FROM Clients W" +
+                "HERE (ClientId = SCOPE_IDENTITY())";
             this._adapter.InsertCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Name", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Name", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Location", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Location", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
@@ -5232,15 +5232,15 @@ SELECT ClientId, Name, Location, DistrictId FROM Clients WHERE (ClientId = @Clie
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Name", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Name", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.InsertCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.InsertCommand.Connection = this.Connection;
-            this._adapter.InsertCommand.CommandText = "INSERT INTO [dbo].[Districts] ([Name]) VALUES (@Name);\r\nSELECT DistrictId, Name F" +
-                "ROM Districts WHERE (DistrictId = SCOPE_IDENTITY())";
+            this._adapter.InsertCommand.CommandText = "INSERT INTO [dbo].[Districts] ([Name]) VALUES (@Name);\nSELECT DistrictId, Name FR" +
+                "OM Districts WHERE (DistrictId = SCOPE_IDENTITY())";
             this._adapter.InsertCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Name", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Name", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.UpdateCommand.Connection = this.Connection;
             this._adapter.UpdateCommand.CommandText = "UPDATE [dbo].[Districts] SET [Name] = @Name WHERE (([DistrictId] = @Original_Dist" +
-                "rictId) AND ([Name] = @Original_Name));\r\nSELECT DistrictId, Name FROM Districts " +
-                "WHERE (DistrictId = @DistrictId)";
+                "rictId) AND ([Name] = @Original_Name));\nSELECT DistrictId, Name FROM Districts W" +
+                "HERE (DistrictId = @DistrictId)";
             this._adapter.UpdateCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Name", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Name", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_DistrictId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "DistrictId", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
@@ -6601,8 +6601,8 @@ SELECT InterventionId, InterventionTypeId, ClientId, ProposingEngineerId, Date, 
             this._adapter.InsertCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.InsertCommand.Connection = this.Connection;
             this._adapter.InsertCommand.CommandText = "INSERT INTO [dbo].[InterventionTypes] ([Name], [Cost], [Labour]) VALUES (@Name, @" +
-                "Cost, @Labour);\r\nSELECT InterventionTypeId, Name, Cost, Labour FROM Intervention" +
-                "Types WHERE (InterventionTypeId = SCOPE_IDENTITY())";
+                "Cost, @Labour);\nSELECT InterventionTypeId, Name, Cost, Labour FROM InterventionT" +
+                "ypes WHERE (InterventionTypeId = SCOPE_IDENTITY())";
             this._adapter.InsertCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Name", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Name", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Cost", global::System.Data.SqlDbType.Money, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Cost", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
@@ -6929,8 +6929,8 @@ SELECT InterventionTypeId, Name, Cost, Labour FROM InterventionTypes WHERE (Inte
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_UserId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "UserId", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.InsertCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.InsertCommand.Connection = this.Connection;
-            this._adapter.InsertCommand.CommandText = "INSERT INTO [dbo].[Users] DEFAULT VALUES;\r\nSELECT UserId FROM Users WHERE (UserId" +
-                " = SCOPE_IDENTITY())";
+            this._adapter.InsertCommand.CommandText = "INSERT INTO [dbo].[Users] DEFAULT VALUES;\nSELECT UserId FROM Users WHERE (UserId " +
+                "= SCOPE_IDENTITY())";
             this._adapter.InsertCommand.CommandType = global::System.Data.CommandType.Text;
         }
         

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ENETCare.IMS
 {
-    public class Districts
+    public class Districts : IReadOnlyList<District>
     {
         private ENETCareDAO application;
 
@@ -16,11 +16,9 @@ namespace ENETCare.IMS
         public Districts(ENETCareDAO application)
         {
             this.application = application;
-
-            PopulateDistricts();
         }
 
-        private void PopulateDistricts()
+        public void PopulateDistricts()
         {
             districts = new List<District>();
 
@@ -39,6 +37,14 @@ namespace ENETCare.IMS
             get { return districts.Count; }
         }
 
+        public District this[int index]
+        {
+            get
+            {
+               return districts.First<District>(district => district.ID == index); 
+            }
+        }
+
         public District GetDistrictByID(int id)
         {
             return districts.First<District>(d => d.ID == id);
@@ -47,6 +53,21 @@ namespace ENETCare.IMS
         public List<District> GetListCopy()
         {
             return new List<District>(districts);
+        }
+
+        public IEnumerator<District> GetEnumerator()
+        {
+            return districts.GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
+
+        public void Add(District district)
+        {
+            districts.Add(district);
         }
     }
 }

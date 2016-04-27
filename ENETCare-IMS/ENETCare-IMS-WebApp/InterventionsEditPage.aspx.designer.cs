@@ -10,8 +10,7 @@
 namespace ENETCare.IMS.WebApp {
     
     
-    public partial class InterventionEditPageWebUI
-    {
+    public partial class InterventionEditPageWebUI {
         
         /// <summary>
         /// InterventionIDLabel control.
@@ -140,6 +139,15 @@ namespace ENETCare.IMS.WebApp {
         protected global::System.Web.UI.WebControls.Label ApprovalUserLabel;
         
         /// <summary>
+        /// QualityInterventionSection control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl QualityInterventionSection;
+        
+        /// <summary>
         /// EditQualityInterventionButton control.
         /// </summary>
         /// <remarks>
@@ -147,6 +155,15 @@ namespace ENETCare.IMS.WebApp {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button EditQualityInterventionButton;
+        
+        /// <summary>
+        /// CancelEditQualityInterventionButton control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button CancelEditQualityInterventionButton;
         
         /// <summary>
         /// Intervention_Notes_Textbox control.

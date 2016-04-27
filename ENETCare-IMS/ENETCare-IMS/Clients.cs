@@ -77,6 +77,7 @@ namespace ENETCare.IMS
         {
             int id = NextID;
             Client newClient = new Client(id, name, location, district);
+            application.Save(newClient);
             Add(newClient);
             return newClient;
         }

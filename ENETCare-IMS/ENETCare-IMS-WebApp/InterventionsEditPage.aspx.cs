@@ -56,7 +56,7 @@ namespace ENETCare.IMS.WebApp
             //Display Admin Information
             StateLabel.Text = editIntervention.ApprovalState.ToString();
             SetApprovalButtons();
-
+            
             //Display Quality Information
             Intervention_Notes_Textbox.Text = editIntervention.Notes;
             Intervention_Notes_Textbox.ReadOnly = true;
@@ -65,15 +65,27 @@ namespace ENETCare.IMS.WebApp
 
         void SetApprovalButtons()
         {
-            if(editIntervention.ApprovalState == InterventionApprovalState.Proposed)
+            InterventionApprovalState state = editIntervention.ApprovalState;
+
+            if (state == InterventionApprovalState.Proposed)
             {
                CompleteButton.Visible = false;
                ApprovalUserGroup.Visible = false;
             }
-            else if (editIntervention.ApprovalState == InterventionApprovalState.Approved)
+            else if (state == InterventionApprovalState.Approved)
             {
                ApproveButton.Visible = false;
                ApprovalUserGroup.Visible = true;
+               CompleteButton.Visible = true;
+               ApprovalUserLabel.Text = editIntervention.ApprovingUser.Name;
+            }
+            else if(state == InterventionApprovalState.Cancelled || state == InterventionApprovalState.Completed)
+            {
+                ApprovalUserGroup.Visible = false;
+                CompleteButton.Visible = false;
+                ApproveButton.Visible = false;
+                ApprovalUserLabel.Visible = false;
+                CancelButton.Visible = false;
             }
         }
 
@@ -100,48 +112,40 @@ namespace ENETCare.IMS.WebApp
 
         void SetEditControlsForUserRole()
         {
-            //Code goes here to limit Edit/Approval Buttons for particular user
-            //PSEUDOCODE:
-            /*
-            User user = Users.GetUserFromDB(Session[SessionConstants.USER_ID]);
+            User user = UserSession.Current.User;
+            
             if (!editIntervention.UserCanChangeState(user))
             {
                 InterventionStateButtonGroup.Visible = false;
             }
-            else if(!editIntervention.UserCanChangeQuality(user)
+            else if(!editIntervention.UserCanChangeQuality(user))
             {
                 EditQualityInterventionButton.Visible = false;
             }
 
-            */
+            //*/
         }
 
         protected void ApproveButton_Click(object sender, EventArgs e)
         {
-            /* More pseudocode
-            //User user = Users.GetUserFromDB(Session[SessionConstants.USER_ID]);
-            //editIntervention.Approve(user)
-            */
+            User user = UserSession.Current.User;
+            editIntervention.Approve(user);
 
             DisplayInterventionData();
         }
 
         protected void CancelButton_Click(object sender, EventArgs e)
         {
-            /* More pseudocode
-            //User user = Users.GetUserFromDB(Session[SessionConstants.USER_ID]);
-            //editIntervention.Cancel(user)
-            */
+            User user = UserSession.Current.User;
+            editIntervention.Cancel(user);
 
             DisplayInterventionData();
         }
 
         protected void CompleteButton_Click(object sender, EventArgs e)
         {
-            /* More pseudocode
-            //User user = Users.GetUserFromDB(Session[SessionConstants.USER_ID]);
-            //editIntervention.Complete(user)
-            */
+            User user = UserSession.Current.User;
+            editIntervention.Complete(user);
 
             DisplayInterventionData();
         }
@@ -151,19 +155,17 @@ namespace ENETCare.IMS.WebApp
             if (isEditing)
             {
                 Intervention_Notes_Textbox.ReadOnly = true;
-                /*PSEUDOCODE:
-                //User user = Users.GetUserFromDB(Session[SessionConstants.USER_ID]);
-                //editIntervention.UpdateNotes(user, Intervention_Notes_Textbox.Text);
-                */
+                SiteEngineer user = (SiteEngineer) UserSession.Current.User;
+                editIntervention.UpdateNotes(user, Intervention_Notes_Textbox.Text);
             }
             else
             {
                 Intervention_Notes_Textbox.ReadOnly = false;
+                EditQualityInterventionButton.Text = "Save Edits";
             }
 
-            //TODO: Make Last Date label and Health label text boxes
-            //LastDateLabel.ReadOnly = editIntervention.LastVisit.ToString();
-            //HealthLabel.Text = editIntervention.Health.ToString();
+            LastDateLabel.Text = editIntervention.LastVisit.ToString();
+            HealthLabel.Text = editIntervention.Health.ToString();
         }
 
     }
