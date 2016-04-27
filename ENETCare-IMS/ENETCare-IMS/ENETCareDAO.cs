@@ -31,11 +31,11 @@ namespace ENETCare.IMS
 
             using (SqlConnection sqlLink = new SqlConnection(sqlConnectionString))
             {
-                Districts = LoadDistricts(sqlLink);
-                Clients = LoadClients(sqlLink);
-                Users = LoadUsers(sqlLink);
-                InterventionTypes = LoadInterventionTypes(sqlLink);
-                Interventions = LoadInterventions(sqlLink);
+                this.Districts = LoadDistricts(sqlLink);
+                this.Clients = LoadClients(sqlLink);
+                this.Users = LoadUsers(sqlLink);
+                this.InterventionTypes = LoadInterventionTypes(sqlLink);
+                this.Interventions = LoadInterventions(sqlLink);
             }
         }
 
@@ -48,10 +48,12 @@ namespace ENETCare.IMS
 
         private InterventionTypes LoadInterventionTypes(SqlConnection sql)
         {
+            // Select all from table, given the table name
             SqlCommand query = new SqlCommand(
-                String.Format("SELECT * FROM {0}", DatabaseConstants.INTERVENTIONTYPES_NAME),
+                String.Format(
+                    "SELECT * FROM [dbo].[{0}]",
+                    DatabaseConstants.INTERVENTIONTYPES_NAME),
                 sql);
-
             SqlDataAdapter adapter = new SqlDataAdapter(query);
 
             EnetCareImsDataSet dataSet = new EnetCareImsDataSet();
@@ -72,13 +74,14 @@ namespace ENETCare.IMS
             return types;
         }
 
-
         private Clients LoadClients(SqlConnection sql)
         {
+            // Select all from table, given the table name
             SqlCommand query = new SqlCommand(
-                String.Format("SELECT * FROM {0}", DatabaseConstants.CLIENTS_TABLE_NAME),
+                String.Format(
+                    "SELECT * FROM [dbo].[{0}]",
+                    DatabaseConstants.CLIENTS_TABLE_NAME),
                 sql);
-
             SqlDataAdapter adapter = new SqlDataAdapter(query);
 
             EnetCareImsDataSet dataSet = new EnetCareImsDataSet();
@@ -101,8 +104,11 @@ namespace ENETCare.IMS
 
         private Interventions.Interventions LoadInterventions(SqlConnection sql)
         {
+            // Select all from table, given the table name
             SqlCommand query = new SqlCommand(
-                String.Format("SELECT * FROM {0}", DatabaseConstants.INTERVENTIONS_TABLE_NAME),
+                String.Format(
+                    "SELECT * FROM [dbo].[{0}]",
+                    DatabaseConstants.INTERVENTIONS_TABLE_NAME),
                 sql);
 
             SqlDataAdapter adapter = new SqlDataAdapter(query);
@@ -130,6 +136,7 @@ namespace ENETCare.IMS
                 // Avoids DBNull exception
                 string notes = row.IsNotesNull() ? "" : row.Notes;
 
+                // TODO: Handle Intervention Approval and Quality Management
                 interventions.Add(
                     Intervention.Factory.CreateIntervention(
                         row.InterventionId, type, client, (SiteEngineer)siteEngineer,
@@ -144,19 +151,40 @@ namespace ENETCare.IMS
         {
             Users.Users users = new Users.Users(this);
             users.Add(LoadSiteEngineers(sql));
-            //users.Add(LoadManagers(sql));
-            //users.Add(LoadAccountants(sql));
+            users.Add(LoadManagers(sql));
+            users.Add(LoadAccountants(sql));
             return users;
         }
 
-        public Users.Users LoadSiteEngineers(SqlConnection sql)
+        /// <summary>
+        /// Loads a collection of users of a given sub-class of User.
+        /// 
+        /// For example: this function may be used to load all Site Engineer users
+        /// into a Users collection, when the 'tableName' is the name of the
+        /// TPT (Table-Per-Type) sub-type table (ie, "Users_SiteEngineers"),
+        /// and "InstantiateUser" is populated with code which returns a
+        /// SiteEngineer given a row of said table.
+        /// </summary>
+        /// <see cref="ENETCare.IMS.ENETCareDAO.LoadSiteEngineers(SqlConnection)"/>
+        /// <param name="sql">An SQL connection (initialized)</param>
+        /// <param name="tableName">The name of the TPT sub-type table (ie, "Users_SiteEngineers")</param>
+        /// <param name="instantiateUser">
+        /// A delegate which is passed a DataRow from an inner-join of the specified
+        /// sub-type table and its respective Users table row, and should return
+        /// an instantiated user of the given type.
+        /// </param>
+        /// <returns>A Users collection, populated with all users of the specified type.</returns>
+        public Users.Users LoadUsers(SqlConnection sql, string tableName, Func<DataRow, User> instantiateUser)
         {
+            // Joins Table-Per-Type sub-class with its base class
             SqlCommand query = new SqlCommand(
-                "SELECT * " +
-                "FROM   [dbo].[Users_SiteEngineers] " +
-                "   INNER JOIN [dbo].[Users] " +
-                "       ON [dbo].[Users_SiteEngineers].[UserId] = [dbo].[Users].[UserId]"
-                , sql);
+                String.Format(
+                    "SELECT * " +
+                    "FROM   [dbo].[{0}] " +
+                    "   INNER JOIN [dbo].[Users] " +
+                    "       ON [dbo].[{0}].[UserId] = [dbo].[Users].[UserId]",
+                    tableName),
+                sql);
 
             SqlDataAdapter adapter = new SqlDataAdapter(query);
             DataSet dataSet = new DataSet();
@@ -165,43 +193,65 @@ namespace ENETCare.IMS
             // The query returns one table
             if (dataSet.Tables.Count != 1)
                 throw new InvalidDataException("An error occurred when joining database tables.");
-            DataTable engineerTable = dataSet.Tables[0];
+            DataTable userTable = dataSet.Tables[0];
 
             // Read rows into ENETCare business objects
             // TODO: Handle passwords
-            Users.Users engineers = new Users.Users(this);
-            foreach(DataRow engineerRow in engineerTable.Rows)
-            {
-                District district = Districts.GetDistrictByID((int)engineerRow["DistrictId"]);
+            Users.Users users = new Users.Users(this);
+            foreach (DataRow userRow in userTable.Rows)
+                users.Add(instantiateUser(userRow));
 
-                SiteEngineer engineer = new SiteEngineer(
-                    (int)engineerRow["UserId"], (string)engineerRow["Name"], (string)engineerRow["Username"],
-                    "1234", district, (decimal)engineerRow["MaxApprovableLabour"], (decimal)engineerRow["MaxApprovableCost"]);
-                engineers.Add(engineer);
-            }
-
-            return engineers;
+            return users;
         }
 
-        /*
+        public Users.Users LoadSiteEngineers(SqlConnection sql)
+        {
+            return LoadUsers(sql, "Users_SiteEngineers", row =>
+            {
+                // Find the Site Engineer's district
+                District district = Districts.GetDistrictByID((int)row["DistrictId"]);
+
+                // Create the Site Engineer from table data
+                return new SiteEngineer (
+                    (int)row["UserId"], (string)row["Name"], (string)row["Username"],
+                    "1234", district, (decimal)row["MaxApprovableLabour"], (decimal)row["MaxApprovableCost"]);
+            });
+        }
+
         public Users.Users LoadManagers(SqlConnection sql)
         {
+            return LoadUsers(sql, "Users_Managers", row =>
+            {
+                // Find the Manager's district
+                District district = Districts.GetDistrictByID((int)row["DistrictId"]);
 
+                // Create the Manager from table data
+                return new Manager(
+                    (int)row["UserId"], (string)row["Name"], (string)row["Username"],
+                    "1234", district, (decimal)row["MaxApprovableLabour"], (decimal)row["MaxApprovableCost"]);
+            });
         }
 
         public Users.Users LoadAccountants(SqlConnection sql)
         {
-
+            return LoadUsers(sql, "Users_Accountants", row =>
+            {
+                // Create the Accountant from table data
+                return new Accountant(
+                    (int)row["UserId"], (string)row["Name"], (string)row["Username"], "1234");
+            });
         }
-        */
+
         public Districts LoadDistricts(SqlConnection sql)
         {
+            // Select all from table, given the table name
             SqlCommand query = new SqlCommand(
-                String.Format("SELECT * FROM {0}", DatabaseConstants.DISTRICTS_TABLE_NAME),
+                String.Format(
+                    "SELECT * FROM [dbo].[{0}]",
+                    DatabaseConstants.DISTRICTS_TABLE_NAME),
                 sql);
 
             SqlDataAdapter adapter = new SqlDataAdapter(query);
-
             EnetCareImsDataSet dataSet = new EnetCareImsDataSet();
             adapter.Fill(dataSet, DatabaseConstants.DISTRICTS_TABLE_NAME);
 
@@ -227,99 +277,24 @@ namespace ENETCare.IMS
             {
                 sqlLink.Open();
 
-                string notes = "'" + intervention.Notes + "'" ?? "'NULL'";
-                string date = "'" + intervention.Date.ToString("yyyy-MM-dd HH:mm:ss") + "'";
-
-                SqlCommand query = new SqlCommand(
-                String.Format(" INSERT INTO {0} ({1}) VALUES({2}, {3}, {4}, {5}, {6}, {7}, {8});",
+                // Create query, and substitute table and column names first
+                string queryString = String.Format(
+                    "INSERT INTO {0} ({1}) VALUES(@id, @client, @engineer, @date, @labour, @cost, @notes);",
                     DatabaseConstants.INTERVENTIONS_TABLE_NAME,
-                    DatabaseConstants.INTERVENTIONS_COLUMN_NAMES_FOR_CREATION,
-                    intervention.InterventionType.ID,
-                    intervention.Client.ID,
-                    intervention.SiteEngineer.ID,
-                    "convert(datetime, " + date + ")",
-                    intervention.Labour,
-                    intervention.Cost,
-                    notes),
-                sqlLink);
+                    DatabaseConstants.INTERVENTIONS_COLUMN_NAMES_FOR_CREATION);
+
+                // Substitute SQL parameters using the Parameters collection
+                SqlCommand query = new SqlCommand(queryString, sqlLink);
+                query.Parameters.AddWithValue("@id",        intervention.ID);
+                query.Parameters.AddWithValue("@client",    intervention.Client.ID);
+                query.Parameters.AddWithValue("@engineer",  intervention.SiteEngineer.ID);
+                query.Parameters.AddWithValue("@date",      intervention.Date);
+                query.Parameters.AddWithValue("@labour",    intervention.Labour);
+                query.Parameters.AddWithValue("@cost",      intervention.Cost);
+                query.Parameters.AddWithValue("@notes",     intervention.Notes);
 
                 query.ExecuteNonQuery();
                 sqlLink.Close();
-            }
-        }
-
-        public void Save(InterventionType type)
-        {
-            using (SqlConnection sqlLink = new SqlConnection(GetConnectionString()))
-            {
-                sqlLink.Open();
-
-                string name = "'" + type.Name + "'" ?? "'NULL'";
-
-                SqlCommand query = new SqlCommand(
-                String.Format("INSERT INTO {0} ({1}) VALUES({2}, {3}, {4});",
-                    DatabaseConstants.INTERVENTIONTYPES_NAME,
-                    DatabaseConstants.INTERVENTIONTYPES_COLUMN_NAMES_FOR_CREATION,
-                    name,
-                    type.Labour,
-                    type.Cost),
-                sqlLink);
-
-                query.ExecuteNonQuery();
-                sqlLink.Close();
-
-            }
-        }
-
-        public void Save(User user)
-        {
-            using (SqlConnection sqlLink = new SqlConnection(GetConnectionString()))
-            {
-                sqlLink.Open();
-
-                int id = user.ID;
-                string name = "'" + user.Name + "'";
-                string userName = "'" + user.Username + "'";
-                string password = "'" + user.PlaintextPassword + "'";
-                string plainText = "'" + user.PlaintextPassword + "'";
-
-                SqlCommand query = new SqlCommand(
-                string.Format("INSERT INTO {0} ( {1} ) VALUES ( {2}, {3}, {4}, {5} );", DatabaseConstants.USERS_TABLE_NAME, DatabaseConstants.USERS_COLUMN_NAMES_FOR_CREATION, name, userName, plainText, password),
-                sqlLink);
-
-                query.ExecuteNonQuery();
-
-                string tableName = "";
-
-                int districtID = 0;
-                decimal labor = 0, money = 0;
-
-                if (user is SiteEngineer)
-                {
-                    tableName = DatabaseConstants.SITE_ENGINEERS_TABLE_NAME;
-                    districtID = ((SiteEngineer)user).District.ID;
-                    labor = ((SiteEngineer)user).MaxApprovableLabour;
-                    money = ((SiteEngineer)user).MaxApprovableCost;
-                }
-                else if (user is Manager)
-                {
-                    tableName = DatabaseConstants.MANAGERS_TABLE_NAME;
-                    districtID = ((Manager)user).District.ID;
-                    labor = ((Manager)user).MaxApprovableLabour;
-                    money = ((Manager)user).MaxApprovableCost;
-                }
-
-                query = new SqlCommand(
-                String.Format("INSERT INTO {0} ({1}) VALUES({2}, {3}, {4});",
-                    tableName,
-                    DatabaseConstants.MANAGERS_AND_SITE_ENGINEERS_COLUMN_NAMES_FOR_CREATION,
-                    districtID,
-                    labor,
-                    money),
-                sqlLink);
-
-                sqlLink.Close();
-
             }
         }
 
@@ -329,42 +304,20 @@ namespace ENETCare.IMS
             {
                 sqlLink.Open();
 
-                string name = "'" + client.Name + "'";
-                string location = "'" + client.Location + "'";
-                int districtID = client.District.ID;
-
-                SqlCommand query = new SqlCommand(
-                String.Format("INSERT INTO {0} ({1}) VALUES({2}, {3}, {4});",
+                // Create query, and substitute table and column names first
+                string queryString = String.Format(
+                    "INSERT INTO {0} ({1}) VALUES(@name, @location, @district);",
                     DatabaseConstants.CLIENTS_TABLE_NAME,
-                    DatabaseConstants.CLIENTS_COLUMN_NAMES_FOR_CREATION,
-                    name,
-                    location,
-                    districtID),
-                sqlLink);
+                    DatabaseConstants.CLIENTS_COLUMN_NAMES_FOR_CREATION);
+
+                // Substitute SQL parameters using the Parameters collection
+                SqlCommand query = new SqlCommand(queryString, sqlLink);
+                query.Parameters.AddWithValue("@name",      client.Name);
+                query.Parameters.AddWithValue("@location",  client.Location);
+                query.Parameters.AddWithValue("@district",  client.District.ID);
 
                 query.ExecuteNonQuery();
                 sqlLink.Close();
-
-            }
-        }
-
-        public void Save(District district)
-        {
-            using (SqlConnection sqlLink = new SqlConnection(GetConnectionString()))
-            {
-                sqlLink.Open();
-
-                string name = "'" + district.Name + "'";
-
-
-                SqlCommand query = new SqlCommand(
-                String.Format("INSERT INTO {0} ({1}) VALUES({2});",
-                    DatabaseConstants.DISTRICTS_TABLE_NAME,
-                    DatabaseConstants.DISTRICTS_COLUMNS_FOR_CREATION,
-                    name),
-                sqlLink);
-
-                query.ExecuteNonQuery();
             }
         }
     }
