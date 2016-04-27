@@ -35,7 +35,7 @@ namespace ENETCare.IMS
             {
                 Districts = new Districts(this);
                 Clients = LoadClients(sqlLink);
-                Users = new Users.Users(this);
+                EnetUsers = new Users.Users(this);
                 InterventionTypes = new InterventionTypes();
                 Interventions = LoadInterventions(sqlLink);
             }
@@ -98,10 +98,17 @@ namespace ENETCare.IMS
                         String.Format("Database load error\n\nIntervention #{0} references a user who is not a Site Engineer (UserID: {1}).",
                         row.InterventionId, row.ProposingEngineerId));
 
+                // Intervention Factory will populate with type defaults if database values are null
+                decimal? labour = row.IsLabourNull()? (decimal?)null : row.Labour;
+                decimal? cost = row.IsCostNull()? (decimal?)null : row.Cost;
+
+                // Avoids DBNull exception
+                string notes = row.IsNotesNull() ? "" : row.Notes;
+
                 interventions.Add(
                     Intervention.Factory.CreateIntervention(
                         row.InterventionId, type, client, (SiteEngineer)siteEngineer,
-                        row.Labour, row.Cost, row.Date
+                        labour, cost, row.Date, notes, null, null
                         ));
             }
 

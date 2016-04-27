@@ -176,6 +176,43 @@ namespace ENETCare.IMS.Interventions
         public class Factory
         {
             /// <summary>
+            /// Instantiates an Intervention given all optional data, and extra data
+            /// </summary>
+            /// <param name="type">The type of the intervention</param>
+            /// <param name="client">The client associated with the intervention</param>
+            /// <param name="siteEngineer">The staff proposing the intervention</param>
+            /// <param name="labour">The required labour (in hours) - overrides 'type'</param>
+            /// <param name="cost">The required cost (in AUD) - overrides 'type'</param>
+            /// <param name="date">The date of the intervention - overrides the present date</param>
+            /// <param name="notes">Quality control / optional notes</param>
+            /// <param name="approval">The object that defines the state of approval of this Intervention</param>
+            /// <param name="quality">The object that holds quality control information for this Intervention</param>
+            /// <returns>A new Intervention</returns>
+            public static Intervention CreateIntervention(
+                int ID,
+                InterventionType type,
+                Client client,
+                SiteEngineer siteEngineer,
+                decimal? labour,
+                decimal? cost,
+                DateTime date,
+                string notes,
+                InterventionApproval approval,
+                InterventionQualityManagement quality
+                )
+            {
+                Intervention intervention = CreateIntervention(
+                    ID, type, client, siteEngineer, labour, cost, date);
+
+                // Set extra data
+                if (approval != null) intervention.approval = approval;
+                intervention.Notes = notes;
+                intervention.Quality = quality;
+
+                return intervention;
+            }
+
+            /// <summary>
             /// Instantiates an Intervention given all optional data
             /// </summary>
             /// <param name="type">The type of the intervention</param>
@@ -190,8 +227,8 @@ namespace ENETCare.IMS.Interventions
                 InterventionType type,
                 Client client,
                 SiteEngineer siteEngineer,
-                decimal labour,
-                decimal cost,
+                decimal? labour,
+                decimal? cost,
                 DateTime date
                 )
             {
@@ -200,7 +237,11 @@ namespace ENETCare.IMS.Interventions
                 if (client.District != siteEngineer.District)
                     throw new ArgumentException("Cannot create Intervention.\nThe Client must exist in the same district as the Site Engineer.");
 
-                return new Intervention(ID, type, client, siteEngineer, labour, cost, date);
+                // Populate labour and cost with type defaults if they are not defined
+                if (labour == null) labour = type.Labour;
+                if (cost == null) cost = type.Cost;
+
+                return new Intervention(ID, type, client, siteEngineer, labour.Value, cost.Value, date);
             }
 
             /// <summary>

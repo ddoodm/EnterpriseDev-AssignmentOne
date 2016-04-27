@@ -72,6 +72,8 @@ namespace ENETCare.IMS.Interventions
         {
             get
             {
+                if (ID == 0)
+                    throw new IndexOutOfRangeException("ENETCare data is 1-indexed, but an index of 0 was requested.");
                 return interventions.First<Intervention>(
                     intervention => intervention.ID == ID);
             }

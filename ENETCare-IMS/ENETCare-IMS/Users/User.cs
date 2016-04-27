@@ -21,8 +21,9 @@ namespace ENETCare.IMS.Users
         /// </summary>
         public abstract string Title { get; }
 
-        protected User(string name, string username, string plaintextPassword)
+        protected User(int ID, string name, string username, string plaintextPassword)
         {
+            this.ID = ID;
             this.Name = name;
             this.Username = username;
 

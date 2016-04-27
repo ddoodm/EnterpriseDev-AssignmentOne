@@ -26,10 +26,10 @@ namespace ENETCare.IMS.Users
         {
             // Placeholder data:
             Districts districts = application.Districts;
-            Add(new Manager("Daum Park", "daum", "1234", districts.GetDistrictByID(0), 8, 1024));
-            Add(new SiteEngineer("Deinyon Davies", "deinyon", "1234", districts.GetDistrictByID(1), 9, 900));
-            Add(new SiteEngineer("Henry Saal", "henry", "1234", districts.GetDistrictByID(2), 9, 1000));
-            Add(new Accountant("Yiannis Chambers", "yiannis", "1234"));
+            Add(new Manager(1, "Daum Park", "daum", "1234", districts.GetDistrictByID(1), 8, 1024));
+            Add(new SiteEngineer(2, "Deinyon Davies", "deinyon", "1234", districts.GetDistrictByID(2), 9, 900));
+            Add(new SiteEngineer(3, "Henry Saal", "henry", "1234", districts.GetDistrictByID(3), 9, 1000));
+            Add(new Accountant(4, "Yiannis Chambers", "yiannis", "1234"));
         }
 
         private void Add(User user)
@@ -39,6 +39,8 @@ namespace ENETCare.IMS.Users
 
         public User GetUserById(int ID)
         {
+            if (ID == 0)
+                throw new IndexOutOfRangeException("ENETCare data is 1-indexed, but an index of 0 was requested.");
             return users.First<User>(
                 user => user.ID == ID);
         }

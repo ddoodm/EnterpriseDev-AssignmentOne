@@ -23,13 +23,14 @@ namespace ENETCare.IMS.Users
         }
 
         public SiteEngineer(
+            int ID,
             string name,
             string username,
             string plaintextPassword,
             District district,
             decimal maxApprovableLabour,
             decimal maxApprovableCost)
-            : base(name, username, plaintextPassword)
+            : base(ID, name, username, plaintextPassword)
         {
             this.District = district;
             this.MaxApprovableLabour = maxApprovableLabour;
