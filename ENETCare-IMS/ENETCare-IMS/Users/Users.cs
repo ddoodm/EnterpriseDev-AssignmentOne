@@ -15,32 +15,18 @@ namespace ENETCare.IMS.Users
         public Users(ENETCareDAO application)
         {
             this.application = application;
-            if (application.Users == null)
-            {
             users = new List<User>();
-        }
-            else
-            {
-                users = application.Users.GetUsers();
-            }
-        }
-
-        /// <summary>
-        /// Populates the list of users with users
-        /// </summary>
-        public void PopulateUsersList()
-        {
-            // Placeholder data:
-            Districts districts = application.Districts;
-            Add(new Manager(1, "Daum Park", "daum", "1234", districts.GetDistrictByID(1), 8, 1024));
-            Add(new SiteEngineer(2, "Deinyon Davies", "deinyon", "1234", districts.GetDistrictByID(2), 9, 900));
-            Add(new SiteEngineer(3, "Henry Saal", "henry", "1234", districts.GetDistrictByID(3), 9, 1000));
-            Add(new Accountant(4, "Yiannis Chambers", "yiannis", "1234"));
         }
 
         public void Add(User user)
         {
             users.Add(user);
+        }
+
+        public void Add(Users newUsers)
+        {
+            foreach (User user in newUsers)
+                users.Add(user);
         }
 
         public User Login(string username, string plaintextPassword)

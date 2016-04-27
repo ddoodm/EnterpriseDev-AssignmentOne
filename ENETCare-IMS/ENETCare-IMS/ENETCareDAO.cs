@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 using System.Configuration;
+using System.Data;
 using System.Data.SqlClient;
 
 using ENETCare.IMS.Data;
@@ -141,82 +142,58 @@ namespace ENETCare.IMS
 
         public Users.Users LoadUsers(SqlConnection sql)
         {
-            #region A Right Shambles
-            SqlCommand userQuery = new SqlCommand(
-                String.Format("SELECT * FROM {0}", DatabaseConstants.USERS_TABLE_NAME),
-                sql);
-
-            SqlCommand siteManagerQuery = new SqlCommand(
-                String.Format("SELECT * FROM {0}", DatabaseConstants.SITE_ENGINEERS_TABLE_NAME),
-                sql);
-
-            SqlCommand managerQuery = new SqlCommand(
-                String.Format("SELECT * FROM {0}", DatabaseConstants.MANAGERS_TABLE_NAME),
-                sql);
-
-            SqlDataAdapter adapter = new SqlDataAdapter(userQuery);
-            EnetCareImsDataSet userDataSet = new EnetCareImsDataSet();
-            adapter.Fill(userDataSet, DatabaseConstants.USERS_TABLE_NAME);
-
-            adapter = new SqlDataAdapter(siteManagerQuery);
-            EnetCareImsDataSet siteEngineerDataSet = new EnetCareImsDataSet();
-            adapter.Fill(siteEngineerDataSet, DatabaseConstants.SITE_ENGINEERS_TABLE_NAME);
-
-            adapter = new SqlDataAdapter(managerQuery);
-            EnetCareImsDataSet managerDataSet = new EnetCareImsDataSet();
-            adapter.Fill(managerDataSet, DatabaseConstants.MANAGERS_TABLE_NAME);
-
-
-            foreach (EnetCareImsDataSet.Users_SiteEngineersRow siteEngineerRow in siteEngineerDataSet.Users_SiteEngineers.Rows)// .Users_Managers)
-            {
-                int id = siteEngineerRow.UserId;
-                District district = Districts.GetDistrictByID(siteEngineerRow.DistrictId);
-                decimal labour = (decimal)siteEngineerRow.MaxApprovableLabour;
-                decimal cost = siteEngineerRow.MaxApprovableCost;
-
-                #region Code To Revise
-                //string name = ((EnetCareImsDataSet.UsersRow)userDataSet.Users.Rows[id]).Name;
-                //string username = joinTableRow.Username;
-                //string password = joinTableRow.Password;
-                //string plainText = joinTableRow.PlaintextPassword;
-
-                //Manager manager = new Manager(id, name, username, plainText, district, labour, cost);
-                //Users.Add(manager);
-                #endregion
-            }
-
-            #region Code That's Probably Unnecessary
-            //Do same for SiteEngineers
-            //query = new SqlCommand(
-            //    DatabaseConstants.USERS_SITEENGINEERS_JOIN_SQL,
-            //    sql);
-
-            //dataSet = new EnetCareImsDataSet();
-            //adapter.Fill(dataSet, DatabaseConstants.USERS_JOIN_TABLE_NAME);
-
-            //foreach (EnetCareImsDataSet.UserJoinTableRow joinTableRow in dataSet.UserJoinTable)// .Users_Managers)
-            //{
-            //    int id = joinTableRow.UserId;
-            //    District district = Districts.GetDistrictByID(joinTableRow.DistrictId);
-            //    decimal labour = (decimal)joinTableRow.MaxApprovableLabour;
-            //    decimal cost = joinTableRow.MaxApprovableCost;
-            //    string name = joinTableRow.Name;
-            //    string username = joinTableRow.Username;
-            //    string password = joinTableRow.Password;
-            //    string plainText = joinTableRow.PlaintextPassword;
-
-            //    SiteEngineer engineer = new SiteEngineer(id, name, username, plainText, district, labour, cost);
-            //    Users.Add(engineer);
-            //}
-            #endregion
-            #endregion
-
-            // Placeholder
             Users.Users users = new Users.Users(this);
-            users.PopulateUsersList();
+            users.Add(LoadSiteEngineers(sql));
+            //users.Add(LoadManagers(sql));
+            //users.Add(LoadAccountants(sql));
             return users;
         }
 
+        public Users.Users LoadSiteEngineers(SqlConnection sql)
+        {
+            SqlCommand query = new SqlCommand(
+                "SELECT * " +
+                "FROM   [dbo].[Users_SiteEngineers] " +
+                "   INNER JOIN [dbo].[Users] " +
+                "       ON [dbo].[Users_SiteEngineers].[UserId] = [dbo].[Users].[UserId]"
+                , sql);
+
+            SqlDataAdapter adapter = new SqlDataAdapter(query);
+            DataSet dataSet = new DataSet();
+            adapter.Fill(dataSet);
+
+            // The query returns one table
+            if (dataSet.Tables.Count != 1)
+                throw new InvalidDataException("An error occurred when joining database tables.");
+            DataTable engineerTable = dataSet.Tables[0];
+
+            // Read rows into ENETCare business objects
+            // TODO: Handle passwords
+            Users.Users engineers = new Users.Users(this);
+            foreach(DataRow engineerRow in engineerTable.Rows)
+            {
+                District district = Districts.GetDistrictByID((int)engineerRow["DistrictId"]);
+
+                SiteEngineer engineer = new SiteEngineer(
+                    (int)engineerRow["UserId"], (string)engineerRow["Name"], (string)engineerRow["Username"],
+                    "1234", district, (decimal)engineerRow["MaxApprovableLabour"], (decimal)engineerRow["MaxApprovableCost"]);
+                engineers.Add(engineer);
+            }
+
+            return engineers;
+        }
+
+        /*
+        public Users.Users LoadManagers(SqlConnection sql)
+        {
+
+        }
+
+        public Users.Users LoadAccountants(SqlConnection sql)
+        {
+
+        }
+        */
         public Districts LoadDistricts(SqlConnection sql)
         {
             SqlCommand query = new SqlCommand(
