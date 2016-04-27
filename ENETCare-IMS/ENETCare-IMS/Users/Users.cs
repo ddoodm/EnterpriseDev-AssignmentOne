@@ -17,8 +17,8 @@ namespace ENETCare.IMS.Users
             this.application = application;
             if (application.Users == null)
             {
-                users = new List<User>();
-            }
+            users = new List<User>();
+        }
             else
             {
                 users = application.Users.GetUsers();
@@ -33,8 +33,8 @@ namespace ENETCare.IMS.Users
             // Placeholder data:
             Districts districts = application.Districts;
             Add(new Manager(1, "Daum Park", "daum", "1234", districts.GetDistrictByID(1), 8, 1024));
-            Add(new SiteEngineer(2, "Deinyon Davies", "deinyon", "1234", districts.GetDistrictByID(1), 9, 900));
-            Add(new SiteEngineer(3, "Henry Saal", "henry", "1234", districts.GetDistrictByID(2), 9, 1000));
+            Add(new SiteEngineer(2, "Deinyon Davies", "deinyon", "1234", districts.GetDistrictByID(2), 9, 900));
+            Add(new SiteEngineer(3, "Henry Saal", "henry", "1234", districts.GetDistrictByID(3), 9, 1000));
             Add(new Accountant(4, "Yiannis Chambers", "yiannis", "1234"));
         }
 
@@ -55,9 +55,12 @@ namespace ENETCare.IMS.Users
             return result.First<User>();
         }
 
-        public User GetUserByID(int id)
+        public User GetUserByID(int ID)
         {
-            return users.First<User>(c => c.ID == id);
+            if (ID == 0)
+                throw new IndexOutOfRangeException("ENETCare data is 1-indexed, but an index of 0 was requested.");
+            return users.First<User>(
+                user => user.ID == ID);
         }
 
         public IEnumerator<User> GetEnumerator()

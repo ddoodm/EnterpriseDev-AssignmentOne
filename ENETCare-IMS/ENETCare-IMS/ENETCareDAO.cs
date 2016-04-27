@@ -60,7 +60,11 @@ namespace ENETCare.IMS
 
             foreach (EnetCareImsDataSet.InterventionTypesRow typesRow in dataSet.InterventionTypes)
             {
-                InterventionType type = new InterventionType(typesRow.InterventionTypeId, typesRow.Name, typesRow.Cost, (decimal)typesRow.Labour);
+                InterventionType type = new InterventionType(
+                    typesRow.InterventionTypeId,
+                    typesRow.Name,
+                    typesRow.Cost,
+                    typesRow.Labour);
                 types.Add(type);
             }
 
@@ -105,23 +109,31 @@ namespace ENETCare.IMS
             EnetCareImsDataSet dataSet = new EnetCareImsDataSet();
             adapter.Fill(dataSet, DatabaseConstants.INTERVENTIONS_TABLE_NAME);
 
+            Interventions.Interventions interventions = new Interventions.Interventions(this);
 
-            IMS.Interventions.Interventions interventions = new IMS.Interventions.Interventions(this);
-            foreach (EnetCareImsDataSet.InterventionsRow interventionRow in dataSet.Interventions)
+            foreach (EnetCareImsDataSet.InterventionsRow row in dataSet.Interventions)
             {
-                int id = interventionRow.InterventionId;
-                InterventionType type = InterventionTypes.GetTypeByID(interventionRow.InterventionTypeId);
-                Client client = Clients.GetClientByID(interventionRow.ClientId);
-                SiteEngineer user = (SiteEngineer)Users.GetUserByID(interventionRow.ProposingEngineerId);
-                DateTime date = interventionRow.Date;
-                decimal labour = (decimal)interventionRow.Labour;
-                decimal cost = interventionRow.Cost;
-                string notes = interventionRow.Notes;
+                InterventionType type = InterventionTypes[row.InterventionTypeId];
+                Client client = Clients.GetClientByID(row.ClientId);
+                User siteEngineer = Users.GetUserByID(row.ProposingEngineerId);
 
-                Intervention intervention = Intervention.Factory.CreateIntervention(id, type, client, user, labour, cost, date);
-                intervention.UpdateNotes(user, notes);
+                if (!(siteEngineer is SiteEngineer))
+                    throw new InvalidDataException(
+                        String.Format("Database load error\n\nIntervention #{0} references a user who is not a Site Engineer (UserID: {1}).",
+                        row.InterventionId, row.ProposingEngineerId));
 
-                interventions.Add(intervention);
+                // Intervention Factory will populate with type defaults if database values are null
+                decimal? labour = row.IsLabourNull() ? (decimal?)null : row.Labour;
+                decimal? cost = row.IsCostNull() ? (decimal?)null : row.Cost;
+
+                // Avoids DBNull exception
+                string notes = row.IsNotesNull() ? "" : row.Notes;
+
+                interventions.Add(
+                    Intervention.Factory.CreateIntervention(
+                        row.InterventionId, type, client, (SiteEngineer)siteEngineer,
+                        labour, cost, row.Date, notes, null, null
+                        ));
             }
 
             return interventions;
@@ -256,7 +268,6 @@ namespace ENETCare.IMS
 
                 query.ExecuteNonQuery();
                 sqlLink.Close();
-
             }
         }
 
@@ -360,7 +371,6 @@ namespace ENETCare.IMS
             }
         }
 
-
         public void Save(District district)
         {
             using (SqlConnection sqlLink = new SqlConnection(GetConnectionString()))
@@ -378,10 +388,7 @@ namespace ENETCare.IMS
                 sqlLink);
 
                 query.ExecuteNonQuery();
-                sqlLink.Close();
-
             }
         }
-
     }
 }

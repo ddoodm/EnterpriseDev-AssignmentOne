@@ -26,13 +26,15 @@ namespace ENETCare.IMS
         public District this[int index]
         {
             get
-            {
+        {
                return districts.First<District>(district => district.ID == index); 
             }
         }
 
         public District GetDistrictByID(int id)
         {
+            if (id == 0)
+                throw new IndexOutOfRangeException("ENETCare data is 1-indexed, but an index of 0 was requested.");
             return districts.First<District>(d => d.ID == id);
         }
 

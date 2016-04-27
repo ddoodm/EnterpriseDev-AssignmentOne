@@ -19,12 +19,19 @@ namespace ENETCare.IMS.Interventions
             this.application = application;
 
             interventions = new List<Intervention>();
+
+            SetUpData();
         }
 
         public Interventions(ENETCareDAO application, List<Intervention> list)
         {
             this.application = application;
             this.interventions = list;
+        }
+
+        private void SetUpData()
+        {
+
         }
 
         /// <summary>
@@ -54,7 +61,7 @@ namespace ENETCare.IMS.Interventions
             return newIntervention;
         }
 
-        public void Add(Intervention intervention)//private void Add(Intervention intervention)
+        public void Add(Intervention intervention)
         {
             interventions.Add(intervention);
         }
@@ -73,6 +80,8 @@ namespace ENETCare.IMS.Interventions
         {
             get
             {
+                if (ID == 0)
+                    throw new IndexOutOfRangeException("ENETCare data is 1-indexed, but an index of 0 was requested.");
                 return interventions.First<Intervention>(
                     intervention => intervention.ID == ID);
             }
