@@ -18,20 +18,6 @@ namespace ENETCare.IMS
             this.application = application;
         }
 
-        public void PopulateDistricts()
-        {
-            districts = new List<District>();
-
-            // TODO: This will retrieve ENETCare's operating districts from
-            // the database. These are temporary placeholders.
-            districts.Add(new District(0, "Urban Indonesia"));
-            districts.Add(new District(1, "Rural Indonesia"));
-            districts.Add(new District(2, "Urban Papua New Guinea"));
-            districts.Add(new District(3, "Rural Papua New Guinea"));
-            districts.Add(new District(4, "Sydney"));
-            districts.Add(new District(5, "Rural New South Wales"));
-        }
-
         public int Count
         {
             get { return districts.Count; }

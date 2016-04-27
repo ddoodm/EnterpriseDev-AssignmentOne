@@ -30,12 +30,11 @@ namespace ENETCare.IMS
 
             using (SqlConnection sqlLink = new SqlConnection(sqlConnectionString))
             {
-                SetUpDistricts(sqlLink);
+                Districts = LoadDistricts(sqlLink);
                 Clients = LoadClients(sqlLink);
-                SetUpUsers(sqlLink);
-                SetUpInterventionTypes(sqlLink);
+                Users = LoadUsers(sqlLink);
+                InterventionTypes = LoadInterventionTypes(sqlLink);
                 Interventions = LoadInterventions(sqlLink);
-
             }
         }
 
@@ -46,41 +45,7 @@ namespace ENETCare.IMS
                 .ConnectionString;
         }
 
-        private void SetUpInterventionTypes(SqlConnection sql)
-        {
-            InterventionTypes = new InterventionTypes();
-
-            LoadInterventionTypes(sql);
-
-            //Only for our purposes - we need to have existing InterventionTypes in the system.
-            if (InterventionTypes.Count == 0)
-            {
-                InterventionTypes.PopulateTypes();
-                for (int i = 0; i < InterventionTypes.Count; i++)
-                {
-                    Save(InterventionTypes[i]);
-                }
-            }
-        }
-
-        private void SetUpDistricts(SqlConnection sql)
-        {
-            Districts = new Districts(this);
-
-            LoadDistricts(sql);
-
-            //Only for our purposes - we need to have existing InterventionTypes in the system.
-            if (Districts.Count == 0)
-            {
-                Districts.PopulateDistricts();
-                for (int i = 0; i < Districts.Count; i++)
-                {
-                    Save(Districts[i]);
-                }
-            }
-        }
-
-        private void LoadInterventionTypes(SqlConnection sql)
+        private InterventionTypes LoadInterventionTypes(SqlConnection sql)
         {
             SqlCommand query = new SqlCommand(
                 String.Format("SELECT * FROM {0}", DatabaseConstants.INTERVENTIONTYPES_NAME),
@@ -91,11 +56,15 @@ namespace ENETCare.IMS
             EnetCareImsDataSet dataSet = new EnetCareImsDataSet();
             adapter.Fill(dataSet, DatabaseConstants.INTERVENTIONTYPES_NAME);
 
+            InterventionTypes types = new InterventionTypes();
+
             foreach (EnetCareImsDataSet.InterventionTypesRow typesRow in dataSet.InterventionTypes)
             {
                 InterventionType type = new InterventionType(typesRow.InterventionTypeId, typesRow.Name, typesRow.Cost, (decimal)typesRow.Labour);
-                InterventionTypes.Add(type);
+                types.Add(type);
             }
+
+            return types;
         }
 
 
@@ -158,24 +127,7 @@ namespace ENETCare.IMS
             return interventions;
         }
 
-        public void SetUpUsers(SqlConnection sql)
-        {
-            Users = new IMS.Users.Users(this);
-
-            LoadUsers(sql);
-
-            //Only for our purposes - we need to have existing InterventionTypes in the system.
-            if (Users.Count == 0)
-            {
-                Users.PopulateUsersList();
-                for (int i = 1; i < Users.Count; i++)
-                {
-                    Save(Users[i]);
-                }
-            }
-        }
-
-        public void LoadUsers(SqlConnection sql)
+        public Users.Users LoadUsers(SqlConnection sql)
         {
             #region A Right Shambles
             SqlCommand userQuery = new SqlCommand(
@@ -246,9 +198,14 @@ namespace ENETCare.IMS
             //}
             #endregion
             #endregion
+
+            // Placeholder
+            Users.Users users = new Users.Users(this);
+            users.PopulateUsersList();
+            return users;
         }
 
-        public void LoadDistricts(SqlConnection sql)
+        public Districts LoadDistricts(SqlConnection sql)
         {
             SqlCommand query = new SqlCommand(
                 String.Format("SELECT * FROM {0}", DatabaseConstants.DISTRICTS_TABLE_NAME),
@@ -259,6 +216,8 @@ namespace ENETCare.IMS
             EnetCareImsDataSet dataSet = new EnetCareImsDataSet();
             adapter.Fill(dataSet, DatabaseConstants.DISTRICTS_TABLE_NAME);
 
+            Districts districts = new Districts(this);
+
             foreach (EnetCareImsDataSet.DistrictsRow districtRow in dataSet.Districts)
             {
                 int id = districtRow.DistrictId;
@@ -267,8 +226,10 @@ namespace ENETCare.IMS
 
                 District district = new District(id, name);
 
-                Districts.Add(district);
+                districts.Add(district);
             }
+
+            return districts;
         }
 
         public void Save(Intervention intervention)

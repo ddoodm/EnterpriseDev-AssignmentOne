@@ -18,13 +18,6 @@ namespace ENETCare.IMS.Interventions
             // TODO: Remove these test types, and use the database instead
         }
 
-        public void PopulateTypes()
-        {
-            types.Add(new InterventionType(0, "Supply and Install Portable Toilet", 600.0m, 3));
-            types.Add(new InterventionType(1, "Hepatitis Avoidance Training", 350.0m, 7));
-            types.Add(new InterventionType(2, "Supply and Install Storm-proof Home Kit", 1000.0m, 9));
-        }
-
         public int Count
         {
             get { return types.Count; }

@@ -19,19 +19,12 @@ namespace ENETCare.IMS.Interventions
             this.application = application;
 
             interventions = new List<Intervention>();
-
-            SetUpData();
         }
 
         public Interventions(ENETCareDAO application, List<Intervention> list)
         {
             this.application = application;
             this.interventions = list;
-        }
-
-        private void SetUpData()
-        {
-
         }
 
         /// <summary>
