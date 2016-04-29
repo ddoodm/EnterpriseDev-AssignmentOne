@@ -279,19 +279,22 @@ namespace ENETCare.IMS
 
                 // Create query, and substitute table and column names first
                 string queryString = String.Format(
-                    "INSERT INTO {0} ({1}) VALUES(@id, @client, @engineer, @date, @labour, @cost, @notes);",
+                    "INSERT INTO {0} ({1}) VALUES(@typeId, @client, @engineer, @date, @labour, @cost, @notes);",
                     DatabaseConstants.INTERVENTIONS_TABLE_NAME,
                     DatabaseConstants.INTERVENTIONS_COLUMN_NAMES_FOR_CREATION);
 
                 // Substitute SQL parameters using the Parameters collection
                 SqlCommand query = new SqlCommand(queryString, sqlLink);
-                query.Parameters.AddWithValue("@id",        intervention.ID);
+                query.Parameters.AddWithValue("@typeId",    intervention.InterventionType.ID);
                 query.Parameters.AddWithValue("@client",    intervention.Client.ID);
                 query.Parameters.AddWithValue("@engineer",  intervention.SiteEngineer.ID);
                 query.Parameters.AddWithValue("@date",      intervention.Date);
                 query.Parameters.AddWithValue("@labour",    intervention.Labour);
                 query.Parameters.AddWithValue("@cost",      intervention.Cost);
-                query.Parameters.AddWithValue("@notes",     intervention.Notes);
+
+                // Permit null notes
+                query.Parameters.AddWithValue("@notes",
+                    ((object)intervention.Notes)?? DBNull.Value);
 
                 query.ExecuteNonQuery();
                 sqlLink.Close();
