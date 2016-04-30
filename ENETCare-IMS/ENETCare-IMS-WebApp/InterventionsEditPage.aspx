@@ -52,7 +52,7 @@
             <div class="form-group">
                 <p>
                 <b>Cost Estimate:</b>
-                 $<asp:Label ID="CostLabel" runat="server"></asp:Label>
+                 <asp:Label ID="CostLabel" runat="server"></asp:Label>
                 </p>
             </div>
         </div>

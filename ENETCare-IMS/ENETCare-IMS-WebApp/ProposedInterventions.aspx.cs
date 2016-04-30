@@ -10,7 +10,6 @@ using ENETCare.IMS.Users;
 
 namespace ENETCare.IMS.WebApp
 {
-    
     public partial class ProposedInterventionsWebUI : System.Web.UI.Page
     {
         private ENETCareDAO application;
