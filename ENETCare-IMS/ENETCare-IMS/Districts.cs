@@ -11,7 +11,7 @@ namespace ENETCare.IMS
     {
         private ENETCareDAO application;
 
-        private static List<District> districts = new List<District>();
+        private List<District> districts = new List<District>();
 
         public Districts(ENETCareDAO application)
         {

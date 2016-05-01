@@ -24,7 +24,7 @@ namespace ENETCare.IMS.WebApp
         protected void Page_Load(object sender, EventArgs e)
         {
             // Obtain application context
-            application = UserSession.Current.Application;
+            application = ENETCareDAO.Context;
 
             // Obtain the ID of the Intervention to be displayed
             string interventionIdString = Request.QueryString[INTERVENTION_ID_GET_PARAMETER];

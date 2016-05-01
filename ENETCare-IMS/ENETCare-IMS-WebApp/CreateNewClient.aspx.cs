@@ -16,7 +16,7 @@ namespace ENETCare.IMS.WebApp
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            application = UserSession.Current.Application;
+            application = ENETCareDAO.Context;
             districts = application.Districts;
             clients = application.Clients;
 

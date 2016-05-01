@@ -25,7 +25,7 @@ namespace ENETCare.IMS.WebApp
         {
             // Obtain the Application instance
             // TODO: Do not use a Site Engineer session here; use Manager.
-            application = UserSession.Current.Application;
+            application = ENETCareDAO.Context;
             interventions = application.Interventions;
 
             SortInterventions();

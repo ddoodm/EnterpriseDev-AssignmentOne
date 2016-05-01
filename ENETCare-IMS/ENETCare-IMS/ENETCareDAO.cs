@@ -19,6 +19,8 @@ namespace ENETCare.IMS
     /// </summary>
     public class ENETCareDAO
     {
+        private string sqlConnectionString;
+
         public Interventions.Interventions Interventions { get; private set; }
         public InterventionTypes InterventionTypes { get; private set; }
         public Districts Districts { get; private set; }
@@ -27,7 +29,7 @@ namespace ENETCare.IMS
 
         public ENETCareDAO()
         {
-            string sqlConnectionString = GetConnectionString();
+            sqlConnectionString = GetConnectionString();
 
             using (SqlConnection sqlLink = new SqlConnection(sqlConnectionString))
             {
@@ -37,6 +39,11 @@ namespace ENETCare.IMS
                 this.InterventionTypes = LoadInterventionTypes(sqlLink);
                 this.Interventions = LoadInterventions(sqlLink);
             }
+        }
+
+        public static ENETCareDAO Context
+        {
+            get { return new ENETCareDAO(); }
         }
 
         private string GetConnectionString()

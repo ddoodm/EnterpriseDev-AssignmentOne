@@ -21,7 +21,7 @@ namespace ENETCare.IMS.WebApp
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            application = UserSession.Current.Application;
+            application = ENETCareDAO.Context;
             engineer = (SiteEngineer)UserSession.Current.User;
 
             // Get application culture descriptor
