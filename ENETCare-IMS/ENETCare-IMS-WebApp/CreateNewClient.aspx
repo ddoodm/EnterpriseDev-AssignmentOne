@@ -9,11 +9,16 @@
         <asp:TextBox ID="ClientNameText" runat="server" Width="296px"></asp:TextBox>
         <br />
         <p>Client Location</p>
-        <asp:TextBox ID="ClientLocationText" runat="server" Height="122px" Width="380px"></asp:TextBox>
+        <asp:TextBox
+            ID="ClientLocationText"
+            runat="server"
+            TextMode="MultiLine"
+            Height="122px"
+            Width="380px"></asp:TextBox>
         <br />
 
         <p>District</p>
-        <asp:DropDownList ID="ClientDistrict" runat="server" Height="16px" Width="377px"></asp:DropDownList>
+        <asp:DropDownList ID="ClientDistrict" runat="server" Width="377px"></asp:DropDownList>
         <br />
         <br />
         <asp:Button ID="Button_Cancel" runat="server" Text="Cancel" OnClick="Button_Cancel_Click" />

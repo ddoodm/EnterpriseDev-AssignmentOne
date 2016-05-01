@@ -260,11 +260,8 @@ namespace ENETCare.IMS
             foreach (EnetCareImsDataSet.DistrictsRow districtRow in dataSet.Districts)
             {
                 int id = districtRow.DistrictId;
-
                 string name = districtRow.Name;
-
                 District district = new District(id, name);
-
                 districts.Add(district);
             }
 

@@ -1,5 +1,6 @@
 ﻿<%@ Page Title="Interventions" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Interventions.aspx.cs" Inherits="ENETCare.IMS.WebApp.InterventionsWebUI" %>
 <%@ Reference Control="~/Controls/EditTableItemButton.ascx" %>
+
 <asp:Content ID="InterventionsContent" ContentPlaceHolderID="MainContent" runat="server">
     <h1>Interventions in <%: User.District %></h1>
 
@@ -9,19 +10,39 @@
     </ul>
 
     <div class="enetImsTableContainer">
-        <asp:Table ID="Table_Interventions" runat="server"
+        <asp:LinqDataSource
+            ID="InterventionsDataSource"
+            OnSelecting="InterventionsDataSource_Selecting"
+            runat="server"></asp:LinqDataSource>
+        <asp:GridView
+            ID="Table_Interventions"
+            DataSourceID="InterventionsDataSource"
+            AutoGenerateColumns="false"
+            AllowSorting="true"
+            PageSize="8"
+            runat="server"
             CellSpacing="0"
-            CssClass="enetImsTable">
-            <asp:TableHeaderRow TableSection="TableHeader">
-                <asp:TableHeaderCell></asp:TableHeaderCell>
-                <asp:TableHeaderCell>Intervention Type</asp:TableHeaderCell>
-                <asp:TableHeaderCell>Client</asp:TableHeaderCell>
-                <asp:TableHeaderCell>Date Started</asp:TableHeaderCell>
-                <asp:TableHeaderCell>Date of Last Visit</asp:TableHeaderCell>
-                <asp:TableHeaderCell>Approval</asp:TableHeaderCell>
-                <asp:TableHeaderCell>Life Left</asp:TableHeaderCell>
-                <asp:TableHeaderCell>Notes</asp:TableHeaderCell>
-            </asp:TableHeaderRow>
-        </asp:Table>
+            CssClass="enetImsTable" OnLoad="Table_Interventions_Load">
+            <Columns>
+                <asp:TemplateField>
+                    <ItemTemplate>
+                        <asp:HyperLink
+                            ID="EditLink"
+                            runat="server"
+                            NavigateUrl='<%# Eval("ID", "~/InterventionsEditPage?id={0}") %>'
+                            Text="">
+                            <img runat="server" alt="Edit" src="~/Content/EditTableItem.png"/>
+                        </asp:HyperLink>
+                    </ItemTemplate>
+                </asp:TemplateField>
+
+                <asp:BoundField HeaderText="Type" DataField="InterventionType.Name" />
+                <asp:BoundField HeaderText="Client" DataField="Client.Name" />
+                <asp:BoundField HeaderText="Date" DataField="Date" dataformatstring="{0:d MMMM, yyyy}" htmlencode="false" />
+                <asp:BoundField HeaderText="State" DataField="ApprovalState" />
+                <asp:BoundField HeaderText="Health" DataField="Health" />
+                <asp:BoundField HeaderText="Notes" DataField="Notes" />
+            </Columns>
+        </asp:GridView>
     </div>
 </asp:Content>

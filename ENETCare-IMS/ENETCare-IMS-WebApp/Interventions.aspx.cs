@@ -29,7 +29,7 @@ namespace ENETCare.IMS.WebApp
         }
 
         private void PopulateInterventionsTable()
-        {
+        {/*
             // Filter Interventions by the user's district
             List<Intervention> filteredInterventions =
                 interventions.FilterByDistrict(User.District);
@@ -84,6 +84,7 @@ namespace ENETCare.IMS.WebApp
                 notesCell.Text = intervention.Notes;
                 row.Cells.Add(notesCell);
             }
+            */
         }
 
         protected void Button_CreateNewIntervention_Click(object sender, EventArgs e)
@@ -94,6 +95,18 @@ namespace ENETCare.IMS.WebApp
         protected void Button_Clients_Click(object sender, EventArgs e)
         {
             Response.Redirect("Clients.aspx");
+        }
+
+        protected void InterventionsDataSource_Selecting(object sender, LinqDataSourceSelectEventArgs e)
+        {
+            e.Result = interventions.FilterByDistrict(User.District);
+        }
+
+        protected void Table_Interventions_Load(object sender, EventArgs e)
+        {
+            // Set GridView to render its header in a HTML 'thead'
+            Table_Interventions.HeaderRow.TableSection
+                = TableRowSection.TableHeader;
         }
     }
 }

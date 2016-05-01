@@ -8,9 +8,10 @@
         <li><asp:Button ID="Button_AddClient" runat="server" Text="Add a New Client" OnClick="Button_AddClient_Click"/></li>
     </ul>
 
-    <div class="enetImsTableContainer">
-
-        <asp:TreeView ID="TreeView_Clients" runat="server"
+    <div style="display:block; padding: 20px;">
+        <asp:TreeView
+            ID="TreeView_Clients"
+            runat="server"
             CssClass="treeView"
             NodeStyle-CssClass="treeNode"
             RootNodeStyle-CssClass="treeRootNode"
@@ -20,7 +21,6 @@
                 <asp:TreeNode Expanded="True" Text="Clients">
                 </asp:TreeNode>
             </Nodes>
-            
         </asp:TreeView>
     </div>
 

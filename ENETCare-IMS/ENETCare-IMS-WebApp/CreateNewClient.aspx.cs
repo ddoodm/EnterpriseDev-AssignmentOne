@@ -20,10 +20,8 @@ namespace ENETCare.IMS.WebApp
             districts = application.Districts;
             clients = application.Clients;
 
-            foreach(District district in districts.GetListCopy())
-            {
-                ClientDistrict.Items.Add(district.Name);
-            }
+            ClientDistrict.DataSource = districts;
+            ClientDistrict.DataBind();
         }
 
         protected void Button_Create_Click(object sender, EventArgs e)

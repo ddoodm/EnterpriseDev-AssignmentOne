@@ -6,7 +6,7 @@
     <section id="InterventionSection">
 
         <div>
-            <u><h3>Core Information</h3></u>
+            <h3><u>Core Information</u></h3>
         </div>
 
         <div id="InterventionData">
