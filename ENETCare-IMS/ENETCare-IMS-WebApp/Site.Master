@@ -37,7 +37,7 @@
         <ul id="navBar">
             <li><a>[Navigation + Account Here]</a></li>
             <li style="float: right;">
-                <img id="headerLogo" src="Content/ENETCare-Logo.png" alt="ENET Care" />
+                <img runat="server" id="headerLogo" src="~/Content/ENETCare-Logo.png" alt="ENET Care" />
             </li>
         </ul>
 

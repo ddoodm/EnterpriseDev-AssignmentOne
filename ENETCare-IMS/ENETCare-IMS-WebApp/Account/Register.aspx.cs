@@ -25,13 +25,13 @@ namespace ENETCare.IMS.WebApp.Account
                 case "Site Engineer":
                     user = application.Users.CreateSiteEngineer(
                         Name.Text,
-                        application.Districts[0],
+                        application.Districts[1],
                         0, 0);
                     break;
                 case "Manager":
                         user = application.Users.CreateManager(
                         Name.Text,
-                        application.Districts[0],
+                        application.Districts[1],
                         0, 0);
                     break;
                 case "Accountant":

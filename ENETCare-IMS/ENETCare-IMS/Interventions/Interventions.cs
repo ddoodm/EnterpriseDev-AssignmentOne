@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,7 +9,7 @@ using ENETCare.IMS.Users;
 
 namespace ENETCare.IMS.Interventions
 {
-    public class Interventions
+    public class Interventions : IReadOnlyList<Intervention>
     {
         private ENETCareDAO application;
 
@@ -90,7 +91,6 @@ namespace ENETCare.IMS.Interventions
             }
         }
 
-        // TODO: Have this return an Interventions collection as a standardized "Filter" method
         public List<Intervention> GetInterventionsWithClient(Client client)
         {
             return interventions
@@ -103,6 +103,23 @@ namespace ENETCare.IMS.Interventions
             return interventions
                 .Where(x => x.District == district)
                 .ToList<Intervention>();
+        }
+
+        public List<Intervention> FilterByState(InterventionApprovalState state)
+        {
+            return interventions
+                .Where(x => x.ApprovalState == state)
+                .ToList<Intervention>();
+        }
+
+        public IEnumerator<Intervention> GetEnumerator()
+        {
+            return interventions.GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
         }
     }
 }
