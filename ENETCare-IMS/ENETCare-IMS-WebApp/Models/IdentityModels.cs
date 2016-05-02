@@ -30,7 +30,7 @@ namespace ENETCare.IMS.WebApp.Models
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext()
-            : base("DefaultConnection", throwIfV1Schema: false)
+            : base("ENETCareDatabaseConnection", throwIfV1Schema: false)
         {
         }
 
