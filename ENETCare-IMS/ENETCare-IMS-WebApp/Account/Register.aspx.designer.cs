@@ -31,6 +31,15 @@ namespace ENETCare.IMS.WebApp.Account {
         protected global::System.Web.UI.WebControls.TextBox Email;
         
         /// <summary>
+        /// Name control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox Name;
+        
+        /// <summary>
         /// Password control.
         /// </summary>
         /// <remarks>
@@ -47,5 +56,14 @@ namespace ENETCare.IMS.WebApp.Account {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox ConfirmPassword;
+        
+        /// <summary>
+        /// AccountType control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList AccountType;
     }
 }

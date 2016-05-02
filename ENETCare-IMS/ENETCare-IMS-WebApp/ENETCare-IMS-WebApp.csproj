@@ -222,7 +222,6 @@
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Interventions.aspx" />
     <Content Include="InterventionsEditPage.aspx" />
-    <Content Include="Login.aspx" />
     <Content Include="ProposedInterventions.aspx" />
     <Content Include="Scripts\ai.0.15.0-build58334.js" />
     <Content Include="Scripts\ai.0.15.0-build58334.min.js" />
@@ -274,6 +273,14 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Migrations\201605020808479_Initial.cs" />
+    <Compile Include="Migrations\201605020808479_Initial.Designer.cs">
+      <DependentUpon>201605020808479_Initial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201605020841472_AddEnetCareUserIdField.cs" />
+    <Compile Include="Migrations\201605020841472_AddEnetCareUserIdField.Designer.cs">
+      <DependentUpon>201605020841472_AddEnetCareUserIdField.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Report.aspx.cs">
       <DependentUpon>Report.aspx</DependentUpon>
@@ -464,13 +471,6 @@
     <Compile Include="InterventionsEditPage.aspx.designer.cs">
       <DependentUpon>InterventionsEditPage.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Login.aspx.cs">
-      <DependentUpon>Login.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Login.aspx.designer.cs">
-      <DependentUpon>Login.aspx</DependentUpon>
-    </Compile>
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ProposedInterventions.aspx.cs">
@@ -513,6 +513,14 @@
       <Project>{29bc6fca-c92d-4336-a962-3885b2e6a486}</Project>
       <Name>ENETCare-IMS</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201605020808479_Initial.resx">
+      <DependentUpon>201605020808479_Initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201605020841472_AddEnetCareUserIdField.resx">
+      <DependentUpon>201605020841472_AddEnetCareUserIdField.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

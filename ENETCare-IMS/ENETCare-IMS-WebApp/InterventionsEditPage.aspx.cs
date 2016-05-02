@@ -118,7 +118,7 @@ namespace ENETCare.IMS.WebApp
 
         void SetEditControlsForUserRole()
         {
-            User user = UserSession.Current.User;
+            EnetCareUser user = UserSession.Current.User;
             
             if (!editIntervention.UserCanChangeState(user))
             {
@@ -134,7 +134,7 @@ namespace ENETCare.IMS.WebApp
 
         protected void ApproveButton_Click(object sender, EventArgs e)
         {
-            User user = UserSession.Current.User;
+            EnetCareUser user = UserSession.Current.User;
             editIntervention.Approve(user);
 
             DisplayInterventionData();
@@ -142,7 +142,7 @@ namespace ENETCare.IMS.WebApp
 
         protected void CancelButton_Click(object sender, EventArgs e)
         {
-            User user = UserSession.Current.User;
+            EnetCareUser user = UserSession.Current.User;
             editIntervention.Cancel(user);
 
             DisplayInterventionData();
@@ -150,7 +150,7 @@ namespace ENETCare.IMS.WebApp
 
         protected void CompleteButton_Click(object sender, EventArgs e)
         {
-            User user = UserSession.Current.User;
+            EnetCareUser user = UserSession.Current.User;
             editIntervention.Complete(user);
 
             DisplayInterventionData();

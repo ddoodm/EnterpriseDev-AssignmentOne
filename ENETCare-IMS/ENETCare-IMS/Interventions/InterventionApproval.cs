@@ -27,7 +27,7 @@ namespace ENETCare.IMS.Interventions
         /// The user who approved the Intervention,
         /// null if the Intervention has not been approved.
         /// </summary>
-        public User ApprovingUser { get; private set; }
+        public EnetCareUser ApprovingUser { get; private set; }
 
         private Intervention intervention;
 
@@ -41,7 +41,7 @@ namespace ENETCare.IMS.Interventions
             this.state = new InterventionApprovalStateWrapper();
         }
 
-        public void ChangeState(InterventionApprovalState targetState, User user)
+        public void ChangeState(InterventionApprovalState targetState, EnetCareUser user)
         {
             // Check that the user can change the state of the Intervention
             if (!CanChangeState(user)) 
@@ -51,23 +51,23 @@ namespace ENETCare.IMS.Interventions
             this.state.ChangeState(targetState);
         }
 
-        public void Approve(User user)
+        public void Approve(EnetCareUser user)
         {
             ChangeState(InterventionApprovalState.Approved, user);
             ApprovingUser = user;
         }
 
-        public void Cancel(User user)
+        public void Cancel(EnetCareUser user)
         {
             ChangeState(InterventionApprovalState.Cancelled, user);
         }
 
-        public void Complete(User user)
+        public void Complete(EnetCareUser user)
         {
             ChangeState(InterventionApprovalState.Completed, user);
         }
 
-        public bool CanChangeState(User user)
+        public bool CanChangeState(EnetCareUser user)
         {
             if (user is Manager)
             {

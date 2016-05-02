@@ -14,26 +14,13 @@ namespace ENETCare.IMS.WebApp
     public partial class AccountantsPage : Page
     {
         private ENETCareDAO application;
-        private List<User> users;
+        private List<EnetCareUser> users;
 
         protected void Page_Load(object sender, EventArgs e)
         {
             application = new ENETCareDAO();
 
-            PopulateTempUsers();
             PopulateAccountTable();
-
-        }
-
-        private void PopulateTempUsers()
-        {
-            /**Temp populating Users to input into display accountant table
-            TODO: Remove this method*/
-            users = new List<User>();
-
-            users.Add(new Manager(1, "SmithJohnes", "Smith", "1234", application.Districts.GetDistrictByID(3), 12, 1000));
-            users.Add(new SiteEngineer(2, "JohnSmith", "John", "1234", application.Districts.GetDistrictByID(2), 12, 1000));
-
         }
 
         private void PopulateAccountTable()

@@ -19,6 +19,14 @@
             </div>
         </div>
         <div class="form-group">
+            <asp:Label runat="server" AssociatedControlID="Name" CssClass="col-md-2 control-label">Name</asp:Label>
+            <div class="col-md-10">
+                <asp:TextBox runat="server" ID="Name" CssClass="form-control" />
+                <asp:RequiredFieldValidator runat="server" ControlToValidate="Name"
+                    CssClass="text-danger" ErrorMessage="The name field is required." />
+            </div>
+        </div>
+        <div class="form-group">
             <asp:Label runat="server" AssociatedControlID="Password" CssClass="col-md-2 control-label">Password</asp:Label>
             <div class="col-md-10">
                 <asp:TextBox runat="server" ID="Password" TextMode="Password" CssClass="form-control" />
@@ -34,6 +42,18 @@
                     CssClass="text-danger" Display="Dynamic" ErrorMessage="The confirm password field is required." />
                 <asp:CompareValidator runat="server" ControlToCompare="Password" ControlToValidate="ConfirmPassword"
                     CssClass="text-danger" Display="Dynamic" ErrorMessage="The password and confirmation password do not match." />
+            </div>
+        </div>
+        <div class="form-group">
+            <asp:Label runat="server" AssociatedControlID="AccountType" CssClass="col-md-2 control-label">Account Type</asp:Label>
+            <div class="col-md-10">
+                <asp:DropDownList ID="AccountType" runat="server">
+                    <asp:ListItem>Site Engineer</asp:ListItem>
+                    <asp:ListItem>Manager</asp:ListItem>
+                    <asp:ListItem>Accountant</asp:ListItem>
+                </asp:DropDownList>
+                <asp:RequiredFieldValidator runat="server" ControlToValidate="AccountType"
+                    CssClass="text-danger" Display="Dynamic" ErrorMessage="The account type field is required." />
             </div>
         </div>
         <div class="form-group">

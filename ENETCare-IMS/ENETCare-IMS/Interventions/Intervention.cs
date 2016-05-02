@@ -62,7 +62,7 @@ namespace ENETCare.IMS.Interventions
             get { return approval.State; }
         }
 
-        public User ApprovingUser
+        public EnetCareUser ApprovingUser
         {
             get { return approval.ApprovingUser; }
         }
@@ -113,27 +113,27 @@ namespace ENETCare.IMS.Interventions
             this.Notes = newNotes;
         }
 
-        public bool UserCanChangeState(User user)
+        public bool UserCanChangeState(EnetCareUser user)
         {
             return approval.CanChangeState(user);
         }
 
-        public void Approve(User user)
+        public void Approve(EnetCareUser user)
         {
             approval.Approve(user);
         }
 
-        public void Cancel(User user)
+        public void Cancel(EnetCareUser user)
         {
             approval.Cancel(user);
         }
 
-        public void Complete(User user)
+        public void Complete(EnetCareUser user)
         {
             approval.Complete(user);
         }
 
-        public bool UserCanChangeQuality(User user)
+        public bool UserCanChangeQuality(EnetCareUser user)
         {
             if (user is SiteEngineer)
             {

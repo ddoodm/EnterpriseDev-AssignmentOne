@@ -49,7 +49,7 @@ namespace ENETCare.IMS.Tests
         private SiteEngineer CreateTestSiteEngineer()
         {
             return new SiteEngineer
-                (1, "Robert Markson", "markson.robert", "plaintextPassword",
+                (1, "Robert Markson",
                 testDistrictA, 6, 500);
         }
 
@@ -116,7 +116,7 @@ namespace ENETCare.IMS.Tests
 
             // Create a new Engineer who does not service 'testDistrictA'
             SiteEngineer remoteEngineer = new SiteEngineer
-                (1, "Markus Markson", "markson.markus", "aBcDe_12$45",
+                (1, "Markus Markson",
                 testDistrictB, interventionType.Labour + 1, interventionType.Cost + 100);
 
             // Expected argument exception:
@@ -139,7 +139,7 @@ namespace ENETCare.IMS.Tests
 
             // Create a new Engineer that can approve the new intervention
             SiteEngineer testEngineer = new SiteEngineer
-                (1, "Markus Markson", "markson.markus", "aBcDe_12$45",
+                (1, "Markus Markson",
                 testDistrictA, interventionType.Labour + 1, interventionType.Cost + 100);
 
             Intervention intervention = Intervention.Factory.CreateIntervention
@@ -164,7 +164,7 @@ namespace ENETCare.IMS.Tests
 
             // Create a new Engineer
             SiteEngineer testEngineer = new SiteEngineer
-                (1, "Markus Markson", "markson.markus", "aBcDe_12$45",
+                (1, "Markus Markson",
                 testDistrictA, interventionType.Labour + 1, interventionType.Cost + 100);
 
             Intervention intervention = Intervention.Factory.CreateIntervention
@@ -172,7 +172,7 @@ namespace ENETCare.IMS.Tests
 
             // Create a Manager who operates in the same District as the Intervention
             Manager testManager = new Manager
-                (2, "Bob Bobson", "bobson.bob", "dCmEp_98T65",
+                (2, "Bob Bobson",
                 intervention.District, interventionType.Labour + 1, interventionType.Cost + 100);
 
             // Attempt to approve the intervention by a Manager of the same district
@@ -197,7 +197,7 @@ namespace ENETCare.IMS.Tests
 
             // Create a new Engineer who would otherwise be permitted to approve the Intervention
             SiteEngineer newEngineer = new SiteEngineer
-                (2, "Markus Markson", "markson.markus", "aBcDe_12$45",
+                (2, "Markus Markson",
                 intervention.District, intervention.Labour + 1, intervention.Cost + 100);
 
             // Attempt to approve the intervention by an Engineer who did not propose it
@@ -215,7 +215,7 @@ namespace ENETCare.IMS.Tests
 
             // Create a new Engineer
             SiteEngineer testEngineer = new SiteEngineer
-                (1, "Markus Markson", "markson.markus", "aBcDe_12$45",
+                (1, "Markus Markson",
                 testDistrictA, interventionType.Labour + 1, interventionType.Cost + 100);
 
             Intervention intervention = Intervention.Factory.CreateIntervention
@@ -223,7 +223,7 @@ namespace ENETCare.IMS.Tests
 
             // Create a Manager who does not operate in the same district as the Intervention
             Manager testManager = new Manager
-                (2, "Bob Bobson", "bobson.bob", "dCmEp_98T65",
+                (2, "Bob Bobson",
                 testDistrictB, interventionType.Labour + 1, interventionType.Cost + 100);
 
             // Attempt to approve the intervention by a Manager who does not operate in the same District

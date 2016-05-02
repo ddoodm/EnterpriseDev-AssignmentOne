@@ -20,7 +20,7 @@ namespace ENETCare.IMS.Tests
         [TestMethod]
         public void Check_Manager_District()
         {
-            Manager testManager = new Manager(1, "Bob Bobson", "bobson.bob", "dCmEp_98T65",
+            Manager testManager = new Manager(1, "Bob Bobson",
                 application.Districts.GetDistrictByID(2), 50, 50);
 
             Assert.IsTrue(testManager.District.Name == "Rural Indonesia");

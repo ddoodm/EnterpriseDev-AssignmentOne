@@ -5,6 +5,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Owin;
 using ENETCare.IMS.WebApp.Models;
+using ENETCare.IMS.Users;
 
 namespace ENETCare.IMS.WebApp.Account
 {
@@ -23,6 +24,17 @@ namespace ENETCare.IMS.WebApp.Account
             }
         }
 
+        /// <summary>
+        /// Redirects the response to the logged-in user's home page
+        /// </summary>
+        private void RedirectToUserPage(ApplicationUserManager manager)
+        {
+            var user = manager.FindById(User.Identity.GetUserId());
+            int enetUserId = user.EnetCareUserId;
+            EnetCareUser enetUser = ENETCareDAO.Context.Users.GetUserByID(enetUserId);
+            Response.Redirect(string.Format("~/{0}", enetUser.HomePage));
+        }
+
         protected void LogIn(object sender, EventArgs e)
         {
             if (IsValid)
@@ -38,7 +50,7 @@ namespace ENETCare.IMS.WebApp.Account
                 switch (result)
                 {
                     case SignInStatus.Success:
-                        IdentityHelper.RedirectToReturnUrl(Request.QueryString["ReturnUrl"], Response);
+                        RedirectToUserPage(manager);
                         break;
                     case SignInStatus.LockedOut:
                         Response.Redirect("/Account/Lockout");

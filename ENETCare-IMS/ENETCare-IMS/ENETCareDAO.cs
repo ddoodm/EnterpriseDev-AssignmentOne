@@ -134,7 +134,7 @@ namespace ENETCare.IMS
             {
                 InterventionType type = interventionTypes[row.InterventionTypeId];
                 Client client = clients.GetClientByID(row.ClientId);
-                User siteEngineer = users.GetUserByID(row.ProposingEngineerId);
+                EnetCareUser siteEngineer = users.GetUserByID(row.ProposingEngineerId);
 
                 if (!(siteEngineer is SiteEngineer))
                     throw new InvalidDataException(
@@ -186,7 +186,7 @@ namespace ENETCare.IMS
         /// an instantiated user of the given type.
         /// </param>
         /// <returns>A Users collection, populated with all users of the specified type.</returns>
-        public Users.Users LoadUsers(SqlConnection sql, string tableName, Func<DataRow, User> instantiateUser)
+        public Users.Users LoadUsers(SqlConnection sql, string tableName, Func<DataRow, EnetCareUser> instantiateUser)
         {
             // Joins Table-Per-Type sub-class with its base class
             SqlCommand query = new SqlCommand(
@@ -227,8 +227,8 @@ namespace ENETCare.IMS
 
                 // Create the Site Engineer from table data
                 return new SiteEngineer (
-                    (int)row["UserId"], (string)row["Name"], (string)row["Username"],
-                    "1234", district, (decimal)row["MaxApprovableLabour"], (decimal)row["MaxApprovableCost"]);
+                    (int)row["UserId"], (string)row["Name"],district,
+                    (decimal)row["MaxApprovableLabour"], (decimal)row["MaxApprovableCost"]);
             });
         }
 
@@ -241,8 +241,8 @@ namespace ENETCare.IMS
 
                 // Create the Manager from table data
                 return new Manager(
-                    (int)row["UserId"], (string)row["Name"], (string)row["Username"],
-                    "1234", district, (decimal)row["MaxApprovableLabour"], (decimal)row["MaxApprovableCost"]);
+                    (int)row["UserId"], (string)row["Name"], district,
+                    (decimal)row["MaxApprovableLabour"], (decimal)row["MaxApprovableCost"]);
             });
         }
 
@@ -252,7 +252,7 @@ namespace ENETCare.IMS
             {
                 // Create the Accountant from table data
                 return new Accountant(
-                    (int)row["UserId"], (string)row["Name"], (string)row["Username"], "1234");
+                    (int)row["UserId"], (string)row["Name"]);
             });
         }
 
