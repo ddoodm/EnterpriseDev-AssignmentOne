@@ -2,10 +2,11 @@
 
 <asp:Content ID="LoginContent" ContentPlaceHolderID="MainContent" runat="server">
     <div id="loginContainer">       
-        Log in <br />
-        Username<asp:TextBox ID="textName" runat="server" align="center"></asp:TextBox> <br />
-        Password<asp:TextBox ID="textPass" TextMode="Password" runat="server" align="center"></asp:TextBox> <br />
-        <asp:Button ID="buttonLogin" runat="server" Text="Log in" OnClick="buttonLogin_Click" Height="20px" />
-        <asp:Label ID="labelError" runat="server" Text=""></asp:Label>
+
+        <asp:Login ID="LoginMain" runat="server" align="center" DestinationPageUrl="~/ProposedInterventions.aspx">
+        </asp:Login>
+
+        <asp:ValidationSummary ID="ValidationSummary1" runat="server" ValidationGroup="LoginMain" />
+
     </div>
 </asp:Content>
