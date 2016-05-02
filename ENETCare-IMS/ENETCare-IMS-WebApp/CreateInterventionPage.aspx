@@ -7,7 +7,7 @@
     <h1><%: Page.Title %></h1>
 
     <div class="formDataContainer">
-        <p>Intervention Type</p>
+        <h3>Intervention Type</h3>
         <asp:DropDownList
             ID="Dropdown_InterventionType"
             runat="server"
@@ -15,7 +15,9 @@
             DataSourceID="InterventionTypeLinqDataSource"
             DataTextField="Name"
             DataValueField="ID"
-            AppendDataBoundItems="true">
+            AppendDataBoundItems="true"
+            OnSelectedIndexChanged="Dropdown_InterventionType_SelectedIndexChanged"
+            AutoPostBack="true">
             <asp:ListItem Text="Select..." Value="" />
         </asp:DropDownList>
         <br />
@@ -28,7 +30,7 @@
         </asp:RequiredFieldValidator>
         <br />
 
-        <p>Client</p>
+        <h3>Client</h3>
         <asp:TextBox ID="TextBox_ClientNameSearch" runat="server" Width="296px"></asp:TextBox>
         <asp:Button ID="Button_ClientSearch" runat="server" Text="Search" OnClick="Button_ClientSearch_Click" />
         <br />
@@ -43,7 +45,36 @@
         </asp:RequiredFieldValidator>
         <br />
 
-        <p>Notes</p>
+        <h3>Date</h3>
+        <asp:Calendar ID="Calendar_Date" runat="server" OnLoad="Calendar_Date_Load" />
+
+        <h3>Optional Details</h3>
+        <table>
+            <tr>
+                <td>Cost ($)</td>
+                <td><asp:TextBox ID="TextBox_Cost" runat="server"></asp:TextBox></td>
+                <td><asp:RegularExpressionValidator 
+                    ValidationGroup="CreateInterventionGroup"
+                    ControlToValidate="TextBox_Cost"
+                    ValidationExpression="^\$?([0-9]{1,3},([0-9]{3},)*[0-9]{3}|[0-9]+)(.[0-9][0-9])?$"
+                    ErrorMessage="Please enter a valid cost, or leave blank for default"
+                    ForeColor="Red"
+                    runat="server"/></td>
+            </tr>
+            <tr>
+                <td>Labour (Hours)</td>
+                <td><asp:TextBox ID="TextBox_Labour" runat="server"></asp:TextBox></td>
+                <td><asp:RegularExpressionValidator 
+                    ValidationGroup="CreateInterventionGroup"
+                    ControlToValidate="TextBox_Labour"
+                    ValidationExpression="^(\d+(\.\d+)?)?$"
+                    ErrorMessage="Please enter a valid number of hours, or leave blank for default"
+                    ForeColor="Red"
+                    runat="server"/></td>
+            </tr>
+        </table>
+
+        <h3>Notes</h3>
         <asp:TextBox ID="TextBox_Notes" TextMode="MultiLine" runat="server" Height="104px" Rows="8" Width="380px"></asp:TextBox>
         <br />
 

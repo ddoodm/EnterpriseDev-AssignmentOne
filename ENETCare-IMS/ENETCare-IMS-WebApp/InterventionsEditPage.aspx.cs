@@ -4,6 +4,8 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.Globalization;
+using System.Configuration;
 
 using ENETCare.IMS.Interventions;
 using ENETCare.IMS.Users;
@@ -22,7 +24,7 @@ namespace ENETCare.IMS.WebApp
         protected void Page_Load(object sender, EventArgs e)
         {
             // Obtain application context
-            application = UserSession.Current.Application;
+            application = ENETCareDAO.Context;
 
             // Obtain the ID of the Intervention to be displayed
             string interventionIdString = Request.QueryString[INTERVENTION_ID_GET_PARAMETER];
@@ -51,7 +53,11 @@ namespace ENETCare.IMS.WebApp
             //TODO: Edit code in Intervention for Labour and Cost to return default InterventionType values if not set to anything
             //Use a variable that's null initially, and only return it if it's not null.
             LabourLabel.Text = editIntervention.Labour.ToString();
-            CostLabel.Text = editIntervention.Cost.ToString();
+
+            // Display currency in the format described by the application's culture
+            string cultureName = ConfigurationManager.AppSettings["Culture"];
+            CultureInfo culture = CultureInfo.CreateSpecificCulture(cultureName);
+            CostLabel.Text = String.Format(culture, "{0:C}", editIntervention.Cost);
 
             //Display Admin Information
             StateLabel.Text = editIntervention.ApprovalState.ToString();

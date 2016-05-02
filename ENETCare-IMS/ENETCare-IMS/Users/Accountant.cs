@@ -19,11 +19,11 @@ namespace ENETCare.IMS.Users
         }
 
         public Accountant(
-            int id,
+            int ID,
             string name,
             string username,
             string plaintextPassword)
-            : base (id, name,username,plaintextPassword)
+            : base (ID, name,username,plaintextPassword)
         {
 
         }

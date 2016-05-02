@@ -29,6 +29,8 @@ namespace ENETCare.IMS
 
         public Client GetClientByID(int id)
         {
+            if (id == 0)
+                throw new IndexOutOfRangeException("ENETCare data is 1-indexed, but an index of 0 was requested.");
             return clients.First<Client>(c => c.ID == id);
         }
 

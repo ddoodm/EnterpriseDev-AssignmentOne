@@ -10,16 +10,34 @@
 namespace ENETCare.IMS.WebApp {
     
     
-    public partial class ReportPage {
+    public partial class ReportPageUI {
         
         /// <summary>
-        /// DetailedReport control.
+        /// ReportsDropDown control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.PlaceHolder DetailedReport;
+        protected global::System.Web.UI.WebControls.DropDownList ReportsDropDown;
+        
+        /// <summary>
+        /// GenerateReportButton control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button GenerateReportButton;
+        
+        /// <summary>
+        /// ReportTextLabel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label ReportTextLabel;
         
         /// <summary>
         /// Button_Cancel control.

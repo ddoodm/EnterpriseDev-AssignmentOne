@@ -17,7 +17,7 @@ namespace ENETCare.IMS.Tests
         [TestMethod]
         public void Get_District_By_ID_Returns_Valid_District()
         {
-            int id = 0;
+            int id = 1;
             District district = application.Districts.GetDistrictByID(id);
 
             Assert.IsTrue(district.ID == id);

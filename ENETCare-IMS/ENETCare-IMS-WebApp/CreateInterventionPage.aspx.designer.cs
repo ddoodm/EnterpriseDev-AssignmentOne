@@ -58,6 +58,33 @@ namespace ENETCare.IMS.WebApp {
         protected global::System.Web.UI.WebControls.ListBox ListBox_Clients;
         
         /// <summary>
+        /// Calendar_Date control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Calendar Calendar_Date;
+        
+        /// <summary>
+        /// TextBox_Cost control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox TextBox_Cost;
+        
+        /// <summary>
+        /// TextBox_Labour control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox TextBox_Labour;
+        
+        /// <summary>
         /// TextBox_Notes control.
         /// </summary>
         /// <remarks>

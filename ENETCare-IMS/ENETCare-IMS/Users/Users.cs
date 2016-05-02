@@ -15,32 +15,18 @@ namespace ENETCare.IMS.Users
         public Users(ENETCareDAO application)
         {
             this.application = application;
-            if (application.Users == null)
-            {
-                users = new List<User>();
-            }
-            else
-            {
-                users = application.Users.GetUsers();
-            }
-        }
-
-        /// <summary>
-        /// Populates the list of users with users
-        /// </summary>
-        public void PopulateUsersList()
-        {
-            // Placeholder data:
-            Districts districts = application.Districts;
-            Add(new Manager(1, "Daum Park", "daum", "1234", districts.GetDistrictByID(1), 8, 1024));
-            Add(new SiteEngineer(2, "Deinyon Davies", "deinyon", "1234", districts.GetDistrictByID(1), 9, 900));
-            Add(new SiteEngineer(3, "Henry Saal", "henry", "1234", districts.GetDistrictByID(2), 9, 1000));
-            Add(new Accountant(4, "Yiannis Chambers", "yiannis", "1234"));
+            users = new List<User>();
         }
 
         public void Add(User user)
         {
             users.Add(user);
+        }
+
+        public void Add(Users newUsers)
+        {
+            foreach (User user in newUsers)
+                users.Add(user);
         }
 
         public User Login(string username, string plaintextPassword)
@@ -55,9 +41,12 @@ namespace ENETCare.IMS.Users
             return result.First<User>();
         }
 
-        public User GetUserByID(int id)
+        public User GetUserByID(int ID)
         {
-            return users.First<User>(c => c.ID == id);
+            if (ID == 0)
+                throw new IndexOutOfRangeException("ENETCare data is 1-indexed, but an index of 0 was requested.");
+            return users.First<User>(
+                user => user.ID == ID);
         }
 
         public IEnumerator<User> GetEnumerator()
@@ -83,6 +72,30 @@ namespace ENETCare.IMS.Users
         public List<User> GetUsers()
         {
             return users;
+        }
+
+        public List<SiteEngineer> GetSiteEngineers()
+        {
+            List<User> siteEngineerUsers = users.Where(user => user is SiteEngineer).ToList();
+            List<SiteEngineer> siteEngineers = new List<SiteEngineer>();
+            foreach (User user in siteEngineerUsers)
+            {
+                siteEngineers.Add(user as SiteEngineer);
+            }
+
+            return siteEngineers;
+        }
+
+        public List<Manager> GetManagers()
+        {
+            List<User> managerUsers = users.Where(user => user is Manager).ToList();
+            List<Manager> managers = new List<Manager>();
+            foreach (User user in managers)
+            {
+                managers.Add(user as Manager);
+            }
+
+            return managers;
         }
     }
 }

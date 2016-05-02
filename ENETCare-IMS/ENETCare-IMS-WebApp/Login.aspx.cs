@@ -20,8 +20,8 @@ namespace ENETCare.IMS.WebApp
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            application = UserSession.Current.Application;
-            users = new Users.Users(application);
+            application = ENETCareDAO.Context;
+            users = application.Users;
         }
 
         protected void buttonLogin_Click(object sender, EventArgs e)

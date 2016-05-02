@@ -14,15 +14,6 @@ namespace ENETCare.IMS.Interventions
         public InterventionTypes()
         {
             types = new List<InterventionType>();
-
-            // TODO: Remove these test types, and use the database instead
-        }
-
-        public void PopulateTypes()
-        {
-            types.Add(new InterventionType(0, "Supply and Install Portable Toilet", 600.0m, 3));
-            types.Add(new InterventionType(1, "Hepatitis Avoidance Training", 350.0m, 7));
-            types.Add(new InterventionType(2, "Supply and Install Storm-proof Home Kit", 1000.0m, 9));
         }
 
         public int Count
@@ -32,7 +23,12 @@ namespace ENETCare.IMS.Interventions
 
         public InterventionType this[int i]
         {
-            get { return types.First<InterventionType>(type => type.ID == i); }
+            get
+            {
+                if (i == 0)
+                    throw new IndexOutOfRangeException("ENETCare data is 1-indexed, but an index of 0 was requested.");
+                return types.First<InterventionType>(type => type.ID == i);
+            }
         }
 
         public IEnumerator<InterventionType> GetEnumerator()
@@ -54,6 +50,5 @@ namespace ENETCare.IMS.Interventions
         {
             types.Add(type);
         }
-
     }
 }

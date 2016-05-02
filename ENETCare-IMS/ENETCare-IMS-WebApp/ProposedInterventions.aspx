@@ -1,4 +1,5 @@
 ﻿<%@ Page Title="Proposed Interventions" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="True" CodeBehind="ProposedInterventions.aspx.cs" Inherits="ENETCare.IMS.WebApp.ProposedInterventionsWebUI" %>
+<%@ Reference Control="~/Controls/EditTableItemButton.ascx" %>
 
 <asp:Content ID="ProposedInterventionsContent" ContentPlaceHolderID="MainContent" runat="server">
     <h1><%: Page.Title %></h1>
@@ -11,7 +12,7 @@
         </li>
     </ul>
 
-    <div class="enetImsTableContainer">
+        <div class="enetImsTableContainer">
         <asp:Table ID="Table_In_Proposed_Interventions" runat="server"
             CellSpacing="0"
             CssClass="enetImsTable">
@@ -26,4 +27,5 @@
             </asp:TableHeaderRow>
         </asp:Table>
     </div>
+
 </asp:Content>

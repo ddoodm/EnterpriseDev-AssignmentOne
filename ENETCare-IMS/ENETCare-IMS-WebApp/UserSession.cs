@@ -20,7 +20,6 @@ namespace ENETCare.IMS.WebApp
 
         private UserSession()
         {
-            Application = new ENETCareDAO();
         }
 
         /// <summary>
@@ -50,6 +49,5 @@ namespace ENETCare.IMS.WebApp
         }
 
         public User User { get; private set; }
-        public ENETCareDAO Application { get; private set; }
     }
 }

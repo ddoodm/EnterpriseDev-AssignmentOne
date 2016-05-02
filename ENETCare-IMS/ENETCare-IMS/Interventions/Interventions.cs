@@ -19,19 +19,12 @@ namespace ENETCare.IMS.Interventions
             this.application = application;
 
             interventions = new List<Intervention>();
-
-            SetUpData();
         }
 
         public Interventions(ENETCareDAO application, List<Intervention> list)
         {
             this.application = application;
             this.interventions = list;
-        }
-
-        private void SetUpData()
-        {
-
         }
 
         /// <summary>
@@ -51,17 +44,27 @@ namespace ENETCare.IMS.Interventions
             }
         }
 
-        public Intervention CreateIntervention(InterventionType type, Client client, SiteEngineer siteEngineer)
+        public Intervention CreateIntervention(
+            InterventionType type,
+            Client client,
+            SiteEngineer siteEngineer,
+            DateTime date,
+            decimal? cost,
+            decimal? labour,
+            string notes)
         {
             int id = NextID;
+
             Intervention newIntervention = Intervention.Factory.CreateIntervention(
-                id, type, client, siteEngineer);
+                id, type, client, siteEngineer, labour, cost, date);
+            newIntervention.UpdateNotes(siteEngineer, notes);
+
             application.Save(newIntervention);
             Add(newIntervention);
             return newIntervention;
         }
 
-        public void Add(Intervention intervention)//private void Add(Intervention intervention)
+        public void Add(Intervention intervention)
         {
             interventions.Add(intervention);
         }
@@ -80,6 +83,8 @@ namespace ENETCare.IMS.Interventions
         {
             get
             {
+                if (ID == 0)
+                    throw new IndexOutOfRangeException("ENETCare data is 1-indexed, but an index of 0 was requested.");
                 return interventions.First<Intervention>(
                     intervention => intervention.ID == ID);
             }
@@ -98,6 +103,11 @@ namespace ENETCare.IMS.Interventions
             return interventions
                 .Where(x => x.District == district)
                 .ToList<Intervention>();
+        }
+
+        public List<Intervention> GetInterventions()
+        {
+            return interventions;
         }
     }
 }

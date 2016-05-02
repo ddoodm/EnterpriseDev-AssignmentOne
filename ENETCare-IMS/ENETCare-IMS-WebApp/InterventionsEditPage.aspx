@@ -6,7 +6,7 @@
     <section id="InterventionSection">
 
         <div>
-            <u><h3>Core Information</h3></u>
+            <h3><u>Core Information</u></h3>
         </div>
 
         <div id="InterventionData">
@@ -52,7 +52,7 @@
             <div class="form-group">
                 <p>
                 <b>Cost Estimate:</b>
-                 $<asp:Label ID="CostLabel" runat="server"></asp:Label>
+                 <asp:Label ID="CostLabel" runat="server"></asp:Label>
                 </p>
             </div>
         </div>

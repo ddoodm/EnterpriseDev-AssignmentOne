@@ -27,7 +27,7 @@ namespace ENETCare.IMS.Tests
         {
             Assert.IsTrue(interventionTypes.Count >= 1, "There are no Intervention Types");
 
-            return interventionTypes[0];
+            return interventionTypes[1];
         }
 
         private Client CreateTestClient()
@@ -41,9 +41,9 @@ namespace ENETCare.IMS.Tests
             Assert.IsTrue(districts.Count >= NUM_TEST_DISTRICTS,
                 "There are not enough districts for testing.");
 
-            testDistrictA = districts.GetDistrictByID(0);
-            testDistrictB = districts.GetDistrictByID(1);
-            testDistrictC = districts.GetDistrictByID(2);
+            testDistrictA = districts.GetDistrictByID(1);
+            testDistrictB = districts.GetDistrictByID(2);
+            testDistrictC = districts.GetDistrictByID(3);
         }
 
         private SiteEngineer CreateTestSiteEngineer()
@@ -197,7 +197,7 @@ namespace ENETCare.IMS.Tests
 
             // Create a new Engineer who would otherwise be permitted to approve the Intervention
             SiteEngineer newEngineer = new SiteEngineer
-                (1, "Markus Markson", "markson.markus", "aBcDe_12$45",
+                (2, "Markus Markson", "markson.markus", "aBcDe_12$45",
                 intervention.District, intervention.Labour + 1, intervention.Cost + 100);
 
             // Attempt to approve the intervention by an Engineer who did not propose it

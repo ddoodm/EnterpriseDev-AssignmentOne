@@ -16,11 +16,11 @@ namespace ENETCare.IMS.WebApp
 
         private Interventions.Interventions interventions;
 
-        protected ILocalizedUser User { get; private set; }
+        protected new ILocalizedUser User { get; private set; }
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            application = UserSession.Current.Application;
+            application = ENETCareDAO.Context;
             User = (ILocalizedUser)UserSession.Current.User;
 
             interventions = application.Interventions;

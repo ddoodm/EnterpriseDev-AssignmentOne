@@ -10,7 +10,6 @@ using ENETCare.IMS.Users;
 
 namespace ENETCare.IMS.WebApp
 {
-    
     public partial class ProposedInterventionsWebUI : System.Web.UI.Page
     {
         private ENETCareDAO application;
@@ -26,7 +25,7 @@ namespace ENETCare.IMS.WebApp
         {
             // Obtain the Application instance
             // TODO: Do not use a Site Engineer session here; use Manager.
-            application = UserSession.Current.Application;
+            application = ENETCareDAO.Context;
             interventions = application.Interventions;
 
             SortInterventions();
@@ -35,18 +34,10 @@ namespace ENETCare.IMS.WebApp
 
         private void SortInterventions()
         {
-            for (int i = 0; i < interventions.Count; i++)
-            {
-                if (interventions[i].ApprovalState == InterventionApprovalState.Proposed)
-                {
-                    proposedInterventions.Add(interventions[i]);
 
-                }
-                else if (interventions[i].ApprovalState == InterventionApprovalState.Approved)
-                {
-                    approvedInterventions.Add(interventions[i]);
-                }
-            }
+            proposedInterventions = application.Interventions.GetInterventions().Where(i => i.ApprovalState == InterventionApprovalState.Proposed).ToList();
+           
+            approvedInterventions = application.Interventions.GetInterventions().Where(i => i.ApprovalState == InterventionApprovalState.Approved).ToList();
         }
         private void PopulateInterventionsTable()
         {
@@ -68,16 +59,16 @@ namespace ENETCare.IMS.WebApp
 
         private void PopulateWithProposedInterventions()
         {
-            for (int i = 0; i < proposedInterventions.Count; i++)
+            foreach(Intervention proposedIntervention in proposedInterventions)
             {
-                AddInterventionToTable(proposedInterventions[i]);
+                AddInterventionToTable(proposedIntervention);
             }
         }
         private void PopulateWithApprovedInterventions()
         {
-            for (int i = 0; i < approvedInterventions.Count; i++)
+            foreach(Intervention approvedIntervention in approvedInterventions)
             {
-                AddInterventionToTable(approvedInterventions[i]);
+                AddInterventionToTable(approvedIntervention);
             }
         }
 
@@ -129,5 +120,6 @@ namespace ENETCare.IMS.WebApp
         {
 
         }
+
     }
 }
