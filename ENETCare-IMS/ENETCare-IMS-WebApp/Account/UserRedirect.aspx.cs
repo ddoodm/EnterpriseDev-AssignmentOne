@@ -28,10 +28,10 @@ namespace ENETCare.IMS.WebApp
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (User.Identity != null)
-                RedirectToUserPage();
-            else
+            if (User.Identity.GetUserId() == null )
                 Response.Redirect("/Account/Login");
+            else
+                RedirectToUserPage();
         }
     }
 }
