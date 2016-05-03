@@ -19,6 +19,8 @@ namespace ENETCare.IMS
     /// </summary>
     public class ENETCareDAO
     {
+        private static ENETCareDAO currentContext;
+
         private string sqlConnectionString;
 
         public Interventions.Interventions Interventions { get; private set; }
@@ -44,7 +46,7 @@ namespace ENETCare.IMS
 
         public static ENETCareDAO Context
         {
-            get { return new ENETCareDAO(); }
+            get { return (currentContext) ?? (currentContext = new ENETCareDAO()); }
         }
 
         private string GetConnectionString()

@@ -1,5 +1,7 @@
 ﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.master.cs" Inherits="ENETCare.IMS.WebApp.SiteMaster" %>
 
+<%@ Import namespace="ENETCare.IMS.WebApp" %>
+
 <!DOCTYPE html>
 
 <html lang="en">
@@ -41,13 +43,17 @@
                         Not logged in
                     </AnonymousTemplate>
                     <LoggedInTemplate>
-                        Welcome [UserName]
+                        Welcome, <%: UserSession.Current.User.Name %>
                     </LoggedInTemplate>
                 </asp:LoginView>
                 </a></li>
             <li style="float: left;">
-                <asp:LoginStatus ID="LoginStatus1" runat="server" />
-                </li>
+                <asp:LoginStatus
+                    ID="LoginStatus1"
+                    runat="server"
+                    OnLoggingOut="LoginStatus1_LoggingOut"
+                    LogoutPageUrl="~/Account/Login.aspx" />
+            </li>
             <li style="float: right;">
                 <img runat="server" id="headerLogo" src="~/Content/ENETCare-Logo.png" alt="ENET Care" />
             </li>
