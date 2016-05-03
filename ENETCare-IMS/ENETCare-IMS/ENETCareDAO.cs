@@ -240,8 +240,7 @@ namespace ENETCare.IMS
             DataRow qualityData = qualityTable.Rows[0];
 
             return new InterventionQualityManagement(
-                (decimal)qualityData["Health"], (DateTime)qualityData["LastVisit"]
-                );
+                (decimal)qualityData["Health"], (DateTime)qualityData["LastVisit"]);
         }
 
         public Users.Users LoadUsers(SqlConnection sql, Districts districts)
