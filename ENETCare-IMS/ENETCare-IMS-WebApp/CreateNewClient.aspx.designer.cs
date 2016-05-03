@@ -31,13 +31,13 @@ namespace ENETCare.IMS.WebApp {
         protected global::System.Web.UI.WebControls.TextBox ClientLocationText;
         
         /// <summary>
-        /// ClientDistrict control.
+        /// ClientDistrictText control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ClientDistrict;
+        protected global::System.Web.UI.WebControls.TextBox ClientDistrictText;
         
         /// <summary>
         /// Button_Cancel control.

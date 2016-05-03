@@ -155,15 +155,11 @@ namespace ENETCare.IMS
                 InterventionApproval approval =
                     LoadInterventionApproval(sql, users, row.InterventionId);
 
-                // Obtain quality management
-                InterventionQualityManagement quality =
-                    LoadInterventionQualityManagement(sql, row.InterventionId);
-
-                // Create the intervention
+                // TODO: Handle Quality 
                 Intervention intervention = 
                     Intervention.Factory.RawCreateIntervention(
                         row.InterventionId, type, client, (SiteEngineer)siteEngineer,
-                        labour, cost, row.Date, notes, approval, quality
+                        labour, cost, row.Date, notes, approval, null
                         );
 
                 // Link approval
@@ -213,35 +209,6 @@ namespace ENETCare.IMS
                 throw new InvalidDataException("An Intervention Approval specified an incompatible approver.");
 
             return new InterventionApproval(state, (IInterventionApprover)approver);
-        }
-
-        private InterventionQualityManagement LoadInterventionQualityManagement(SqlConnection sql, int interventionId)
-        {
-            // Select the quality info with the given ID
-            SqlCommand query = new SqlCommand(
-                String.Format(
-                    "SELECT * FROM [dbo].[{0}] WHERE InterventionId = @intervention_id",
-                    DatabaseConstants.INTERVENTION_QUALITY_MANAGEMENT_TABLE_NAME),
-                sql);
-            query.Parameters.AddWithValue("@intervention_id", interventionId);
-
-            SqlDataAdapter adapter = new SqlDataAdapter(query);
-            DataSet dataSet = new DataSet();
-            adapter.Fill(dataSet);
-
-            // The query returns one table
-            if (dataSet.Tables.Count != 1)
-                throw new InvalidDataException();
-            DataTable qualityTable = dataSet.Tables[0];
-
-            // No quality data if table is empty
-            if (qualityTable.Rows.Count < 1)
-                return null;
-            DataRow qualityData = qualityTable.Rows[0];
-
-            return new InterventionQualityManagement(
-                (decimal)qualityData["Health"], (DateTime)qualityData["LastVisit"]
-                );
         }
 
         public Users.Users LoadUsers(SqlConnection sql, Districts districts)

@@ -34,27 +34,12 @@ namespace ENETCare.IMS.WebApp
 
         private void SortInterventions()
         {
-            proposedInterventions = interventions.FilterByState(InterventionApprovalState.Proposed);
-            approvedInterventions = interventions.FilterByState(InterventionApprovalState.Approved);
+            Manager manager = UserSession.Current.User as Manager;
+            proposedInterventions = interventions.FilterByState(InterventionApprovalState.Proposed).Where(i => i.Client.District.ID == manager.District.ID).ToList();
+            approvedInterventions = interventions.FilterByState(InterventionApprovalState.Approved).Where(i => i.Client.District.ID == manager.District.ID).ToList();
         }
 
-        //private void PopulateInterventionsTable()
-        //{
-        //    // TODO: This population code will be replaced with a
-        //    // DataSource and a DataGrid
-
-        //    Table_In_Proposed_Interventions.Rows.Clear();
-
-        //    if (isDisplayingProposed)
-        //    {
-        //        PopulateWithProposedInterventions();
-        //    }
-        //    else
-        //    {
-        //        PopulateWithApprovedInterventions();
-        //    }
-            
-        //}
+  
 
         protected void Button_ProposedInterventions_Click(object sender, EventArgs e)
         {
@@ -74,28 +59,11 @@ namespace ENETCare.IMS.WebApp
             Response.Write(Request.RawUrl.ToString());
         }
 
-        protected void Button_Edit_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        /*protected void ProposedInterventionsDataSource_Selecting(object sender, LinqDataSourceSelectEventArgs e)
-        {
-            if (isDisplayingProposed)
-            {
-                e.Result = interventions.FilterByState(InterventionApprovalState.Proposed);
-            }
-            else
-            {
-                e.Result = interventions.FilterByState(InterventionApprovalState.Approved);
-            }
-        }
-        */
 
         protected void ProposedTable_Interventions_Load(object sender, EventArgs e)
         {
             // Set GridView to render its header in a HTML 'thead'
-            Table_ProposedInterventions.HeaderRow.TableSection = TableRowSection.TableHeader;
+            //Table_ProposedInterventions.HeaderRow.TableSection = TableRowSection.TableHeader;
         }
     }
 }

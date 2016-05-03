@@ -77,30 +77,31 @@ namespace ENETCare.IMS.Interventions
 
         public bool CanChangeState(IInterventionApprover user)
         {
+            bool outcome = true;
             // A manager cannot modify an approved intervention
             if (State == InterventionApprovalState.Approved)
                 if (user is Manager)
-                    return false;
+                    outcome = false;
 
             // A manager must work in the same district as the intervention
             if (user is Manager)
                 if (user.District != intervention.District)
-                    return false;
+                    outcome = false;
 
             // A site engineer must be the site engineer who proposed the intervention
             if (user is SiteEngineer)
-                if (user != intervention.SiteEngineer)
-                    return false;
+                if (user.ID != intervention.SiteEngineer.ID)
+                        outcome = false;
 
             // Must be able to approve *at least* the default labour AND the actual labour
             if (user.MaxApprovableLabour < intervention.MaximumLabour)
-                return false;
+                outcome = false;
 
             // Must be able to approve *at least* the default cost AND the actual cost
             if (user.MaxApprovableCost < intervention.MaximumCost)
-                return false;
+                outcome = false;
 
-            return true;
+            return outcome;
         }
 
         internal void LinkIntervention(Intervention intervention)

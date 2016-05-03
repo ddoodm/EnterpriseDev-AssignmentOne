@@ -3,7 +3,7 @@
 <asp:Content ID="InterventionEditPage" ContentPlaceHolderID="MainContent" runat="server">
     <h1><%: Page.Title %></h1>
 
-    <li><asp:Button ID="Button_Interventions" runat="server" Text="< Back" OnClick="Button_Back_Click" /></li>
+    <asp:Button ID="Button_Interventions" runat="server" Text="< Back" OnClick="Button_Back_Click" />
 
     <section id="InterventionSection">
 
@@ -95,7 +95,7 @@
             </div>
 
             <asp:Button ID="EditQualityInterventionButton" runat="server" Text="Edit" />
-            <asp:Button ID="CancelEditQualityInterventionButton" runat="server" Text="Cancel" />
+            <asp:Button ID="CancelEditQualityInterventionButton" runat="server" Text="Cancel" OnClick="CancelEditQualityInterventionButton_Click" />
 
             <div class="form-group">
                 <p><b>Notes</b></p>
@@ -107,14 +107,14 @@
             <div id="HealthGroup" class="form-group" runat="server">
                 <p>
                     <b>Health:</b>
-                <asp:Label ID="HealthLabel" runat="server"></asp:Label>
+                <asp:TextBox ID="HealthText" runat="server" ReadOnly ="true"></asp:TextBox>
                     </p>
             </div>
 
             <div id="DateLastVisitedGroup" class="form-group" runat="server">
                 <p>
                     <b>Date of last visit:</b>
-                    <asp:Label ID="LastDateLabel" runat="server"></asp:Label>
+                    <asp:TextBox ID="LastDateText" runat="server" ReadOnly ="true"></asp:TextBox>
                 </p>
 
 

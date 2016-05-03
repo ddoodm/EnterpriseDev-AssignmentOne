@@ -39,7 +39,6 @@ namespace ENETCare.IMS.WebApp
             editIntervention = application.Interventions[interventionId];
 
             DisplayInterventionData();
-            SetEditControlsForUserRole();
         }
 
         void DisplayInterventionData()
@@ -62,11 +61,13 @@ namespace ENETCare.IMS.WebApp
             //Display Admin Information
             StateLabel.Text = editIntervention.ApprovalState.ToString();
             SetApprovalButtons();
-            
+
             //Display Quality Information
             Intervention_Notes_Textbox.Text = editIntervention.Notes;
             Intervention_Notes_Textbox.ReadOnly = true;
             ShowQualityInformation();
+
+            SetEditControlsForUserRole();
         }
 
         void SetApprovalButtons()
@@ -75,44 +76,49 @@ namespace ENETCare.IMS.WebApp
 
             if (state == InterventionApprovalState.Proposed)
             {
-               CompleteButton.Visible = false;
-               ApprovalUserGroup.Visible = false;
+                CompleteButton.Visible = false;
+                ApprovalUserGroup.Visible = false;
+                CancelButton.Visible = true;
+                ApproveButton.Visible = true;
+                InterventionStateButtonGroup.Visible = true;
             }
             else if (state == InterventionApprovalState.Approved)
             {
-               ApproveButton.Visible = false;
-               ApprovalUserGroup.Visible = true;
-               CompleteButton.Visible = true;
-               ApprovalUserLabel.Text = editIntervention.ApprovingUser.Name;
+                ApproveButton.Visible = false;
+                ApprovalUserGroup.Visible = true;
+                CompleteButton.Visible = true;
+                ApprovalUserLabel.Text = editIntervention.ApprovingUser.Name;
+                InterventionStateButtonGroup.Visible = true;
             }
-            else if(state == InterventionApprovalState.Cancelled || state == InterventionApprovalState.Completed)
+            else if (state == InterventionApprovalState.Cancelled || state == InterventionApprovalState.Completed)
             {
                 ApprovalUserGroup.Visible = false;
                 CompleteButton.Visible = false;
                 ApproveButton.Visible = false;
                 ApprovalUserLabel.Visible = false;
                 CancelButton.Visible = false;
+                InterventionStateButtonGroup.Visible = false;
             }
         }
 
         void ShowQualityInformation()
         {
-            if(editIntervention.Health == null)
+            if (editIntervention.Health == null)
             {
                 HealthGroup.Visible = false;
             }
             else
             {
-                HealthLabel.Text = editIntervention.Health.ToString();
+                HealthText.Text = editIntervention.Health.ToString();
             }
 
-            if(editIntervention.LastVisit == null)
+            if (editIntervention.LastVisit == null)
             {
                 DateLastVisitedGroup.Visible = false;
             }
             else
             {
-                LastDateLabel.Text = editIntervention.LastVisit.ToString();
+                LastDateText.Text = editIntervention.LastVisit.ToString();
             }
         }
 
@@ -124,7 +130,7 @@ namespace ENETCare.IMS.WebApp
 
             if (user is IInterventionApprover)
             {
-                if (!editIntervention.UserCanChangeState((IInterventionApprover)user))
+                if (editIntervention.UserCanChangeState((IInterventionApprover)user))
                 {
                     InterventionStateButtonGroup.Visible = true;
                 }
@@ -164,22 +170,47 @@ namespace ENETCare.IMS.WebApp
             if (isEditing)
             {
                 Intervention_Notes_Textbox.ReadOnly = true;
-                SiteEngineer user = (SiteEngineer) UserSession.Current.User;
+                SiteEngineer user = (SiteEngineer)UserSession.Current.User;
                 editIntervention.UpdateNotes(user, Intervention_Notes_Textbox.Text);
+
+                EditQualityInterventionButton.Text = "Edit";
+                EditQualityInterventionButton.Enabled = true;
+                CancelEditQualityInterventionButton.Visible = false;
+                LastDateText.ReadOnly = true;
+                HealthText.ReadOnly = true;
             }
             else
             {
                 Intervention_Notes_Textbox.ReadOnly = false;
-                EditQualityInterventionButton.Text = "Save Edits";
+                EditQualityInterventionButton.Text = "Editing...";
+                EditQualityInterventionButton.Enabled = false;
+                CancelEditQualityInterventionButton.Visible = true;
+                LastDateText.ReadOnly = false;
+                HealthText.ReadOnly = false;
             }
-
-            LastDateLabel.Text = editIntervention.LastVisit.ToString();
-            HealthLabel.Text = editIntervention.Health.ToString();
         }
 
         protected void Button_Back_Click(object sender, EventArgs e)
         {
-            Response.Redirect(Request.UrlReferrer.ToString());
+            if(UserSession.Current.User is SiteEngineer)
+            {
+                Response.Redirect("Interventions.aspx");
+            }
+            else
+            {
+                Response.Redirect("ProposedInterventions.aspx");
+            }
+        }
+
+        protected void CancelEditQualityInterventionButton_Click(object sender, EventArgs e)
+        {
+            isEditing = false;
+            Intervention_Notes_Textbox.ReadOnly = true;
+            CancelEditQualityInterventionButton.Visible = false;
+            EditQualityInterventionButton.Text = "Edit";
+            EditQualityInterventionButton.Enabled = true;
+            LastDateText.ReadOnly = true;
+            HealthText.ReadOnly = true;
         }
     }
 }

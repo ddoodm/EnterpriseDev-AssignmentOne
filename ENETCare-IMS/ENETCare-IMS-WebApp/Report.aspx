@@ -3,7 +3,7 @@
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
     <h1>Reports</h1>
     <p>
-        <asp:DropDownList ID="ReportsDropDown" runat="server" OnSelectedIndexChanged="Index_Changed"></asp:DropDownList>
+        <asp:DropDownList ID="ReportsDropDown" runat="server" OnSelectedIndexChanged="Index_Changed" OnTextChanged="ReportsDropDown_TextChanged" AutoPostBack="True" ></asp:DropDownList>
     </p>
     <p>
         <asp:DropDownList ID="DistrictsDropDown" runat="server" Visible="false"></asp:DropDownList>

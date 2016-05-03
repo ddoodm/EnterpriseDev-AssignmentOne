@@ -18,7 +18,7 @@
         <br />
 
         <p>District</p>
-        <asp:DropDownList ID="ClientDistrict" runat="server" Width="377px"></asp:DropDownList>
+        <asp:TextBox ID="ClientDistrictText" runat="server"></asp:TextBox>
         <br />
         <br />
         <asp:Button ID="Button_Cancel" runat="server" Text="Cancel" OnClick="Button_Cancel_Click" />

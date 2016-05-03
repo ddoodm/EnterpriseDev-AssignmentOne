@@ -254,5 +254,21 @@ namespace ENETCare.IMS.WebApp
             }
         }
 
+        protected void ReportsDropDown_TextChanged(object sender, EventArgs e)
+        {
+            switch (ReportsDropDown.SelectedIndex)
+            {
+                case 3:
+                    {
+                        DistrictsDropDown.Visible = true;
+                        break;
+                    }
+                default:
+                    {
+                        DistrictsDropDown.Visible = false;
+                        break;
+                    }
+            }
+        }
     }
 }

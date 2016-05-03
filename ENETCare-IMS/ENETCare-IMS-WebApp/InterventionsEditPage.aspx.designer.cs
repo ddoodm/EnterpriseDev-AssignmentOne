@@ -193,13 +193,13 @@ namespace ENETCare.IMS.WebApp {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl HealthGroup;
         
         /// <summary>
-        /// HealthLabel control.
+        /// HealthText control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label HealthLabel;
+        protected global::System.Web.UI.WebControls.TextBox HealthText;
         
         /// <summary>
         /// DateLastVisitedGroup control.
@@ -211,12 +211,12 @@ namespace ENETCare.IMS.WebApp {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl DateLastVisitedGroup;
         
         /// <summary>
-        /// LastDateLabel control.
+        /// LastDateText control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label LastDateLabel;
+        protected global::System.Web.UI.WebControls.TextBox LastDateText;
     }
 }
