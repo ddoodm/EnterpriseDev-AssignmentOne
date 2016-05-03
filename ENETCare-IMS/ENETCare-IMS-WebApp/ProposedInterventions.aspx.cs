@@ -34,19 +34,10 @@ namespace ENETCare.IMS.WebApp
 
         private void SortInterventions()
         {
-            for (int i = 0; i < interventions.Count; i++)
-            {
-                if (interventions[i].ApprovalState == InterventionApprovalState.Proposed)
-                {
-                    proposedInterventions.Add(interventions[i]);
-
-                }
-                else if (interventions[i].ApprovalState == InterventionApprovalState.Approved)
-                {
-                    approvedInterventions.Add(interventions[i]);
-                }
-            }
+            proposedInterventions = interventions.FilterByState(InterventionApprovalState.Proposed);
+            approvedInterventions = interventions.FilterByState(InterventionApprovalState.Approved);
         }
+
         private void PopulateInterventionsTable()
         {
             // TODO: This population code will be replaced with a

@@ -7,49 +7,79 @@ using System.Threading.Tasks;
 
 namespace ENETCare.IMS.Users
 {
-    public class Users : IReadOnlyList<User>
+    public class Users : IReadOnlyList<EnetCareUser>
     {
         private ENETCareDAO application;
-        private List<User> users;
+        private List<EnetCareUser> users;
 
         public Users(ENETCareDAO application)
         {
             this.application = application;
-            users = new List<User>();
+            users = new List<EnetCareUser>();
         }
 
-        public void Add(User user)
+        public void Add(EnetCareUser user)
         {
             users.Add(user);
         }
 
         public void Add(Users newUsers)
         {
-            foreach (User user in newUsers)
+            foreach (EnetCareUser user in newUsers)
                 users.Add(user);
         }
 
-        public User Login(string username, string plaintextPassword)
+        /// <summary>
+        /// Computes the next available ID number
+        /// </summary>
+        private int NextID
         {
-            var result = from user in users
-                         where user.PlaintextPassword == plaintextPassword
-                         && user.Username == username
-                         select user;
+            get
+            {
+                if (users.Count < 1)
+                    return 1;
 
-            if (!result.Any<User>())
-                return null;
-            return result.First<User>();
+                var highestIntervention
+                    = users.OrderByDescending(i => i.ID)
+                    .FirstOrDefault();
+                return highestIntervention.ID + 1;
+            }
         }
 
-        public User GetUserByID(int ID)
+        public SiteEngineer CreateSiteEngineer(
+            string name, District district, decimal maxApprovableLabour, decimal maxApprovableCost)
+        {
+            SiteEngineer engineer =
+                new SiteEngineer(NextID, name, district, maxApprovableLabour, maxApprovableCost);
+            Add(engineer);
+            return engineer;
+        }
+
+        public Manager CreateManager(
+            string name, District district, decimal maxApprovableLabour, decimal maxApprovableCost)
+        {
+            Manager manager =
+                new Manager(NextID, name, district, maxApprovableLabour, maxApprovableCost);
+            Add(manager);
+            return manager;
+        }
+
+        public Accountant CreateAccountant(string name)
+        {
+            Accountant accountant = new Accountant(NextID, name);
+            Add(accountant);
+            return accountant;
+        }
+
+        public EnetCareUser GetUserByID(int ID)
         {
             if (ID == 0)
                 throw new IndexOutOfRangeException("ENETCare data is 1-indexed, but an index of 0 was requested.");
-            return users.First<User>(
+            return users.First<EnetCareUser>(
                 user => user.ID == ID);
         }
 
-        public IEnumerator<User> GetEnumerator()
+        public IEnumerator<EnetCareUser> GetEnumerator()
         {
             return users.GetEnumerator();
         }
@@ -61,15 +91,15 @@ namespace ENETCare.IMS.Users
 
         public int Count { get { return users.Count; } }
 
-        public User this[int index]
+        public EnetCareUser this[int index]
         {
             get
             {
-                return users.First<User>(user => user.ID == index);
+                return users.First<EnetCareUser>(user => user.ID == index);
             }
         }
 
-        public List<User> GetUsers()
+        public List<EnetCareUser> GetUsers()
         {
             return users;
         }

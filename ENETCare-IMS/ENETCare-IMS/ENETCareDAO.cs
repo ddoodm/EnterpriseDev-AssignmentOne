@@ -19,6 +19,8 @@ namespace ENETCare.IMS
     /// </summary>
     public class ENETCareDAO
     {
+        private static ENETCareDAO currentContext;
+
         private string sqlConnectionString;
 
         public Interventions.Interventions Interventions { get; private set; }
@@ -34,22 +36,23 @@ namespace ENETCare.IMS
             using (SqlConnection sqlLink = new SqlConnection(sqlConnectionString))
             {
                 this.Districts = LoadDistricts(sqlLink);
-                this.Clients = LoadClients(sqlLink);
-                this.Users = LoadUsers(sqlLink);
+                this.Clients = LoadClients(sqlLink, this.Districts);
+                this.Users = LoadUsers(sqlLink, this.Districts);
                 this.InterventionTypes = LoadInterventionTypes(sqlLink);
-                this.Interventions = LoadInterventions(sqlLink);
+                this.Interventions = LoadInterventions(
+                    sqlLink, this.InterventionTypes, this.Clients, this.Users);
             }
         }
 
         public static ENETCareDAO Context
         {
-            get { return new ENETCareDAO(); }
+            get { return (currentContext) ?? (currentContext = new ENETCareDAO()); }
         }
 
         private string GetConnectionString()
         {
             return ConfigurationManager
-                .ConnectionStrings["DatabaseConnection"]
+                .ConnectionStrings["ENETCareDatabaseConnection"]
                 .ConnectionString;
         }
 
@@ -81,7 +84,7 @@ namespace ENETCare.IMS
             return types;
         }
 
-        private Clients LoadClients(SqlConnection sql)
+        private Clients LoadClients(SqlConnection sql, Districts districts)
         {
             // Select all from table, given the table name
             SqlCommand query = new SqlCommand(
@@ -98,7 +101,7 @@ namespace ENETCare.IMS
 
             foreach (EnetCareImsDataSet.ClientsRow clientRow in dataSet.Clients)
             {
-                District district = Districts.GetDistrictByID(clientRow.DistrictId);
+                District district = districts.GetDistrictByID(clientRow.DistrictId);
 
                 Client client = new Client(
                     clientRow.ClientId, clientRow.Name, clientRow.Location, district);
@@ -109,7 +112,11 @@ namespace ENETCare.IMS
             return clients;
         }
 
-        private Interventions.Interventions LoadInterventions(SqlConnection sql)
+        private Interventions.Interventions LoadInterventions(
+            SqlConnection sql,
+            InterventionTypes interventionTypes,
+            Clients clients,
+            Users.Users users)
         {
             // Select all from table, given the table name
             SqlCommand query = new SqlCommand(
@@ -127,9 +134,9 @@ namespace ENETCare.IMS
 
             foreach (EnetCareImsDataSet.InterventionsRow row in dataSet.Interventions)
             {
-                InterventionType type = InterventionTypes[row.InterventionTypeId];
-                Client client = Clients.GetClientByID(row.ClientId);
-                User siteEngineer = Users.GetUserByID(row.ProposingEngineerId);
+                InterventionType type = interventionTypes[row.InterventionTypeId];
+                Client client = clients.GetClientByID(row.ClientId);
+                EnetCareUser siteEngineer = users.GetUserByID(row.ProposingEngineerId);
 
                 if (!(siteEngineer is SiteEngineer))
                     throw new InvalidDataException(
@@ -154,11 +161,11 @@ namespace ENETCare.IMS
             return interventions;
         }
 
-        public Users.Users LoadUsers(SqlConnection sql)
+        public Users.Users LoadUsers(SqlConnection sql, Districts districts)
         {
             Users.Users users = new Users.Users(this);
-            users.Add(LoadSiteEngineers(sql));
-            users.Add(LoadManagers(sql));
+            users.Add(LoadSiteEngineers(sql, districts));
+            users.Add(LoadManagers(sql, districts));
             users.Add(LoadAccountants(sql));
             return users;
         }
@@ -181,16 +188,18 @@ namespace ENETCare.IMS
         /// an instantiated user of the given type.
         /// </param>
         /// <returns>A Users collection, populated with all users of the specified type.</returns>
-        public Users.Users LoadUsers(SqlConnection sql, string tableName, Func<DataRow, User> instantiateUser)
+        public Users.Users LoadUsers(SqlConnection sql, string tableName, Func<DataRow, EnetCareUser> instantiateUser)
         {
             // Joins Table-Per-Type sub-class with its base class
             SqlCommand query = new SqlCommand(
                 String.Format(
                     "SELECT * " +
                     "FROM   [dbo].[{0}] " +
-                    "   INNER JOIN [dbo].[Users] " +
-                    "       ON [dbo].[{0}].[UserId] = [dbo].[Users].[UserId]",
-                    tableName),
+                    "   INNER JOIN [dbo].[{1}] " +
+                    "       ON [dbo].[{0}].[{2}] = [dbo].[{1}].[{2}]",
+                    tableName,
+                    DatabaseConstants.USERS_TABLE_NAME,
+                    DatabaseConstants.USER_ID),
                 sql);
 
             SqlDataAdapter adapter = new SqlDataAdapter(query);
@@ -211,31 +220,31 @@ namespace ENETCare.IMS
             return users;
         }
 
-        public Users.Users LoadSiteEngineers(SqlConnection sql)
+        public Users.Users LoadSiteEngineers(SqlConnection sql, Districts districts)
         {
             return LoadUsers(sql, "Users_SiteEngineers", row =>
             {
                 // Find the Site Engineer's district
-                District district = Districts.GetDistrictByID((int)row["DistrictId"]);
+                District district = districts.GetDistrictByID((int)row["DistrictId"]);
 
                 // Create the Site Engineer from table data
                 return new SiteEngineer (
-                    (int)row["UserId"], (string)row["Name"], (string)row["Username"],
-                    "1234", district, (decimal)row["MaxApprovableLabour"], (decimal)row["MaxApprovableCost"]);
+                    (int)row["UserId"], (string)row["Name"],district,
+                    (decimal)row["MaxApprovableLabour"], (decimal)row["MaxApprovableCost"]);
             });
         }
 
-        public Users.Users LoadManagers(SqlConnection sql)
+        public Users.Users LoadManagers(SqlConnection sql, Districts districts)
         {
             return LoadUsers(sql, "Users_Managers", row =>
             {
                 // Find the Manager's district
-                District district = Districts.GetDistrictByID((int)row["DistrictId"]);
+                District district = districts.GetDistrictByID((int)row["DistrictId"]);
 
                 // Create the Manager from table data
                 return new Manager(
-                    (int)row["UserId"], (string)row["Name"], (string)row["Username"],
-                    "1234", district, (decimal)row["MaxApprovableLabour"], (decimal)row["MaxApprovableCost"]);
+                    (int)row["UserId"], (string)row["Name"], district,
+                    (decimal)row["MaxApprovableLabour"], (decimal)row["MaxApprovableCost"]);
             });
         }
 
@@ -245,7 +254,7 @@ namespace ENETCare.IMS
             {
                 // Create the Accountant from table data
                 return new Accountant(
-                    (int)row["UserId"], (string)row["Name"], (string)row["Username"], "1234");
+                    (int)row["UserId"], (string)row["Name"]);
             });
         }
 

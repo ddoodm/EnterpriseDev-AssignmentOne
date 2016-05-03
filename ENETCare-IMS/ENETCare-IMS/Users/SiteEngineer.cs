@@ -6,9 +6,11 @@ using System.Threading.Tasks;
 
 namespace ENETCare.IMS.Users
 {
-    public class SiteEngineer : User, ILocalizedUser
+    public class SiteEngineer : EnetCareUser, ILocalizedUser
     {
-        private string TITLE = "Site Engineer";
+        private const string
+            TITLE = "Site Engineer",
+            HOMEPAGE = "Interventions";
 
         public District District { get; private set; }
         public decimal MaxApprovableLabour { get; private set; }
@@ -22,15 +24,21 @@ namespace ENETCare.IMS.Users
             }
         }
 
+        public override string HomePage
+        {
+            get
+            {
+                return HOMEPAGE;
+            }
+        }
+
         public SiteEngineer(
             int ID,
             string name,
-            string username,
-            string plaintextPassword,
             District district,
             decimal maxApprovableLabour,
             decimal maxApprovableCost)
-            : base(ID, name, username, plaintextPassword)
+            : base(ID, name)
         {
             this.District = district;
             this.MaxApprovableLabour = maxApprovableLabour;

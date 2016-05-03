@@ -13,28 +13,11 @@ namespace ENETCare.IMS.WebApp
     public partial class ReportPage : Page
     {
         private ENETCareDAO application;
-        private List<User> users;
+        private List<EnetCareUser> users;
 
         protected void Page_Load(object sender, EventArgs e)
         {
             application = new ENETCareDAO();
-
-            PopulateTempUsers();
-        }
-
-        private void PopulateTempUsers()
-        {
-            /**Temp populating Users to input into display accountant table
-            TODO: Remove this method*/
-            users = new List<User>();
-
-            users.Add(new SiteEngineer(1, "JohnSmith", "John", "1234", application.Districts.GetDistrictByID(2), 12, 1000));
-            users.Add(new SiteEngineer(2, "daum", "da", "1234", application.Districts.GetDistrictByID(2), 12, 1000));
-            users.Add(new SiteEngineer(3, "deinyon", "d", "1234", application.Districts.GetDistrictByID(2), 12, 1000));
-            users.Add(new Manager(4, "yianni", "y", "1234", application.Districts.GetDistrictByID(3), 12, 1000));
-            users.Add(new Manager(5, "henry", "Smith", "he", application.Districts.GetDistrictByID(3), 12, 1000));
-            users.Add(new Manager(6, "SmithJohnes", "Smith", "1234", application.Districts.GetDistrictByID(3), 12, 1000));
-
         }
 
         protected void Button_Cancel_Click(object sender, EventArgs e)
@@ -46,7 +29,6 @@ namespace ENETCare.IMS.WebApp
         {
 
         }
-
 
         //This should really be done through SQL LAMBA equations. 
         private decimal TotalCost(List<SiteEngineer> users)
@@ -71,7 +53,7 @@ namespace ENETCare.IMS.WebApp
 
         }
 
-        private List<SiteEngineer> SortEngineers(List<User> users)
+        private List<SiteEngineer> SortEngineers(List<EnetCareUser> users)
         {
             List<SiteEngineer> tempEngineers = new List<SiteEngineer>();
 
@@ -84,17 +66,17 @@ namespace ENETCare.IMS.WebApp
             return tempEngineers;
         }
 
-        private decimal TotalCostEngineers(List<User> users)
+        private decimal TotalCostEngineers(List<EnetCareUser> users)
         {
             return TotalCost(SortEngineers(users));
         }
 
-        private decimal AverageCostEngineers(List<User> users)
+        private decimal AverageCostEngineers(List<EnetCareUser> users)
         {
             return AverageCost(SortEngineers(users));
         }
 
-        private decimal CostByDistrict(List<User> users, District districtID)
+        private decimal CostByDistrict(List<EnetCareUser> users, District districtID)
         {
             decimal totalCostByDistrict = 0M;
 
@@ -120,7 +102,7 @@ namespace ENETCare.IMS.WebApp
             return totalCostByDistrict;
         }
 
-        private decimal MonthlyByDistrict(List<User> users, District districtID)
+        private decimal MonthlyByDistrict(List<EnetCareUser> users, District districtID)
         {
             decimal monthlyCost = 0M;
 

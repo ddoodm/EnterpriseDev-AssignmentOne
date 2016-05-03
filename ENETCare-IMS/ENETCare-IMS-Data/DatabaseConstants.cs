@@ -33,6 +33,6 @@ namespace ENETCare.IMS.Data
         //public const string USERS_SITEENGINEERS_JOIN_SQL = "SELECT Users_SiteEngineers.UserId, Users.Name, Users.PlaintextPassword, Users.Password, Users_SiteEngineers.DistrictId, Users_SiteEngineers.MaxApprovableLabour, Users_SiteEngineers.MaxApprovableCost FROM Users INNER JOIN Users_SiteEngineers ON Users.UserID = Users_SiteEngineers.UserID";
 
         public const string USERS_JOIN_TABLE_NAME = "UserJoinTable";
-
+        public const string USER_ID = "UserId";
     }
 }

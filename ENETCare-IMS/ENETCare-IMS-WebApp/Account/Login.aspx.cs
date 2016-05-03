@@ -5,6 +5,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Owin;
 using ENETCare.IMS.WebApp.Models;
+using ENETCare.IMS.Users;
 
 namespace ENETCare.IMS.WebApp.Account
 {
@@ -12,15 +13,6 @@ namespace ENETCare.IMS.WebApp.Account
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            RegisterHyperLink.NavigateUrl = "Register";
-            // Enable this once you have account confirmation enabled for password reset functionality
-            //ForgotPasswordHyperLink.NavigateUrl = "Forgot";
-            OpenAuthLogin.ReturnUrl = Request.QueryString["ReturnUrl"];
-            var returnUrl = HttpUtility.UrlEncode(Request.QueryString["ReturnUrl"]);
-            if (!String.IsNullOrEmpty(returnUrl))
-            {
-                RegisterHyperLink.NavigateUrl += "?ReturnUrl=" + returnUrl;
-            }
         }
 
         protected void LogIn(object sender, EventArgs e)
@@ -38,7 +30,7 @@ namespace ENETCare.IMS.WebApp.Account
                 switch (result)
                 {
                     case SignInStatus.Success:
-                        IdentityHelper.RedirectToReturnUrl(Request.QueryString["ReturnUrl"], Response);
+                        Response.Redirect("/Account/UserRedirect");
                         break;
                     case SignInStatus.LockedOut:
                         Response.Redirect("/Account/Lockout");
