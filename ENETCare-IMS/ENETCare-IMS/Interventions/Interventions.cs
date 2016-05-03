@@ -15,6 +15,9 @@ namespace ENETCare.IMS.Interventions
 
         private List<Intervention> interventions = new List<Intervention>();
 
+        //IF ANYTHING BREAKS: Delete the below property, and replace all instances of 'InterventionList' with 'interventions'
+        private List<Intervention> InterventionList { get { return interventions.Where(i => i.ApprovalState != InterventionApprovalState.Cancelled).Select(i => i).ToList(); } }
+
         public Interventions(ENETCareDAO application)
         {
             this.application = application;
@@ -86,35 +89,35 @@ namespace ENETCare.IMS.Interventions
             {
                 if (ID == 0)
                     throw new IndexOutOfRangeException("ENETCare data is 1-indexed, but an index of 0 was requested.");
-                return interventions.First<Intervention>(
+                return InterventionList.First<Intervention>(
                     intervention => intervention.ID == ID);
             }
         }
 
         public List<Intervention> GetInterventionsWithClient(Client client)
         {
-            return interventions
+            return InterventionList
                 .Where(x => x.Client.ID == client.ID)
                 .ToList<Intervention>();
         }
 
         public List<Intervention> FilterByDistrict(District district)
         {
-            return interventions
+            return InterventionList
                 .Where(x => x.District == district)
                 .ToList<Intervention>();
         }
 
         public List<Intervention> FilterByState(InterventionApprovalState state)
         {
-            return interventions
+            return InterventionList
                 .Where(x => x.ApprovalState == state)
                 .ToList<Intervention>();
         }
 
         public IEnumerator<Intervention> GetEnumerator()
         {
-            return interventions.GetEnumerator();
+            return InterventionList.GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
@@ -124,7 +127,7 @@ namespace ENETCare.IMS.Interventions
 
         public List<Intervention> GetInterventions()
         {
-            return interventions;
+            return InterventionList;
         }
     }
 }

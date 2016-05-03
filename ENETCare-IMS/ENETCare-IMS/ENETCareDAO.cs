@@ -166,7 +166,10 @@ namespace ENETCare.IMS
                 if(approval != null)
                     approval.LinkIntervention(intervention);
 
-                interventions.Add(intervention);
+                //TODO: This could break something when Interventions actually get cancelled.
+                 if (intervention.ApprovalState != InterventionApprovalState.Cancelled)
+                        interventions.Add(intervention);
+
             }
 
             return interventions;
@@ -431,6 +434,25 @@ namespace ENETCare.IMS
             using (SqlConnection sqlLink = new SqlConnection(sqlConnectionString))
             {
                 this.Users = LoadUsers(sqlLink, this.Districts);
+            }
+        }
+
+        //Beginnings of Quality Management updater - dependant on Quality Loader
+        public void UpdateQuality(InterventionQualityManagement quality)
+        {
+            using (SqlConnection sqlLink = new SqlConnection(GetConnectionString()))
+            {
+                sqlLink.Open();
+
+                string queryString = String.Format(
+                    "UPDATE {0} SET Health = @health WHERE LastVisit = @visit;", DatabaseConstants.INTERVENTION_QUALITY_MANAGEMENT_TABLE_NAME);
+
+                SqlCommand query = new SqlCommand(queryString, sqlLink);
+                query.Parameters.AddWithValue("@health", quality.Health);
+                query.Parameters.AddWithValue("@visit", quality.LastVisit);
+
+                query.ExecuteNonQuery();
+                sqlLink.Close();
             }
         }
     }

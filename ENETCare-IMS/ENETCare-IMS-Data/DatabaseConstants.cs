@@ -21,6 +21,10 @@ namespace ENETCare.IMS.Data
 
         public const string INTERVENTION_APPROVALS_TABLE_NAME = "InterventionApprovals";
 
+        public const string INTERVENTION_QUALITY_MANAGEMENT_TABLE_NAME = "InterventionQualityManagement";
+        public const string INTERVENTION_QUALITY_MANAGEMENT_COLUMN_NAMES = "InterventionQualityID, InterventionID, Health, LastVisit";
+        public const string INTERVENTION_QUALITY_MANAGEMENT_COLUMN_NAMES_FOR_CREATION = "InterventionID, Health, LastVisit";
+
         public const string USERS_TABLE_NAME = "Users";
         public const string SITE_ENGINEERS_TABLE_NAME = "Users_SiteEngineers";
         public const string MANAGERS_TABLE_NAME = "Users_Managers";
@@ -36,5 +40,7 @@ namespace ENETCare.IMS.Data
 
         public const string USERS_JOIN_TABLE_NAME = "UserJoinTable";
         public const string USER_ID = "UserId";
+
+
     }
 }

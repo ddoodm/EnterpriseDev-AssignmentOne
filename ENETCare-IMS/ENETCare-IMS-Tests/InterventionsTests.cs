@@ -33,7 +33,7 @@ namespace ENETCare.IMS.Tests
         private Client CreateTestClient()
         {
             return new Client
-                ( 10, "Foobar Family", "1 Madeup Lane, Fakeland", testDistrictA );
+                (10, "Foobar Family", "1 Madeup Lane, Fakeland", testDistrictA);
         }
 
         private void CreateTestDistricts()
@@ -69,6 +69,18 @@ namespace ENETCare.IMS.Tests
             return Intervention.Factory.CreateIntervention
                 (0, interventionType, testClient, testEngineer);
         }
+        private Intervention CreateCancelledIntervention(SiteEngineer testEngineer)
+        {
+            InterventionType interventionType = CreateTestInterventionType();
+
+            Intervention i =  Intervention.Factory.CreateIntervention
+                (0, interventionType, testClient, testEngineer);
+            i.Cancel(testEngineer);
+
+            return i;
+
+        }
+
         #endregion
 
         [TestInitialize]
@@ -152,7 +164,7 @@ namespace ENETCare.IMS.Tests
                 testDistrictA, interventionType.Labour + 1, interventionType.Cost + 100);
 
             Intervention intervention = Intervention.Factory.CreateIntervention
-                ( 0, interventionType, testClient, testEngineer );
+                (0, interventionType, testClient, testEngineer);
 
             // Attempt to approve the intervention by the Engineer who proposed it
             intervention.Approve(testEngineer);
@@ -441,5 +453,22 @@ namespace ENETCare.IMS.Tests
                 Assert.Fail("Intervention was auto-approved by an ineligible Site Engineer");
         }
         #endregion
+
+        [TestMethod]
+        public void Intervention_Does_Not_Appear_In_Interventions()
+        {
+            // Create an engineer who is not permitted to approve this type
+            Intervention intervention = CreateCancelledIntervention(testEngineer);
+
+            ENETCareDAO dao = new ENETCareDAO();
+            dao.Interventions.Add(intervention);
+
+            // Check that the intervention has not been approved
+            if(dao.Interventions.GetInterventions().Count == 0)
+                Assert.Fail("Cancelled intervention still appears in Interventions");
+
+            if(dao.Interventions.GetInterventions().Find(i => i.ID == intervention.ID) != null)
+                Assert.Fail("Cancelled intervention still appears in Interventions");
+        }
     }
 }
