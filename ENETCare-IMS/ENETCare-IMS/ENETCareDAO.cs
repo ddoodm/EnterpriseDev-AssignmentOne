@@ -46,7 +46,8 @@ namespace ENETCare.IMS
 
         public static ENETCareDAO Context
         {
-            get { return (currentContext) ?? (currentContext = new ENETCareDAO()); }
+            // get { return (currentContext) ?? (currentContext = new ENETCareDAO()); }
+            get { return (currentContext = new ENETCareDAO()); }
         }
 
         private string GetConnectionString()
@@ -150,15 +151,64 @@ namespace ENETCare.IMS
                 // Avoids DBNull exception
                 string notes = row.IsNotesNull() ? "" : row.Notes;
 
-                // TODO: Handle Intervention Approval and Quality Management
-                interventions.Add(
-                    Intervention.Factory.CreateIntervention(
+                // Obtain the approval
+                InterventionApproval approval =
+                    LoadInterventionApproval(sql, users, row.InterventionId);
+
+                // TODO: Handle Quality 
+                Intervention intervention = 
+                    Intervention.Factory.RawCreateIntervention(
                         row.InterventionId, type, client, (SiteEngineer)siteEngineer,
-                        labour, cost, row.Date, notes, null, null
-                        ));
+                        labour, cost, row.Date, notes, approval, null
+                        );
+
+                // Link approval
+                if(approval != null)
+                    approval.LinkIntervention(intervention);
+
+                interventions.Add(intervention);
             }
 
             return interventions;
+        }
+
+        private InterventionApproval LoadInterventionApproval(SqlConnection sql, Users.Users users, int interventionId)
+        {
+            // Select the approval with the given ID
+            SqlCommand query = new SqlCommand(
+                String.Format(
+                    "SELECT * FROM [dbo].[{0}] WHERE InterventionId = @intervention_id",
+                    DatabaseConstants.INTERVENTION_APPROVALS_TABLE_NAME),
+                sql);
+            query.Parameters.AddWithValue("@intervention_id", interventionId);
+
+            SqlDataAdapter adapter = new SqlDataAdapter(query);
+            DataSet dataSet = new DataSet();
+            adapter.Fill(dataSet);
+
+            // The query returns one table
+            if (dataSet.Tables.Count != 1)
+                throw new InvalidDataException();
+            DataTable approvalTable = dataSet.Tables[0];
+
+            // No approval data if table is empty
+            if (approvalTable.Rows.Count < 1)
+                return null;
+            DataRow approvalData = approvalTable.Rows[0];
+
+            // Cast the state ID to an InterventionApprovalState
+            InterventionApprovalState state =
+                (InterventionApprovalState)((int)approvalData["State"]);
+
+            // Get the user who approved the intervention
+            EnetCareUser approver =
+                users.GetUserByID((int)approvalData["ApprovingUserId"]);
+
+            // Verify that the approver is an IInterventionApprover
+            if (!(approver is IInterventionApprover))
+                throw new InvalidDataException("An Intervention Approval specified an incompatible approver.");
+
+            return new InterventionApproval(state, (IInterventionApprover)approver);
         }
 
         public Users.Users LoadUsers(SqlConnection sql, Districts districts)
@@ -212,7 +262,6 @@ namespace ENETCare.IMS
             DataTable userTable = dataSet.Tables[0];
 
             // Read rows into ENETCare business objects
-            // TODO: Handle passwords
             Users.Users users = new Users.Users(this);
             foreach (DataRow userRow in userTable.Rows)
                 users.Add(instantiateUser(userRow));
@@ -374,9 +423,7 @@ namespace ENETCare.IMS
 
                 query.ExecuteNonQuery();
                 sqlLink.Close();
-
             }
-
         }
 
         public void RefreshUsers()

@@ -153,7 +153,7 @@ namespace ENETCare.IMS.WebApp
 
         protected void CompleteButton_Click(object sender, EventArgs e)
         {
-            IInterventionApprover user = (IInterventionApprover)UserSession.Current.User;
+            SiteEngineer user = (SiteEngineer)UserSession.Current.User;
             editIntervention.Complete(user);
 
             DisplayInterventionData();

@@ -31,13 +31,21 @@ namespace ENETCare.IMS.Interventions
 
         private Intervention intervention;
 
+        public InterventionApproval(
+            InterventionApprovalState state,
+            IInterventionApprover approvingUser)
+        {
+            // Intervention must be linked later
+            this.state = new InterventionApprovalStateWrapper(state);
+            this.ApprovingUser = approvingUser;
+        }
+
         public InterventionApproval(Intervention intervention)
         {
             if (intervention == null)
                 throw new ArgumentNullException("An Intervention Approval must be associated with an instantiated Intervention");
 
             this.intervention = intervention;
-
             this.state = new InterventionApprovalStateWrapper();
         }
 
@@ -62,13 +70,18 @@ namespace ENETCare.IMS.Interventions
             ChangeState(InterventionApprovalState.Cancelled, user);
         }
 
-        public void Complete(IInterventionApprover user)
+        public void Complete(SiteEngineer user)
         {
             ChangeState(InterventionApprovalState.Completed, user);
         }
 
         public bool CanChangeState(IInterventionApprover user)
         {
+            // A manager cannot modify an approved intervention
+            if (State == InterventionApprovalState.Approved)
+                if (user is Manager)
+                    return false;
+
             // A manager must work in the same district as the intervention
             if (user is Manager)
                 if (user.District != intervention.District)
@@ -80,20 +93,21 @@ namespace ENETCare.IMS.Interventions
                     return false;
 
             // Must be able to approve *at least* the default labour AND the actual labour
-            decimal maxDefaultOrActualLabour = Math.Max(
-                intervention.Labour,
-                intervention.InterventionType.Labour);
-            if (user.MaxApprovableLabour < maxDefaultOrActualLabour)
+            if (user.MaxApprovableLabour < intervention.MaximumLabour)
                 return false;
 
             // Must be able to approve *at least* the default cost AND the actual cost
-            decimal maxDefaultOrActualCost = Math.Max(
-                intervention.Cost,
-                intervention.InterventionType.Cost);
-            if (user.MaxApprovableCost < maxDefaultOrActualCost)
+            if (user.MaxApprovableCost < intervention.MaximumCost)
                 return false;
 
             return true;
+        }
+
+        internal void LinkIntervention(Intervention intervention)
+        {
+            if (this.intervention != null)
+                throw new InvalidOperationException("Approval is already linked");
+            this.intervention = intervention;
         }
     }
 }
