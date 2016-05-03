@@ -27,9 +27,9 @@ namespace ENETCare.IMS.WebApp
             // TODO: Do not use a Site Engineer session here; use Manager.
             application = ENETCareDAO.Context;
             interventions = application.Interventions;
-
             SortInterventions();
-            PopulateInterventionsTable();
+            Table_ProposedInterventions.DataSource = proposedInterventions;
+            Table_ProposedInterventions.DataBind();
         }
 
         private void SortInterventions()
@@ -38,86 +38,64 @@ namespace ENETCare.IMS.WebApp
             approvedInterventions = interventions.FilterByState(InterventionApprovalState.Approved);
         }
 
-        private void PopulateInterventionsTable()
-        {
-            // TODO: This population code will be replaced with a
-            // DataSource and a DataGrid
+        //private void PopulateInterventionsTable()
+        //{
+        //    // TODO: This population code will be replaced with a
+        //    // DataSource and a DataGrid
 
-            Table_In_Proposed_Interventions.Rows.Clear();
+        //    Table_In_Proposed_Interventions.Rows.Clear();
 
-            if (isDisplayingProposed)
-            {
-                PopulateWithProposedInterventions();
-            }
-            else
-            {
-                PopulateWithApprovedInterventions();
-            }
+        //    if (isDisplayingProposed)
+        //    {
+        //        PopulateWithProposedInterventions();
+        //    }
+        //    else
+        //    {
+        //        PopulateWithApprovedInterventions();
+        //    }
             
-        }
-
-        private void PopulateWithProposedInterventions()
-        {
-            for (int i = 0; i < proposedInterventions.Count; i++)
-            {
-                AddInterventionToTable(proposedInterventions[i]);
-            }
-        }
-        private void PopulateWithApprovedInterventions()
-        {
-            for (int i = 0; i < approvedInterventions.Count; i++)
-            {
-                AddInterventionToTable(approvedInterventions[i]);
-            }
-        }
+        //}
 
         protected void Button_ProposedInterventions_Click(object sender, EventArgs e)
         {
             isDisplayingProposed = true;
-            PopulateInterventionsTable();
+            SortInterventions();
+            Table_ProposedInterventions.DataSource = proposedInterventions;
+            Table_ProposedInterventions.DataBind();
+            Response.Write(Request.RawUrl.ToString());
         }
 
         protected void Button_ApprovedInterventions_Click(object sender, EventArgs e)
         {
             isDisplayingProposed = false;
-            PopulateInterventionsTable();
-        }
-
-        private void AddInterventionToTable(Intervention intervention)
-        {
-                TableRow row = new TableRow();
-                Table_In_Proposed_Interventions.Rows.Add(row);
-
-                TableCell typeCell = new TableCell();
-                typeCell.Text = intervention.InterventionType.Name;
-                row.Cells.Add(typeCell);
-                TableCell clientCell = new TableCell();
-                clientCell.Text = intervention.Client.Name;
-                row.Cells.Add(clientCell);
-                TableCell startDateCell = new TableCell();
-                startDateCell.Text = intervention.Date.ToString();
-                row.Cells.Add(startDateCell);
-                TableCell lastVisitDateCell = new TableCell();
-                lastVisitDateCell.Text = "?";
-                row.Cells.Add(lastVisitDateCell);
-                TableCell approvalCell = new TableCell();
-                approvalCell.Text = intervention.ApprovalState.ToString();
-                row.Cells.Add(approvalCell);
-                TableCell lifeCell = new TableCell();
-                if (intervention.Health != null)
-                    lifeCell.Text = intervention.Health.ToString();
-                else
-                    lifeCell.Text = "---";
-                row.Cells.Add(lifeCell);
-                TableCell notesCell = new TableCell();
-                notesCell.Text = intervention.Notes;
-                row.Cells.Add(notesCell);
-            
+            SortInterventions();
+            Table_ProposedInterventions.DataSource = approvedInterventions;
+            Table_ProposedInterventions.DataBind();
+            Response.Write(Request.RawUrl.ToString());
         }
 
         protected void Button_Edit_Click(object sender, EventArgs e)
         {
 
+        }
+
+        /*protected void ProposedInterventionsDataSource_Selecting(object sender, LinqDataSourceSelectEventArgs e)
+        {
+            if (isDisplayingProposed)
+            {
+                e.Result = interventions.FilterByState(InterventionApprovalState.Proposed);
+            }
+            else
+            {
+                e.Result = interventions.FilterByState(InterventionApprovalState.Approved);
+            }
+        }
+        */
+
+        protected void ProposedTable_Interventions_Load(object sender, EventArgs e)
+        {
+            // Set GridView to render its header in a HTML 'thead'
+            Table_ProposedInterventions.HeaderRow.TableSection = TableRowSection.TableHeader;
         }
     }
 }

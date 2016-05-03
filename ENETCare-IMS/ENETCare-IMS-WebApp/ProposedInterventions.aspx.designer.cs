@@ -40,6 +40,15 @@ namespace ENETCare.IMS.WebApp {
         protected global::System.Web.UI.WebControls.Button Button_Edit;
         
         /// <summary>
+        /// Table_ProposedInterventions control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView Table_ProposedInterventions;
+        
+        /// <summary>
         /// Table_In_Proposed_Interventions control.
         /// </summary>
         /// <remarks>

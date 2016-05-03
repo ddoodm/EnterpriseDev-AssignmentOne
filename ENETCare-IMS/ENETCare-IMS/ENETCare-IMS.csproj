@@ -65,6 +65,7 @@
     <Compile Include="Users\Accountant.cs" />
     <Compile Include="Users\IEnetCareUser.cs" />
     <Compile Include="Users\IInterventionApprover.cs" />
+    <Compile Include="Users\IAdvancedUser.cs" />
     <Compile Include="Users\ILocalizedUser.cs" />
     <Compile Include="Users\Manager.cs" />
     <Compile Include="Users\SiteEngineer.cs" />
