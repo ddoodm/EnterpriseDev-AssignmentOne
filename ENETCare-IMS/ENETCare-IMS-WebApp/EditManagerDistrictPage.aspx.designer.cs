@@ -10,60 +10,42 @@
 namespace ENETCare.IMS.WebApp {
     
     
-    public partial class ReportPageUI {
+    public partial class EditManagerDistrictPageUI {
         
         /// <summary>
-        /// ReportsDropDown control.
+        /// Manager_Name control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ReportsDropDown;
+        protected global::System.Web.UI.WebControls.Label Manager_Name;
         
         /// <summary>
-        /// DistrictsDropDown control.
+        /// Current_District control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList DistrictsDropDown;
+        protected global::System.Web.UI.WebControls.Label Current_District;
         
         /// <summary>
-        /// GenerateReportButton control.
+        /// District_Selection_DropDown control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button GenerateReportButton;
+        protected global::System.Web.UI.WebControls.DropDownList District_Selection_DropDown;
         
         /// <summary>
-        /// ReportTextLabel control.
+        /// Button_Change_District control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label ReportTextLabel;
-        
-        /// <summary>
-        /// Button_Cancel control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Button_Cancel;
-        
-        /// <summary>
-        /// Button_Print control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Button_Print;
+        protected global::System.Web.UI.WebControls.Button Button_Change_District;
     }
 }

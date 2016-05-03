@@ -13,6 +13,15 @@ namespace ENETCare.IMS.WebApp {
     public partial class InterventionEditPageWebUI {
         
         /// <summary>
+        /// Button_Interventions control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button Button_Interventions;
+        
+        /// <summary>
         /// InterventionIDLabel control.
         /// </summary>
         /// <remarks>

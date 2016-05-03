@@ -1,11 +1,20 @@
-﻿<%@ Page Title="Report" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Report.aspx.cs" Inherits="ENETCare.IMS.WebApp.ReportPage" %>
+﻿<%@ Page Title="Report" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Report.aspx.cs" Inherits="ENETCare.IMS.WebApp.ReportPageUI" %>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
     <h1>Reports</h1>
     <p>
-        <asp:PlaceHolder ID="DetailedReport" runat="server"></asp:PlaceHolder>
+        <asp:DropDownList ID="ReportsDropDown" runat="server" OnSelectedIndexChanged="Index_Changed"></asp:DropDownList>
     </p>
-
+    <p>
+        <asp:DropDownList ID="DistrictsDropDown" runat="server" Visible="false"></asp:DropDownList>
+    </p>
+    <p>
+        <asp:Button ID="GenerateReportButton" runat="server" Text="Generate Report" OnClick="Button_Generate_Report_Click"/>
+    </p>
+    
+    <p>
+        <asp:Label ID="ReportTextLabel" runat="server" Width="965px" Height="177px"></asp:Label>
+    </p>
     <div>
         <ul class="buttonBar">
             <li style="float: left;">

@@ -40,21 +40,39 @@ namespace ENETCare.IMS.WebApp {
         protected global::System.Web.UI.WebControls.Button Button_Generate;
         
         /// <summary>
-        /// Button_Edit_Accountant control.
+        /// SiteEngineersDataSource control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Button_Edit_Accountant;
+        protected global::System.Web.UI.WebControls.LinqDataSource SiteEngineersDataSource;
         
         /// <summary>
-        /// Table_Accountants control.
+        /// Table_SiteEngineers control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Table Table_Accountants;
+        protected global::System.Web.UI.WebControls.GridView Table_SiteEngineers;
+        
+        /// <summary>
+        /// ManagersDataSource control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinqDataSource ManagersDataSource;
+        
+        /// <summary>
+        /// Table_Managers control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView Table_Managers;
     }
 }
