@@ -121,10 +121,5 @@ namespace ENETCare.IMS.Interventions
         {
             return GetEnumerator();
         }
-
-        public List<Intervention> GetInterventions()
-        {
-            return interventions;
-        }
     }
 }

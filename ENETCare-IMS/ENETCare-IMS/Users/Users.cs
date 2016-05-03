@@ -103,58 +103,5 @@ namespace ENETCare.IMS.Users
         {
             return users;
         }
-
-        public List<SiteEngineer> GetSiteEngineers()
-        {
-            List<EnetCareUser> siteEngineerUsers = users.Where(user => user is SiteEngineer).ToList();
-            List<SiteEngineer> siteEngineers = new List<SiteEngineer>();
-            foreach (EnetCareUser user in siteEngineerUsers)
-            {
-                siteEngineers.Add(user as SiteEngineer);
-            }
-
-            return siteEngineers;
-        }
-
-        public List<Manager> GetManagers()
-        {
-            List<EnetCareUser> managerUsers = users.Where(user => user is Manager).ToList();
-            List<Manager> managers = new List<Manager>();
-            foreach (EnetCareUser user in managerUsers)
-            {
-                managers.Add(user as Manager);
-            }
-
-            return managers;
-        }
-
-        public List<IAdvancedUser> GetIAdvancedUsers()
-        {
-            List<IAdvancedUser> advancedUsers = new List<IAdvancedUser>();
-            
-            foreach (EnetCareUser user in users)
-            {
-                if (user is IAdvancedUser)
-                {
-                    advancedUsers.Add(user as IAdvancedUser);
-                }
-            }
-
-            return advancedUsers;
-        }
-
-        //TODO: Make this update the row in the respective table in the DB with ENETDAO
-        public void UpdateUser(EnetCareUser user)
-        {
-            if(user is SiteEngineer)
-            {
-                application.UpdateSiteEngineer(user as SiteEngineer);
-            }
-            else if(user is Manager)
-            {
-                application.UpdateManager(user as Manager);
-            }
-
-        }
     }
 }

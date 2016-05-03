@@ -336,55 +336,5 @@ namespace ENETCare.IMS
                 sqlLink.Close();
             }
         }
-
-        public void UpdateSiteEngineer(SiteEngineer engineer)
-        {
-            using (SqlConnection sqlLink = new SqlConnection(GetConnectionString()))
-            {
-                sqlLink.Open();
-
-                string queryString = String.Format(
-                    "UPDATE {0} SET DistrictId = @districtID, MaxApprovableLabour = @labour, MaxApprovableCost = @cost WHERE UserId = @userID;", DatabaseConstants.SITE_ENGINEERS_TABLE_NAME);
-
-                SqlCommand query = new SqlCommand(queryString, sqlLink);
-                query.Parameters.AddWithValue("@districtID", engineer.District.ID);
-                query.Parameters.AddWithValue("@labour", engineer.MaxApprovableLabour);
-                query.Parameters.AddWithValue("@cost", engineer.MaxApprovableCost);
-                query.Parameters.AddWithValue("@userID", engineer.ID);
-
-                query.ExecuteNonQuery();
-                sqlLink.Close();
-            }
-        }
-
-        public void UpdateManager(Manager manager)
-        {
-            using (SqlConnection sqlLink = new SqlConnection(GetConnectionString()))
-            {
-                sqlLink.Open();
-
-                string queryString = String.Format(
-                    "UPDATE {0} SET DistrictId = @districtID, MaxApprovableLabour = @labour, MaxApprovableCost = @cost WHERE UserId = @userID;", DatabaseConstants.MANAGERS_TABLE_NAME);
-
-                SqlCommand query = new SqlCommand(queryString, sqlLink);
-                query.Parameters.AddWithValue("@districtID", manager.District.ID);
-                query.Parameters.AddWithValue("@labour", manager.MaxApprovableLabour);
-                query.Parameters.AddWithValue("@cost", manager.MaxApprovableCost);
-                query.Parameters.AddWithValue("@userID", manager.ID);
-
-                query.ExecuteNonQuery();
-                sqlLink.Close();
-
-            }
-
-        }
-
-        public void RefreshUsers()
-        {
-            using (SqlConnection sqlLink = new SqlConnection(sqlConnectionString))
-            {
-                this.Users = LoadUsers(sqlLink, this.Districts);
-            }
-        }
     }
 }

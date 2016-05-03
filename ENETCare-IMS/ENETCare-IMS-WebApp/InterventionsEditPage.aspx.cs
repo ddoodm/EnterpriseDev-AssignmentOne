@@ -174,9 +174,5 @@ namespace ENETCare.IMS.WebApp
             HealthLabel.Text = editIntervention.Health.ToString();
         }
 
-        protected void Button_Back_Click(object sender, EventArgs e)
-        {
-            Response.Redirect(Request.UrlReferrer.ToString());
-        }
     }
 }

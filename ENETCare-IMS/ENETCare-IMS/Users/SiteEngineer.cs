@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ENETCare.IMS.Users
 {
-    public class SiteEngineer : EnetCareUser, ILocalizedUser, IAdvancedUser
+    public class SiteEngineer : EnetCareUser, ILocalizedUser
     {
         private const string
             TITLE = "Site Engineer",
@@ -43,11 +43,6 @@ namespace ENETCare.IMS.Users
             this.District = district;
             this.MaxApprovableLabour = maxApprovableLabour;
             this.MaxApprovableCost = maxApprovableCost;
-        }
-
-        public void UpdateDistrict(District district)
-        {
-            District = district;
         }
 
     }

@@ -3,8 +3,6 @@
 <asp:Content ID="InterventionEditPage" ContentPlaceHolderID="MainContent" runat="server">
     <h1><%: Page.Title %></h1>
 
-    <li><asp:Button ID="Button_Interventions" runat="server" Text="< Back" OnClick="Button_Back_Click" /></li>
-
     <section id="InterventionSection">
 
         <div>
