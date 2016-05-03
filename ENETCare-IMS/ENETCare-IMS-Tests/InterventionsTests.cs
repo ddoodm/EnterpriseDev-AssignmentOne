@@ -50,7 +50,7 @@ namespace ENETCare.IMS.Tests
         {
             return new SiteEngineer
                 (1, "Robert Markson",
-                testDistrictA, 6, 500);
+                testDistrictA, 48, 100000);
         }
 
         private Intervention CreateTestIntervention(SiteEngineer testEngineer)
@@ -187,10 +187,10 @@ namespace ENETCare.IMS.Tests
         /// Attempts to approve an Intervention by an Engineer other than
         /// the Engineer who made the proposition. 
         /// 
-        /// Expects an Argument Exception
+        /// Expects an Invalid Operation Exception
         /// </summary>
         [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
+        [ExpectedException(typeof(InvalidOperationException))]
         public void Intervention_Approve_By_Distinct_Engineer_Failure()
         {
             Intervention intervention = CreateTestIntervention(testEngineer);
@@ -201,14 +201,14 @@ namespace ENETCare.IMS.Tests
                 intervention.District, intervention.Labour + 1, intervention.Cost + 100);
 
             // Attempt to approve the intervention by an Engineer who did not propose it
-            // Should throw an Argument Exception
+            // Should throw an Invalid Operation Exception
             intervention.Approve(newEngineer);
 
             Assert.Fail("A Site Engineer was permitted to approve an intervention that they did not create.");
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
+        [ExpectedException(typeof(InvalidOperationException))]
         public void Intervention_Approve_By_Foreign_Manager_Failure()
         {
             InterventionType interventionType = CreateTestInterventionType();
@@ -230,6 +230,59 @@ namespace ENETCare.IMS.Tests
             intervention.Approve(testManager);
 
             Assert.Fail("A Manager was permitted to approve an Intervention that is proposed for a District that the Manager does not operate in.");
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(InvalidOperationException))]
+        public void Intervention_Approve_With_Actual_Cost_Greater_Than_Approver_Max_Cost_Failure()
+        {
+            InterventionType interventionType = CreateTestInterventionType();
+
+            SiteEngineer testEngineer = new SiteEngineer
+                (1, "Markus Markson",
+                testDistrictA,
+                interventionType.Labour,
+                interventionType.Cost);         // Capable of approving the DEFAULT value
+
+            Intervention intervention = Intervention.Factory.CreateIntervention
+                (1, interventionType, testClient, testEngineer,
+                interventionType.Labour,
+                interventionType.Cost + 100,    // Not capable of approving the ACTUAL value
+                DateTime.Now.AddDays(1));
+
+            // Engineer attempts to approve an Intervention with a
+            // greater cost then their maximum permissable cost.
+            // Should throw an invalid operation exception
+            intervention.Approve(testEngineer);
+
+            // Error on success
+            Assert.Fail("An engineer was permitted to approve an intervention whose actual cost exceeds the engineer's max approvable cost.");
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(InvalidOperationException))]
+        public void Intervention_Approve_With_Default_Cost_Greater_Than_Approver_Max_Cost_Failure()
+        {
+            InterventionType interventionType = CreateTestInterventionType();
+
+            SiteEngineer testEngineer = new SiteEngineer
+                (1, "Markus Markson",
+                testDistrictA,
+                interventionType.Labour + 1,
+                interventionType.Cost - 100);   // Not capable of approving the DEFAULT value
+
+            Intervention intervention = Intervention.Factory.CreateIntervention
+                (1, interventionType, testClient, testEngineer,
+                interventionType.Labour,
+                1.0m,                           // Engineer sets the cost at $1.00
+                DateTime.Now.AddDays(1));
+
+            // Engineer attempts to approve an Intervention with a fabricated cost
+            // Should throw an invalid operation exception
+            intervention.Approve(testEngineer);
+
+            // Error on success
+            Assert.Fail("An engineer was permitted to approve an intervention whose default cost exceeds the engineer's max approvable cost.");
         }
         #endregion
 

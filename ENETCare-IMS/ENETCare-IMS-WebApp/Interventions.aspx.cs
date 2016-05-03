@@ -24,6 +24,10 @@ namespace ENETCare.IMS.WebApp
             application = ENETCareDAO.Context;
             interventions = application.Interventions;
             User = (ILocalizedUser)UserSession.Current.User;
+
+            // Set GridView to render its header in a HTML 'thead'
+            Table_Interventions.HeaderRow.TableSection
+                = TableRowSection.TableHeader;
         }
 
         protected void Button_CreateNewIntervention_Click(object sender, EventArgs e)
@@ -39,13 +43,6 @@ namespace ENETCare.IMS.WebApp
         protected void InterventionsDataSource_Selecting(object sender, LinqDataSourceSelectEventArgs e)
         {
             e.Result = interventions.FilterByDistrict(User.District);
-        }
-
-        protected void Table_Interventions_Load(object sender, EventArgs e)
-        {
-            // Set GridView to render its header in a HTML 'thead'
-            Table_Interventions.HeaderRow.TableSection
-                = TableRowSection.TableHeader;
         }
     }
 }

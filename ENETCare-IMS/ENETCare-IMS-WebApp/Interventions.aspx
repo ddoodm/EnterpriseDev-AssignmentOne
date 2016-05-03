@@ -22,7 +22,7 @@
             PageSize="8"
             runat="server"
             CellSpacing="0"
-            CssClass="enetImsTable" OnLoad="Table_Interventions_Load">
+            CssClass="enetImsTable">
             <Columns>
                 <asp:TemplateField>
                     <ItemTemplate>
