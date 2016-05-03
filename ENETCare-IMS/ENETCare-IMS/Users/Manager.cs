@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ENETCare.IMS.Users
 {
-    public class Manager : EnetCareUser, ILocalizedUser, IAdvancedUser
+    public class Manager : EnetCareUser, ILocalizedUser, IInterventionApprover, IAdvancedUser
     {
         private const string
             TITLE = "Manager",

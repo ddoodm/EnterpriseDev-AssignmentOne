@@ -62,11 +62,10 @@ namespace ENETCare.IMS.Interventions
             get { return approval.State; }
         }
 
-        public EnetCareUser ApprovingUser
+        public IInterventionApprover ApprovingUser
         {
             get { return approval.ApprovingUser; }
         }
-
 
         #endregion
 
@@ -113,22 +112,22 @@ namespace ENETCare.IMS.Interventions
             this.Notes = newNotes;
         }
 
-        public bool UserCanChangeState(EnetCareUser user)
+        public bool UserCanChangeState(IInterventionApprover user)
         {
             return approval.CanChangeState(user);
         }
 
-        public void Approve(EnetCareUser user)
+        public void Approve(IInterventionApprover user)
         {
             approval.Approve(user);
         }
 
-        public void Cancel(EnetCareUser user)
+        public void Cancel(IInterventionApprover user)
         {
             approval.Cancel(user);
         }
 
-        public void Complete(EnetCareUser user)
+        public void Complete(IInterventionApprover user)
         {
             approval.Complete(user);
         }
