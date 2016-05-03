@@ -7,6 +7,11 @@ using System.Web.Security;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
+using Microsoft.Owin.Security;
+using Owin;
+
+using ENETCare.IMS;
 
 namespace ENETCare.IMS.WebApp
 {
@@ -75,6 +80,12 @@ namespace ENETCare.IMS.WebApp
         protected void Unnamed_LoggingOut(object sender, LoginCancelEventArgs e)
         {
             Context.GetOwinContext().Authentication.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
+        }
+
+        protected void LoginStatus1_LoggingOut(object sender, LoginCancelEventArgs e)
+        {
+            var authManager = Context.GetOwinContext().Authentication;
+            authManager.SignOut();
         }
     }
 

@@ -45,6 +45,11 @@
     text-decoration: none;
 }
 
+#navBar li > a[href]
+{
+    color: #d1f1f0 !important;
+}
+
 #headerLogo
 {
     margin-top: 5px;

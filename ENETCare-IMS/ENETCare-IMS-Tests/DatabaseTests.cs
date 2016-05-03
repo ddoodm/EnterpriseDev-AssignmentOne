@@ -35,7 +35,7 @@ namespace ENETCare.IMS.Tests
         public void Setup()
         {
             this.connectionString = ConfigurationManager
-                .ConnectionStrings["DatabaseConnection"]
+                .ConnectionStrings["ENETCareDatabaseConnection"]
                 .ConnectionString;
         }
 

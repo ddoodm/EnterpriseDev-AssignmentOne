@@ -6,9 +6,11 @@ using System.Threading.Tasks;
 
 namespace ENETCare.IMS.Users
 {
-    public class Manager : User, ILocalizedUser
+    public class Manager : EnetCareUser, ILocalizedUser, IAdvancedUser
     {
-        private const string TITLE = "Manager";
+        private const string
+            TITLE = "Manager",
+            HOMEPAGE = "ProposedInterventions";
 
         public District District { get; private set; }
         public decimal MaxApprovableLabour { get; private set; }
@@ -22,19 +24,30 @@ namespace ENETCare.IMS.Users
             }
         }
 
+        public override string HomePage
+        {
+            get
+            {
+                return HOMEPAGE;
+            }
+        }
+
         public Manager(
             int ID,
             string name,
-            string username,
-            string plaintextPassword,
             District district,
             decimal maxApprovableLabour,
             decimal maxApprovableCost)
-            : base(ID, name, username, plaintextPassword)
+            : base(ID, name)
         {
             this.District = district;
             this.MaxApprovableLabour = maxApprovableLabour;
             this.MaxApprovableCost = maxApprovableCost;
+        }
+
+        public void UpdateDistrict(District district)
+        {
+            District = district;
         }
     }
 }

@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
+
 using ENETCare.IMS.Users;
 
 namespace ENETCare.IMS.WebApp
@@ -43,11 +46,21 @@ namespace ENETCare.IMS.WebApp
             }
         }
 
-        public void Login(User user)
+        /// <summary>
+        /// Returns the current ENETCare User who is associated with
+        /// the current session's ASP Identity User.
+        /// </summary>
+        public EnetCareUser User
         {
-            this.User = user;
+            get
+            {
+                var context = HttpContext.Current;
+                var manager = context.GetOwinContext().GetUserManager<ApplicationUserManager>();
+                var user = manager.FindById(context.User.Identity.GetUserId());
+                int enetUserId = user.EnetCareUserId;
+                EnetCareUser enetUser = ENETCareDAO.Context.Users.GetUserByID(enetUserId);
+                return enetUser;
+            }
         }
-
-        public User User { get; private set; }
     }
 }

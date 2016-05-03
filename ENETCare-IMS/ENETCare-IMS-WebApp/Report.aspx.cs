@@ -14,7 +14,7 @@ namespace ENETCare.IMS.WebApp
     public partial class ReportPageUI : Page
     {
         private ENETCareDAO application;
-        private List<User> users;
+        private List<EnetCareUser> users;
         private string[] ReportTypes = { "Total Costs by Engineer", "Average Costs by Engineer", "Costs by District", "Monthly Cost for District" };
 
         protected void Page_Load(object sender, EventArgs e)
@@ -23,7 +23,8 @@ namespace ENETCare.IMS.WebApp
 
             users = application.Users.GetUsers();
 
-            PopulateDropDown();
+
+            PopulateDropDowns();
         }
 
         protected void Button_Cancel_Click(object sender, EventArgs e)
@@ -59,14 +60,16 @@ namespace ENETCare.IMS.WebApp
                     {
                         //TODO: Make Proposed Interventions screen Datasource with Edit Button (so we can Complete some)
                         //TODO: Make drop down menu to select Districts if case 3 is selected.
-                        //GenerateMonthlyCostsReport();
+                        GenerateMonthlyCostsReport((application.Districts.GetListCopy())[DistrictsDropDown.SelectedIndex]);
                         break;
                     }
             }
-            
+
         }
 
-        private void PopulateDropDown()
+
+
+        private void PopulateDropDowns()
         {
             if (ReportsDropDown.Items.Count == 0)
             {
@@ -74,6 +77,12 @@ namespace ENETCare.IMS.WebApp
                 {
                     ReportsDropDown.Items.Add(type);
                 }
+            }
+
+            if (DistrictsDropDown.Items.Count == 0)
+            {
+                foreach (District district in application.Districts.GetListCopy())
+                    DistrictsDropDown.Items.Add(district.Name);
             }
         }
 
@@ -99,7 +108,7 @@ namespace ENETCare.IMS.WebApp
                 report.Append("<br />");
                 report.AppendFormat("Total Costs: ${0}", totalCosts);
 
-                if(engineer != engineers.Last())
+                if (engineer != engineers.Last())
                     report.Append("<br /><br />---oOo---<br /><br />");
             }
 
@@ -167,7 +176,7 @@ namespace ENETCare.IMS.WebApp
 
             }
 
-            report.Append("            --//COMPANY TOTALS\\--             ");
+            report.Append(@"            --//COMPANY TOTALS\\--             ");
             report.Append("<br /> <br />");
             report.AppendFormat("Total Labour Hours: {0} hours", companyTotalHours);
             report.Append("<br />");
@@ -179,7 +188,7 @@ namespace ENETCare.IMS.WebApp
         void GenerateMonthlyCostsReport(District district)
         {
             StringBuilder report = new StringBuilder();
-           
+
             int[] months = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 };
 
             report.Append("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
@@ -223,8 +232,25 @@ namespace ENETCare.IMS.WebApp
                 case 10: return "October";
                 case 11: return "November";
                 case 12: return "December";
-                default:return string.Empty;
+                default: return string.Empty;
 
+            }
+        }
+
+        protected void Index_Changed(object sender, EventArgs e)
+        {
+            switch (ReportsDropDown.SelectedIndex)
+            {
+                case 3:
+                    {
+                        DistrictsDropDown.Visible = true;
+                        break;
+                    }
+                default:
+                    {
+                        DistrictsDropDown.Visible = false;
+                        break;
+                    }
             }
         }
 

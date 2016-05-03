@@ -1,5 +1,7 @@
 ﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.master.cs" Inherits="ENETCare.IMS.WebApp.SiteMaster" %>
 
+<%@ Import namespace="ENETCare.IMS.WebApp" %>
+
 <!DOCTYPE html>
 
 <html lang="en">
@@ -35,9 +37,25 @@
         </asp:ScriptManager>
 
         <ul id="navBar">
-            <li><a>[Navigation + Account Here]</a></li>
+            <li><a>
+                <asp:LoginView ID="LoginView1" runat="server">
+                    <AnonymousTemplate>
+                        Not logged in
+                    </AnonymousTemplate>
+                    <LoggedInTemplate>
+                        Welcome, <%: UserSession.Current.User.Name %>
+                    </LoggedInTemplate>
+                </asp:LoginView>
+                </a></li>
+            <li style="float: left;">
+                <asp:LoginStatus
+                    ID="LoginStatus1"
+                    runat="server"
+                    OnLoggingOut="LoginStatus1_LoggingOut"
+                    LogoutPageUrl="~/Account/Login.aspx" />
+            </li>
             <li style="float: right;">
-                <img id="headerLogo" src="Content/ENETCare-Logo.png" alt="ENET Care" />
+                <img runat="server" id="headerLogo" src="~/Content/ENETCare-Logo.png" alt="ENET Care" />
             </li>
         </ul>
 

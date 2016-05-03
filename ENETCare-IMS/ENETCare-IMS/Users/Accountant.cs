@@ -6,9 +6,11 @@ using System.Threading.Tasks;
 
 namespace ENETCare.IMS.Users
 {
-    public class Accountant : User
+    public class Accountant : EnetCareUser
     {
-        private const string TITLE = "Accountant";
+        private const string
+            TITLE = "Accountant",
+            HOMEPAGE = "Accountants";
 
         public override string Title
         {
@@ -18,14 +20,21 @@ namespace ENETCare.IMS.Users
             }
         }
 
+        public override string HomePage
+        {
+            get
+            {
+                return HOMEPAGE;
+            }
+        }
+
         public Accountant(
             int ID,
-            string name,
-            string username,
-            string plaintextPassword)
-            : base (ID, name,username,plaintextPassword)
+            string name)
+            : base (ID, name)
         {
 
         }
+        
     }
 }

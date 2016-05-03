@@ -3,17 +3,18 @@
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
     <h1>Reports</h1>
     <p>
-        <asp:DropDownList ID="ReportsDropDown" runat="server"></asp:DropDownList>
+        <asp:DropDownList ID="ReportsDropDown" runat="server" OnSelectedIndexChanged="Index_Changed"></asp:DropDownList>
     </p>
     <p>
-        <asp:Button ID="GenerateReportButton" runat="server" Text="General Reports" OnClick="Button_Generate_Report_Click"/>
+        <asp:DropDownList ID="DistrictsDropDown" runat="server" Visible="false"></asp:DropDownList>
+    </p>
+    <p>
+        <asp:Button ID="GenerateReportButton" runat="server" Text="Generate Report" OnClick="Button_Generate_Report_Click"/>
     </p>
     
     <p>
         <asp:Label ID="ReportTextLabel" runat="server" Width="965px" Height="177px"></asp:Label>
     </p>
-
-
     <div>
         <ul class="buttonBar">
             <li style="float: left;">
