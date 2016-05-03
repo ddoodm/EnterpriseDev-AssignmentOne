@@ -35,7 +35,19 @@
         </asp:ScriptManager>
 
         <ul id="navBar">
-            <li><a>[Navigation + Account Here]</a></li>
+            <li><a>
+                <asp:LoginView ID="LoginView1" runat="server">
+                    <AnonymousTemplate>
+                        Not logged in
+                    </AnonymousTemplate>
+                    <LoggedInTemplate>
+                        Welcome [UserName]
+                    </LoggedInTemplate>
+                </asp:LoginView>
+                </a></li>
+            <li style="float: left;">
+                <asp:LoginStatus ID="LoginStatus1" runat="server" />
+                </li>
             <li style="float: right;">
                 <img runat="server" id="headerLogo" src="~/Content/ENETCare-Logo.png" alt="ENET Care" />
             </li>

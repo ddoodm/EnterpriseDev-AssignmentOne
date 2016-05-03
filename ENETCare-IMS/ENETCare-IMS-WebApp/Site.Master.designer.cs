@@ -13,13 +13,22 @@ namespace ENETCare.IMS.WebApp {
     public partial class SiteMaster {
         
         /// <summary>
-        /// headerLogo control.
+        /// LoginView1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlImage headerLogo;
+        protected global::System.Web.UI.WebControls.LoginView LoginView1;
+        
+        /// <summary>
+        /// LoginStatus1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LoginStatus LoginStatus1;
         
         /// <summary>
         /// MainContent control.
