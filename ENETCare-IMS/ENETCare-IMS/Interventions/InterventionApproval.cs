@@ -27,9 +27,18 @@ namespace ENETCare.IMS.Interventions
         /// The user who approved the Intervention,
         /// null if the Intervention has not been approved.
         /// </summary>
-        public EnetCareUser ApprovingUser { get; private set; }
+        public IInterventionApprover ApprovingUser { get; private set; }
 
         private Intervention intervention;
+
+        public InterventionApproval(
+            InterventionApprovalState state,
+            IInterventionApprover approvingUser)
+        {
+            // Intervention must be linked later
+            this.state = new InterventionApprovalStateWrapper(state);
+            this.ApprovingUser = approvingUser;
+        }
 
         public InterventionApproval(Intervention intervention)
         {
@@ -37,51 +46,68 @@ namespace ENETCare.IMS.Interventions
                 throw new ArgumentNullException("An Intervention Approval must be associated with an instantiated Intervention");
 
             this.intervention = intervention;
-
             this.state = new InterventionApprovalStateWrapper();
         }
 
-        public void ChangeState(InterventionApprovalState targetState, EnetCareUser user)
+        public void ChangeState(InterventionApprovalState targetState, IInterventionApprover user)
         {
             // Check that the user can change the state of the Intervention
             if (!CanChangeState(user)) 
-                throw new ArgumentException("Cannot modify an Intervention by a Site Engineer who did not propose the Intervention.");
+                throw new InvalidOperationException("The user is not permitted to change the state of this Intervention");
 
             // Request to change states. Will throw an exception if current state is invalid.
             this.state.ChangeState(targetState);
         }
 
-        public void Approve(EnetCareUser user)
+        public void Approve(IInterventionApprover user)
         {
             ChangeState(InterventionApprovalState.Approved, user);
             ApprovingUser = user;
         }
 
-        public void Cancel(EnetCareUser user)
+        public void Cancel(IInterventionApprover user)
         {
             ChangeState(InterventionApprovalState.Cancelled, user);
         }
 
-        public void Complete(EnetCareUser user)
+        public void Complete(SiteEngineer user)
         {
             ChangeState(InterventionApprovalState.Completed, user);
         }
 
-        public bool CanChangeState(EnetCareUser user)
+        public bool CanChangeState(IInterventionApprover user)
         {
+            // A manager cannot modify an approved intervention
+            if (State == InterventionApprovalState.Approved)
+                if (user is Manager)
+                    return false;
+
+            // A manager must work in the same district as the intervention
             if (user is Manager)
-            {
-                Manager manager = (Manager)user;
-                return (manager.District == intervention.District);
-            }
-            else if (user is SiteEngineer)
-            {
-                SiteEngineer engineer = (SiteEngineer)user;
-                return engineer == intervention.SiteEngineer;
-            }
-            else return false;
+                if (user.District != intervention.District)
+                    return false;
+
+            // A site engineer must be the site engineer who proposed the intervention
+            if (user is SiteEngineer)
+                if (user != intervention.SiteEngineer)
+                    return false;
+
+            // Must be able to approve *at least* the default labour AND the actual labour
+            if (user.MaxApprovableLabour < intervention.MaximumLabour)
+                return false;
+
+            // Must be able to approve *at least* the default cost AND the actual cost
+            if (user.MaxApprovableCost < intervention.MaximumCost)
+                return false;
+
+            return true;
+        }
+
+        internal void LinkIntervention(Intervention intervention)
+        {
+            if (this.intervention != null)
+                throw new InvalidOperationException("Approval is already linked");
+            this.intervention = intervention;
         }
     }
-
-    
 }

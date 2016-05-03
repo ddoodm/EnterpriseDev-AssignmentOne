@@ -50,7 +50,16 @@ namespace ENETCare.IMS.Tests
         {
             return new SiteEngineer
                 (1, "Robert Markson",
-                testDistrictA, 6, 500);
+                testDistrictA, 48, 100000);
+        }
+
+        private SiteEngineer CreateTestSiteEngineerNoAutoApprove(InterventionType interventionType)
+        {
+            // Test engineer can not auto-approve
+            return new SiteEngineer
+                (1, "Markus Markson", testDistrictA,
+                interventionType.Labour - 1,
+                interventionType.Cost - 100);
         }
 
         private Intervention CreateTestIntervention(SiteEngineer testEngineer)
@@ -162,11 +171,12 @@ namespace ENETCare.IMS.Tests
         {
             InterventionType interventionType = CreateTestInterventionType();
 
-            // Create a new Engineer
+            // Create a new Engineer (make aut-approve impossible)
             SiteEngineer testEngineer = new SiteEngineer
                 (1, "Markus Markson",
-                testDistrictA, interventionType.Labour + 1, interventionType.Cost + 100);
+                testDistrictA, interventionType.Labour - 1, interventionType.Cost - 100);
 
+            // (Will not auto-approve)
             Intervention intervention = Intervention.Factory.CreateIntervention
                 (0, interventionType, testClient, testEngineer);
 
@@ -187,10 +197,10 @@ namespace ENETCare.IMS.Tests
         /// Attempts to approve an Intervention by an Engineer other than
         /// the Engineer who made the proposition. 
         /// 
-        /// Expects an Argument Exception
+        /// Expects an Invalid Operation Exception
         /// </summary>
         [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
+        [ExpectedException(typeof(InvalidOperationException))]
         public void Intervention_Approve_By_Distinct_Engineer_Failure()
         {
             Intervention intervention = CreateTestIntervention(testEngineer);
@@ -201,14 +211,14 @@ namespace ENETCare.IMS.Tests
                 intervention.District, intervention.Labour + 1, intervention.Cost + 100);
 
             // Attempt to approve the intervention by an Engineer who did not propose it
-            // Should throw an Argument Exception
+            // Should throw an Invalid Operation Exception
             intervention.Approve(newEngineer);
 
             Assert.Fail("A Site Engineer was permitted to approve an intervention that they did not create.");
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
+        [ExpectedException(typeof(InvalidOperationException))]
         public void Intervention_Approve_By_Foreign_Manager_Failure()
         {
             InterventionType interventionType = CreateTestInterventionType();
@@ -231,14 +241,69 @@ namespace ENETCare.IMS.Tests
 
             Assert.Fail("A Manager was permitted to approve an Intervention that is proposed for a District that the Manager does not operate in.");
         }
+
+        [TestMethod]
+        [ExpectedException(typeof(InvalidOperationException))]
+        public void Intervention_Approve_With_Actual_Cost_Greater_Than_Approver_Max_Cost_Failure()
+        {
+            InterventionType interventionType = CreateTestInterventionType();
+
+            SiteEngineer testEngineer = new SiteEngineer
+                (1, "Markus Markson",
+                testDistrictA,
+                interventionType.Labour,
+                interventionType.Cost);         // Capable of approving the DEFAULT value
+
+            Intervention intervention = Intervention.Factory.CreateIntervention
+                (1, interventionType, testClient, testEngineer,
+                interventionType.Labour,
+                interventionType.Cost + 100,    // Not capable of approving the ACTUAL value
+                DateTime.Now.AddDays(1));
+
+            // Engineer attempts to approve an Intervention with a
+            // greater cost then their maximum permissable cost.
+            // Should throw an invalid operation exception
+            intervention.Approve(testEngineer);
+
+            // Error on success
+            Assert.Fail("An engineer was permitted to approve an intervention whose actual cost exceeds the engineer's max approvable cost.");
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(InvalidOperationException))]
+        public void Intervention_Approve_With_Default_Cost_Greater_Than_Approver_Max_Cost_Failure()
+        {
+            InterventionType interventionType = CreateTestInterventionType();
+
+            SiteEngineer testEngineer = new SiteEngineer
+                (1, "Markus Markson",
+                testDistrictA,
+                interventionType.Labour + 1,
+                interventionType.Cost - 100);   // Not capable of approving the DEFAULT value
+
+            Intervention intervention = Intervention.Factory.CreateIntervention
+                (1, interventionType, testClient, testEngineer,
+                interventionType.Labour,
+                1.0m,                           // Engineer sets the cost at $1.00
+                DateTime.Now.AddDays(1));
+
+            // Engineer attempts to approve an Intervention with a fabricated cost
+            // Should throw an invalid operation exception
+            intervention.Approve(testEngineer);
+
+            // Error on success
+            Assert.Fail("An engineer was permitted to approve an intervention whose default cost exceeds the engineer's max approvable cost.");
+        }
         #endregion
 
         #region Approval State Change Tests
         [TestMethod]
-        public void Intervention_Initial_State_Is_Proposed_Success()
+        public void Intervention_Initial_State_Is_Proposed_No_AutoApprove_Success()
         {
+            var interventionType = CreateTestInterventionType();
+            SiteEngineer testEngineer = CreateTestSiteEngineerNoAutoApprove(interventionType);
+
             // Create the Intervention
-            SiteEngineer testEngineer = CreateTestSiteEngineer();
             Intervention intervention = CreateTestIntervention(testEngineer);
 
             // Check that the initial state is 'Proposed'
@@ -280,8 +345,9 @@ namespace ENETCare.IMS.Tests
         [ExpectedException(typeof(InvalidOperationException))]
         public void Intervention_State_Change_Proposed_To_Completed_Failure()
         {
-            // Create the Intervention
-            SiteEngineer testEngineer = CreateTestSiteEngineer();
+            // Do not allow auto-approve on the intervention
+            var interventionType = CreateTestInterventionType();
+            SiteEngineer testEngineer = CreateTestSiteEngineerNoAutoApprove(interventionType);
             Intervention intervention = CreateTestIntervention(testEngineer);
 
             // Try to complete
@@ -308,6 +374,71 @@ namespace ENETCare.IMS.Tests
             intervention.Approve(testEngineer);
 
             Assert.Fail("An Intervention was permitted to be approved when it was in its Cancelled state.");
+        }
+
+        [TestMethod]
+        public void Intervention_State_Change_Approved_To_Completed_Success()
+        {
+            // Create the Intervention
+            SiteEngineer testEngineer = CreateTestSiteEngineer();
+            Intervention intervention = CreateTestIntervention(testEngineer);
+
+            // Approve the Intervention (should work)
+            intervention.Approve(testEngineer);
+
+            // Try to complete the Intervention
+            intervention.Complete(testEngineer);
+
+            if (intervention.ApprovalState != InterventionApprovalState.Completed)
+                Assert.Fail("Intervention failed to transition from 'Approved' to 'Completed'.");
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(InvalidOperationException))]
+        public void Intervention_State_Change_By_Manager_Approved_To_Cancelled_Failure()
+        {
+            // Do not allow auto-approve
+            var interventionType = CreateTestInterventionType();
+            SiteEngineer testEngineer = CreateTestSiteEngineerNoAutoApprove(interventionType);
+            Intervention intervention = CreateTestIntervention(testEngineer);
+
+            // Create a Manager
+            Manager testManager = new Manager
+                (2, "William Williams", intervention.District,
+                intervention.Labour + 1000, intervention.Cost + 1000);
+
+            // Approve the Intervention using the manager (should work)
+            try { intervention.Approve(testManager); }
+            catch (Exception e) { Assert.Fail(e.Message); }
+
+            // Try have the manager cancel the approved intervention
+            // (should throw an Invalid Operation exception)
+            intervention.Cancel(testManager);
+        }
+
+        [TestMethod]
+        public void Intervention_AutoApprove_Success()
+        {
+            // Create the Intervention
+            SiteEngineer testEngineer = CreateTestSiteEngineer();
+            Intervention intervention = CreateTestIntervention(testEngineer);
+
+            // Check that the intervention has been approved
+            if (intervention.ApprovalState != InterventionApprovalState.Approved)
+                Assert.Fail("Intervention was not auto-approved.");
+        }
+
+        [TestMethod]
+        public void Intervention_AutoApprove_Fail()
+        {
+            // Create an engineer who is not permitted to approve this type
+            var interventionType = CreateTestInterventionType();
+            SiteEngineer testEngineer = CreateTestSiteEngineerNoAutoApprove(interventionType);
+            Intervention intervention = CreateTestIntervention(testEngineer);
+
+            // Check that the intervention has not been approved
+            if (intervention.ApprovalState != InterventionApprovalState.Proposed)
+                Assert.Fail("Intervention was auto-approved by an ineligible Site Engineer");
         }
         #endregion
     }

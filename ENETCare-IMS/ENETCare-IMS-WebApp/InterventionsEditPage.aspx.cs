@@ -119,22 +119,25 @@ namespace ENETCare.IMS.WebApp
         void SetEditControlsForUserRole()
         {
             EnetCareUser user = UserSession.Current.User;
-            
-            if (!editIntervention.UserCanChangeState(user))
+
+            InterventionStateButtonGroup.Visible = false;
+
+            if (user is IInterventionApprover)
             {
-                InterventionStateButtonGroup.Visible = false;
+                if (!editIntervention.UserCanChangeState((IInterventionApprover)user))
+                {
+                    InterventionStateButtonGroup.Visible = true;
+                }
             }
-            else if(!editIntervention.UserCanChangeQuality(user))
+            else if (!editIntervention.UserCanChangeQuality(user))
             {
                 EditQualityInterventionButton.Visible = false;
             }
-
-            //*/
         }
 
         protected void ApproveButton_Click(object sender, EventArgs e)
         {
-            EnetCareUser user = UserSession.Current.User;
+            IInterventionApprover user = (IInterventionApprover)UserSession.Current.User;
             editIntervention.Approve(user);
 
             DisplayInterventionData();
@@ -142,7 +145,7 @@ namespace ENETCare.IMS.WebApp
 
         protected void CancelButton_Click(object sender, EventArgs e)
         {
-            EnetCareUser user = UserSession.Current.User;
+            IInterventionApprover user = (IInterventionApprover)UserSession.Current.User;
             editIntervention.Cancel(user);
 
             DisplayInterventionData();
@@ -150,7 +153,7 @@ namespace ENETCare.IMS.WebApp
 
         protected void CompleteButton_Click(object sender, EventArgs e)
         {
-            EnetCareUser user = UserSession.Current.User;
+            SiteEngineer user = (SiteEngineer)UserSession.Current.User;
             editIntervention.Complete(user);
 
             DisplayInterventionData();

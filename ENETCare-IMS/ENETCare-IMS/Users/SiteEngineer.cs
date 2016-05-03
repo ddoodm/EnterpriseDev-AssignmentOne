@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ENETCare.IMS.Users
 {
-    public class SiteEngineer : EnetCareUser, ILocalizedUser, IAdvancedUser
+    public class SiteEngineer : EnetCareUser, ILocalizedUser, IInterventionApprover, IAdvancedUser
     {
         private const string
             TITLE = "Site Engineer",

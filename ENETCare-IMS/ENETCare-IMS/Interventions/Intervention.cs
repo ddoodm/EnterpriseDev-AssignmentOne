@@ -45,6 +45,23 @@ namespace ENETCare.IMS.Interventions
         /// </summary>
         public decimal Cost { get; private set; }
 
+        /// <summary>
+        /// The maximum of this Intervention's actual projected labour,
+        /// and the default labour estimate defined in the Intervention's type.
+        /// </summary>
+        public decimal MaximumLabour
+        {
+            get { return Math.Max(Labour, InterventionType.Labour); }
+        }
+
+        /// <summary>
+        /// The maximum of this Intervention's actual projected cost,
+        /// and the default cost estimate defined in the Intervention's type.
+        /// </summary>
+        public decimal MaximumCost
+        {
+            get { return Math.Max(Cost, InterventionType.Cost); }
+        }
         #endregion
 
         #region Administrative Information
@@ -62,11 +79,10 @@ namespace ENETCare.IMS.Interventions
             get { return approval.State; }
         }
 
-        public EnetCareUser ApprovingUser
+        public IInterventionApprover ApprovingUser
         {
             get { return approval.ApprovingUser; }
         }
-
 
         #endregion
 
@@ -113,22 +129,22 @@ namespace ENETCare.IMS.Interventions
             this.Notes = newNotes;
         }
 
-        public bool UserCanChangeState(EnetCareUser user)
+        public bool UserCanChangeState(IInterventionApprover user)
         {
             return approval.CanChangeState(user);
         }
 
-        public void Approve(EnetCareUser user)
+        public void Approve(IInterventionApprover user)
         {
             approval.Approve(user);
         }
 
-        public void Cancel(EnetCareUser user)
+        public void Cancel(IInterventionApprover user)
         {
             approval.Cancel(user);
         }
 
-        public void Complete(EnetCareUser user)
+        public void Complete(SiteEngineer user)
         {
             approval.Complete(user);
         }
@@ -179,7 +195,7 @@ namespace ENETCare.IMS.Interventions
             /// <param name="approval">The object that defines the state of approval of this Intervention</param>
             /// <param name="quality">The object that holds quality control information for this Intervention</param>
             /// <returns>A new Intervention</returns>
-            public static Intervention CreateIntervention(
+            public static Intervention RawCreateIntervention(
                 int ID,
                 InterventionType type,
                 Client client,
@@ -192,7 +208,7 @@ namespace ENETCare.IMS.Interventions
                 InterventionQualityManagement quality
                 )
             {
-                Intervention intervention = CreateIntervention(
+                Intervention intervention = RawCreateIntervention(
                     ID, type, client, siteEngineer, labour, cost, date);
 
                 // Set extra data
@@ -201,6 +217,28 @@ namespace ENETCare.IMS.Interventions
                 intervention.Quality = quality;
 
                 return intervention;
+            }
+
+            public static Intervention RawCreateIntervention (
+                int ID,
+                InterventionType type,
+                Client client,
+                SiteEngineer siteEngineer,
+                decimal? labour,
+                decimal? cost,
+                DateTime date
+                )
+            {
+                // The Client must exist in the same district as the Engineer.
+                // The User Interface should disallow this operation.
+                if (client.District != siteEngineer.District)
+                    throw new ArgumentException("Cannot create Intervention.\nThe Client must exist in the same district as the Site Engineer.");
+
+                // Populate labour and cost with type defaults if they are not defined
+                if (labour == null) labour = type.Labour;
+                if (cost == null) cost = type.Cost;
+
+                return new Intervention(ID, type, client, siteEngineer, labour.Value, cost.Value, date);
             }
 
             /// <summary>
@@ -223,16 +261,14 @@ namespace ENETCare.IMS.Interventions
                 DateTime date
                 )
             {
-                // The Client must exist in the same district as the Engineer.
-                // The User Interface should disallow this operation.
-                if (client.District != siteEngineer.District)
-                    throw new ArgumentException("Cannot create Intervention.\nThe Client must exist in the same district as the Site Engineer.");
+                var intervention = RawCreateIntervention(
+                    ID, type, client, siteEngineer, labour, cost, date);
 
-                // Populate labour and cost with type defaults if they are not defined
-                if (labour == null) labour = type.Labour;
-                if (cost == null) cost = type.Cost;
+                // If possible, auto-approve the intervention on creation
+                if (intervention.UserCanChangeState(siteEngineer))
+                    intervention.Approve(siteEngineer);
 
-                return new Intervention(ID, type, client, siteEngineer, labour.Value, cost.Value, date);
+                return intervention;
             }
 
             /// <summary>

@@ -22,7 +22,7 @@
             PageSize="8"
             runat="server"
             CellSpacing="0"
-            CssClass="enetImsTable" OnLoad="Table_Interventions_Load">
+            CssClass="enetImsTable">
             <Columns>
                 <asp:TemplateField>
                     <ItemTemplate>
@@ -40,7 +40,8 @@
                 <asp:BoundField HeaderText="Client" DataField="Client.Name" />
                 <asp:BoundField HeaderText="Date" DataField="Date" dataformatstring="{0:d MMMM, yyyy}" htmlencode="false" />
                 <asp:BoundField HeaderText="State" DataField="ApprovalState" />
-                <asp:BoundField HeaderText="Health" DataField="Health" />
+                <asp:BoundField HeaderText="Health" DataField="Health" NullDisplayText="-" />
+                <asp:BoundField HeaderText="Last Visit" DataField="LastVisit" NullDisplayText="-" dataformatstring="{0:d MMMM, yyyy}" htmlencode="false" />
                 <asp:BoundField HeaderText="Notes" DataField="Notes" />
             </Columns>
         </asp:GridView>

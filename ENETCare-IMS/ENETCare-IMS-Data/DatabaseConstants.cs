@@ -19,6 +19,10 @@ namespace ENETCare.IMS.Data
         public const string INTERVENTIONTYPES_COLUMN_NAMES = "InterventionTypeId, Name, Cost, Labour";
         public const string INTERVENTIONTYPES_COLUMN_NAMES_FOR_CREATION = "Name, Cost, Labour";
 
+        public const string INTERVENTION_APPROVALS_TABLE_NAME = "InterventionApprovals";
+
+        public const string INTERVENTION_QUALITY_MANAGEMENT_TABLE_NAME = "InterventionQualityManagement";
+
         public const string USERS_TABLE_NAME = "Users";
         public const string SITE_ENGINEERS_TABLE_NAME = "Users_SiteEngineers";
         public const string MANAGERS_TABLE_NAME = "Users_Managers";
