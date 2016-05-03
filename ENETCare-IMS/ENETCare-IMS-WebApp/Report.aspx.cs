@@ -19,7 +19,7 @@ namespace ENETCare.IMS.WebApp
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            application = new ENETCareDAO();
+            application = ENETCareDAO.Context;
 
             users = application.Users.GetUsers();
 
