@@ -13,6 +13,12 @@ namespace ENETCare.IMS.Interventions
 
     public class InterventionApprovalStateWrapper
     {
+        public InterventionApprovalStateWrapper() { }
+        public InterventionApprovalStateWrapper(InterventionApprovalState initialState)
+        {
+            this.CurrentState = initialState;
+        }
+
         public InterventionApprovalState CurrentState { get; private set; }
 
         public void ChangeState(InterventionApprovalState targetState)

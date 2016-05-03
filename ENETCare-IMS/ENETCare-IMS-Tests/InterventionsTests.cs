@@ -53,6 +53,15 @@ namespace ENETCare.IMS.Tests
                 testDistrictA, 48, 100000);
         }
 
+        private SiteEngineer CreateTestSiteEngineerNoAutoApprove(InterventionType interventionType)
+        {
+            // Test engineer can not auto-approve
+            return new SiteEngineer
+                (1, "Markus Markson", testDistrictA,
+                interventionType.Labour - 1,
+                interventionType.Cost - 100);
+        }
+
         private Intervention CreateTestIntervention(SiteEngineer testEngineer)
         {
             InterventionType interventionType = CreateTestInterventionType();
@@ -162,11 +171,12 @@ namespace ENETCare.IMS.Tests
         {
             InterventionType interventionType = CreateTestInterventionType();
 
-            // Create a new Engineer
+            // Create a new Engineer (make aut-approve impossible)
             SiteEngineer testEngineer = new SiteEngineer
                 (1, "Markus Markson",
-                testDistrictA, interventionType.Labour + 1, interventionType.Cost + 100);
+                testDistrictA, interventionType.Labour - 1, interventionType.Cost - 100);
 
+            // (Will not auto-approve)
             Intervention intervention = Intervention.Factory.CreateIntervention
                 (0, interventionType, testClient, testEngineer);
 
@@ -288,10 +298,12 @@ namespace ENETCare.IMS.Tests
 
         #region Approval State Change Tests
         [TestMethod]
-        public void Intervention_Initial_State_Is_Proposed_Success()
+        public void Intervention_Initial_State_Is_Proposed_No_AutoApprove_Success()
         {
+            var interventionType = CreateTestInterventionType();
+            SiteEngineer testEngineer = CreateTestSiteEngineerNoAutoApprove(interventionType);
+
             // Create the Intervention
-            SiteEngineer testEngineer = CreateTestSiteEngineer();
             Intervention intervention = CreateTestIntervention(testEngineer);
 
             // Check that the initial state is 'Proposed'
@@ -333,8 +345,9 @@ namespace ENETCare.IMS.Tests
         [ExpectedException(typeof(InvalidOperationException))]
         public void Intervention_State_Change_Proposed_To_Completed_Failure()
         {
-            // Create the Intervention
-            SiteEngineer testEngineer = CreateTestSiteEngineer();
+            // Do not allow auto-approve on the intervention
+            var interventionType = CreateTestInterventionType();
+            SiteEngineer testEngineer = CreateTestSiteEngineerNoAutoApprove(interventionType);
             Intervention intervention = CreateTestIntervention(testEngineer);
 
             // Try to complete
@@ -361,6 +374,71 @@ namespace ENETCare.IMS.Tests
             intervention.Approve(testEngineer);
 
             Assert.Fail("An Intervention was permitted to be approved when it was in its Cancelled state.");
+        }
+
+        [TestMethod]
+        public void Intervention_State_Change_Approved_To_Completed_Success()
+        {
+            // Create the Intervention
+            SiteEngineer testEngineer = CreateTestSiteEngineer();
+            Intervention intervention = CreateTestIntervention(testEngineer);
+
+            // Approve the Intervention (should work)
+            intervention.Approve(testEngineer);
+
+            // Try to complete the Intervention
+            intervention.Complete(testEngineer);
+
+            if (intervention.ApprovalState != InterventionApprovalState.Completed)
+                Assert.Fail("Intervention failed to transition from 'Approved' to 'Completed'.");
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(InvalidOperationException))]
+        public void Intervention_State_Change_By_Manager_Approved_To_Cancelled_Failure()
+        {
+            // Do not allow auto-approve
+            var interventionType = CreateTestInterventionType();
+            SiteEngineer testEngineer = CreateTestSiteEngineerNoAutoApprove(interventionType);
+            Intervention intervention = CreateTestIntervention(testEngineer);
+
+            // Create a Manager
+            Manager testManager = new Manager
+                (2, "William Williams", intervention.District,
+                intervention.Labour + 1000, intervention.Cost + 1000);
+
+            // Approve the Intervention using the manager (should work)
+            try { intervention.Approve(testManager); }
+            catch (Exception e) { Assert.Fail(e.Message); }
+
+            // Try have the manager cancel the approved intervention
+            // (should throw an Invalid Operation exception)
+            intervention.Cancel(testManager);
+        }
+
+        [TestMethod]
+        public void Intervention_AutoApprove_Success()
+        {
+            // Create the Intervention
+            SiteEngineer testEngineer = CreateTestSiteEngineer();
+            Intervention intervention = CreateTestIntervention(testEngineer);
+
+            // Check that the intervention has been approved
+            if (intervention.ApprovalState != InterventionApprovalState.Approved)
+                Assert.Fail("Intervention was not auto-approved.");
+        }
+
+        [TestMethod]
+        public void Intervention_AutoApprove_Fail()
+        {
+            // Create an engineer who is not permitted to approve this type
+            var interventionType = CreateTestInterventionType();
+            SiteEngineer testEngineer = CreateTestSiteEngineerNoAutoApprove(interventionType);
+            Intervention intervention = CreateTestIntervention(testEngineer);
+
+            // Check that the intervention has not been approved
+            if (intervention.ApprovalState != InterventionApprovalState.Proposed)
+                Assert.Fail("Intervention was auto-approved by an ineligible Site Engineer");
         }
         #endregion
     }
