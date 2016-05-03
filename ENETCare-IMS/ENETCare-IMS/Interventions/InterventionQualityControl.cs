@@ -17,6 +17,12 @@ namespace ENETCare.IMS.Interventions
 
         public DateTime LastVisit;
 
+        public InterventionQualityManagement(Percentage Health, DateTime LastVisit)
+        {
+            this.Health = Health;
+            this.LastVisit = LastVisit;
+        }
+
         public InterventionQualityManagement()
         {
             Health = 100.0m;
