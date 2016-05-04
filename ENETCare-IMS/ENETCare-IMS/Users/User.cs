@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ENETCare.IMS.Users
 {
-    public abstract class EnetCareUser : IEnetCareUser
+    public abstract class EnetCareUser : IEnetCareUser, IEquatable<EnetCareUser>
     {
         public int ID { get; private set; }
         public string Name { get; private set; }
@@ -27,6 +27,26 @@ namespace ENETCare.IMS.Users
                 return false;
 
             return ((EnetCareUser)obj).ID == this.ID;
+        }
+
+        public bool Equals(EnetCareUser other)
+        {
+            return this.Equals(other);
+        }
+
+        public override int GetHashCode()
+        {
+            return ID;
+        }
+
+        public static bool operator ==(EnetCareUser lhs, EnetCareUser rhs)
+        {
+            return lhs.ID == rhs.ID;
+        }
+
+        public static bool operator !=(EnetCareUser lhs, EnetCareUser rhs)
+        {
+            return !(lhs == rhs);
         }
 
         protected EnetCareUser(int ID, string name)

@@ -390,6 +390,9 @@ namespace ENETCare.IMS
 
         public void UpdateApproval(SqlConnection sqlLink, Intervention intervention)
         {
+            if (intervention.ApprovingUser == null)
+                return;
+
             string queryString = String.Format(
                 "UPDATE {0} SET State = @state, ApprovingUserId=@approverId WHERE InterventionId=@intervention \n\n" +
                 "IF @@ROWCOUNT = 0\n  " +
@@ -432,7 +435,8 @@ namespace ENETCare.IMS
                 query.ExecuteNonQuery();
 
                 // Set / update approval
-                UpdateApproval(sqlLink, intervention);
+                if(intervention.ApprovingUser != null)
+                    UpdateApproval(sqlLink, intervention);
 
                 sqlLink.Close();
             }
