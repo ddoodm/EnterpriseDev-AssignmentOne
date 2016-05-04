@@ -140,6 +140,12 @@ namespace ENETCare.IMS.WebApp
             {
                 EditQualityInterventionButton.Visible = false;
             }
+
+            if(user is Manager)
+            {
+                EditQualityInterventionButton.Visible = false;
+                CancelButton.Visible = false;
+            }
         }
 
         protected void ApproveButton_Click(object sender, EventArgs e)
