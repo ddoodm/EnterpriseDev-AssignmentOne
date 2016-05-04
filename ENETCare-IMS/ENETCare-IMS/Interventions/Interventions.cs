@@ -94,35 +94,35 @@ namespace ENETCare.IMS.Interventions
             }
         }
 
-        public List<Intervention> GetInterventionsWithClient(Client client)
+        public Interventions GetInterventionsWithClient(Client client)
         {
-            return InterventionList
+            return new Interventions(application, InterventionList
                 .Where(x => x.Client.ID == client.ID)
-                .ToList<Intervention>();
+                .ToList<Intervention>());
         }
 
-        public List<Intervention> FilterByDistrict(District district)
+        public Interventions FilterByDistrict(District district)
         {
-            return InterventionList
+            return new Interventions(application, InterventionList
                 .Where(x => x.District == district)
-                .ToList<Intervention>();
+                .ToList<Intervention>());
         }
 
-        public List<Intervention> FilterByState(InterventionApprovalState state)
+        public Interventions FilterByState(InterventionApprovalState state)
         {
-            return InterventionList
+            return new Interventions(application, InterventionList
                 .Where(x => x.ApprovalState == state)
-                .ToList<Intervention>();
+                .ToList<Intervention>());
         }
 
-        public List<Intervention> FilterForUserDisplay(IInterventionApprover user)
+        public Interventions FilterForUserDisplay(IInterventionApprover user)
         {
-            return InterventionList
+            return new Interventions(application, InterventionList
                 .Where(x =>
                     (x.District == user.District ||
                     x.SiteEngineer == user ||
                     x.ApprovingUser == user))
-                .ToList<Intervention>();
+                .ToList<Intervention>());
         }
 
         public IEnumerator<Intervention> GetEnumerator()

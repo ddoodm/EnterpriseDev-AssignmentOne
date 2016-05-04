@@ -35,11 +35,11 @@ namespace ENETCare.IMS.WebApp
         private void SortInterventions()
         {
             Manager manager = UserSession.Current.User as Manager;
-            proposedInterventions = interventions.FilterByState(InterventionApprovalState.Proposed).Where(i => i.Client.District.ID == manager.District.ID).ToList();
-            approvedInterventions = interventions.FilterByState(InterventionApprovalState.Approved).Where(i => i.Client.District.ID == manager.District.ID).ToList();
+            proposedInterventions = interventions.FilterByState(InterventionApprovalState.Proposed)
+                .FilterForUserDisplay(manager).ToList<Intervention>();
+            approvedInterventions = interventions.FilterByState(InterventionApprovalState.Approved)
+                .FilterForUserDisplay(manager).ToList<Intervention>();
         }
-
-  
 
         protected void Button_ProposedInterventions_Click(object sender, EventArgs e)
         {
