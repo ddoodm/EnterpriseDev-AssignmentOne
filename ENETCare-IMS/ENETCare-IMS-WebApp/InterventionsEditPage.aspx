@@ -94,7 +94,7 @@
                 <u><h3>Quality Information</h3></u>
             </div>
 
-            <asp:Button ID="EditQualityInterventionButton" runat="server" Text="Edit" />
+            <asp:Button ID="EditQualityInterventionButton" OnClick="EditButton_Click" runat="server" Text="Edit" />
             <asp:Button ID="CancelEditQualityInterventionButton" runat="server" Text="Cancel" OnClick="CancelEditQualityInterventionButton_Click" />
 
             <div class="form-group">

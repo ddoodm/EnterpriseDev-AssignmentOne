@@ -63,7 +63,8 @@ namespace ENETCare.IMS.WebApp
             SetApprovalButtons();
 
             //Display Quality Information
-            Intervention_Notes_Textbox.Text = editIntervention.Notes;
+            if(Intervention_Notes_Textbox.Text == "")
+                Intervention_Notes_Textbox.Text = editIntervention.Notes;
             Intervention_Notes_Textbox.ReadOnly = true;
             ShowQualityInformation();
 
@@ -167,7 +168,7 @@ namespace ENETCare.IMS.WebApp
 
         protected void EditButton_Click(object sender, EventArgs e)
         {
-            if (isEditing)
+            if (EditQualityInterventionButton.Text == "Editing...")
             {
                 Intervention_Notes_Textbox.ReadOnly = true;
                 SiteEngineer user = (SiteEngineer)UserSession.Current.User;
@@ -178,15 +179,17 @@ namespace ENETCare.IMS.WebApp
                 CancelEditQualityInterventionButton.Visible = false;
                 LastDateText.ReadOnly = true;
                 HealthText.ReadOnly = true;
+                isEditing = false;
             }
             else
             {
                 Intervention_Notes_Textbox.ReadOnly = false;
                 EditQualityInterventionButton.Text = "Editing...";
-                EditQualityInterventionButton.Enabled = false;
+                EditQualityInterventionButton.Enabled = true;
                 CancelEditQualityInterventionButton.Visible = true;
                 LastDateText.ReadOnly = false;
                 HealthText.ReadOnly = false;
+                isEditing = true;
             }
         }
 
