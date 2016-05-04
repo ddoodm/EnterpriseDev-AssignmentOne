@@ -365,6 +365,45 @@ namespace ENETCare.IMS
             return districts;
         }
 
+        public void Update(Intervention intervention)
+        {
+            using (SqlConnection sqlLink = new SqlConnection(GetConnectionString()))
+            {
+                sqlLink.Open();
+
+                // Update notes
+                string queryString = String.Format(
+                    "UPDATE {0} SET Notes = @notes WHERE InterventionId = @interventionId;", DatabaseConstants.INTERVENTIONS_TABLE_NAME);
+
+                SqlCommand query = new SqlCommand(queryString, sqlLink);
+                query.Parameters.AddWithValue("@notes", intervention.Notes);
+                query.Parameters.AddWithValue("@interventionId", intervention.ID);
+
+                query.ExecuteNonQuery();
+
+                // Update approval
+                UpdateApproval(sqlLink, intervention);
+
+                sqlLink.Close();
+            }
+        }
+
+        public void UpdateApproval(SqlConnection sqlLink, Intervention intervention)
+        {
+            string queryString = String.Format(
+                "UPDATE {0} SET State = @state, ApprovingUserId=@approverId WHERE InterventionId=@intervention \n\n" +
+                "IF @@ROWCOUNT = 0\n  " +
+                "INSERT INTO {0} (State, ApprovingUserId, InterventionId) VALUES (@state, @approverId, @intervention)",
+                DatabaseConstants.INTERVENTION_APPROVALS_TABLE_NAME);
+
+            SqlCommand query = new SqlCommand(queryString, sqlLink);
+            query.Parameters.AddWithValue("@state", (int)intervention.ApprovalState);
+            query.Parameters.AddWithValue("@approverId", intervention.ApprovingUser.ID);
+            query.Parameters.AddWithValue("@intervention", intervention.ID);
+
+            query.ExecuteNonQuery();
+        }
+
         public void Save(Intervention intervention)
         {
             using (SqlConnection sqlLink = new SqlConnection(GetConnectionString()))
@@ -391,6 +430,10 @@ namespace ENETCare.IMS
                     ((object)intervention.Notes)?? DBNull.Value);
 
                 query.ExecuteNonQuery();
+
+                // Set / update approval
+                UpdateApproval(sqlLink, intervention);
+
                 sqlLink.Close();
             }
         }

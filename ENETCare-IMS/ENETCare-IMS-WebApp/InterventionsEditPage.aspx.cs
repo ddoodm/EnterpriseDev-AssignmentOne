@@ -146,6 +146,7 @@ namespace ENETCare.IMS.WebApp
         {
             IInterventionApprover user = (IInterventionApprover)UserSession.Current.User;
             editIntervention.Approve(user);
+            application.Update(editIntervention);
 
             DisplayInterventionData();
         }
@@ -154,6 +155,7 @@ namespace ENETCare.IMS.WebApp
         {
             IInterventionApprover user = (IInterventionApprover)UserSession.Current.User;
             editIntervention.Cancel(user);
+            application.Update(editIntervention);
 
             DisplayInterventionData();
         }
@@ -162,6 +164,7 @@ namespace ENETCare.IMS.WebApp
         {
             SiteEngineer user = (SiteEngineer)UserSession.Current.User;
             editIntervention.Complete(user);
+            application.Update(editIntervention);
 
             DisplayInterventionData();
         }
@@ -173,6 +176,7 @@ namespace ENETCare.IMS.WebApp
                 Intervention_Notes_Textbox.ReadOnly = true;
                 SiteEngineer user = (SiteEngineer)UserSession.Current.User;
                 editIntervention.UpdateNotes(user, Intervention_Notes_Textbox.Text);
+                application.Update(editIntervention);
 
                 EditQualityInterventionButton.Text = "Edit";
                 EditQualityInterventionButton.Enabled = true;
