@@ -28,8 +28,17 @@ namespace ENETCare.IMS.WebApp
             application = ENETCareDAO.Context;
             interventions = application.Interventions;
             SortInterventions();
-            Table_ProposedInterventions.DataSource = proposedInterventions;
+            BindTable(proposedInterventions);
+        }
+
+        private void BindTable(List<Intervention> interventions)
+        {
+            Table_ProposedInterventions.DataSource = interventions;
             Table_ProposedInterventions.DataBind();
+
+            // Set GridView to render its header in a HTML 'thead'
+            try { Table_ProposedInterventions.HeaderRow.TableSection
+                = TableRowSection.TableHeader; } catch (Exception ex) { }
         }
 
         private void SortInterventions()
@@ -45,18 +54,14 @@ namespace ENETCare.IMS.WebApp
         {
             isDisplayingProposed = true;
             SortInterventions();
-            Table_ProposedInterventions.DataSource = proposedInterventions;
-            Table_ProposedInterventions.DataBind();
-            Response.Write(Request.RawUrl.ToString());
+            BindTable(proposedInterventions);
         }
 
         protected void Button_ApprovedInterventions_Click(object sender, EventArgs e)
         {
             isDisplayingProposed = false;
             SortInterventions();
-            Table_ProposedInterventions.DataSource = approvedInterventions;
-            Table_ProposedInterventions.DataBind();
-            Response.Write(Request.RawUrl.ToString());
+            BindTable(approvedInterventions);
         }
 
 

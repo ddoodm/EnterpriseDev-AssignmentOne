@@ -1,4 +1,4 @@
-﻿<%@ Page Title="Proposed Interventions" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="True" CodeBehind="ProposedInterventions.aspx.cs" Inherits="ENETCare.IMS.WebApp.ProposedInterventionsWebUI" %>
+﻿<%@ Page Title="Interventions" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="True" CodeBehind="ProposedInterventions.aspx.cs" Inherits="ENETCare.IMS.WebApp.ProposedInterventionsWebUI" %>
 
 <asp:Content ID="ProposedInterventionsContent" ContentPlaceHolderID="MainContent" runat="server">
     <h1><%: Page.Title %></h1>
@@ -33,9 +33,12 @@
 
                 <asp:BoundField HeaderText="Type" DataField="InterventionType.Name" />
                 <asp:BoundField HeaderText="Client" DataField="Client.Name" />
+                <asp:BoundField HeaderText="Proposer" DataField="SiteEngineer.Name" />
                 <asp:BoundField HeaderText="Date" DataField="Date" dataformatstring="{0:d MMMM, yyyy}" htmlencode="false" />
                 <asp:BoundField HeaderText="State" DataField="ApprovalState" />
-                <asp:BoundField HeaderText="Health" DataField="Health" />
+                <asp:BoundField HeaderText="District" DataField="District" />
+                <asp:BoundField HeaderText="Health" DataField="Health" NullDisplayText="-" />
+                <asp:BoundField HeaderText="Last Visit" DataField="LastVisit" NullDisplayText="-" dataformatstring="{0:d MMMM, yyyy}" htmlencode="false" />
                 <asp:BoundField HeaderText="Notes" DataField="Notes" />
             </Columns>
         </asp:GridView>
