@@ -2,7 +2,7 @@
 <%@ Reference Control="~/Controls/EditTableItemButton.ascx" %>
 
 <asp:Content ID="InterventionsContent" ContentPlaceHolderID="MainContent" runat="server">
-    <h1>Interventions in <%: User.District %></h1>
+    <h1>Interventions for <%: User.Name %></h1>
 
     <ul class="buttonBar">
         <li><asp:Button ID="Button_CreateNewIntervention" runat="server" Text="Create New ..." OnClick="Button_CreateNewIntervention_Click" /></li>
@@ -38,8 +38,10 @@
 
                 <asp:BoundField HeaderText="Type" DataField="InterventionType.Name" />
                 <asp:BoundField HeaderText="Client" DataField="Client.Name" />
+                <asp:BoundField HeaderText="Proposer" DataField="SiteEngineer.Name" />
                 <asp:BoundField HeaderText="Date" DataField="Date" dataformatstring="{0:d MMMM, yyyy}" htmlencode="false" />
                 <asp:BoundField HeaderText="State" DataField="ApprovalState" />
+                <asp:BoundField HeaderText="District" DataField="District" />
                 <asp:BoundField HeaderText="Health" DataField="Health" NullDisplayText="-" />
                 <asp:BoundField HeaderText="Last Visit" DataField="LastVisit" NullDisplayText="-" dataformatstring="{0:d MMMM, yyyy}" htmlencode="false" />
                 <asp:BoundField HeaderText="Notes" DataField="Notes" />

@@ -46,8 +46,8 @@ namespace ENETCare.IMS
 
         public static ENETCareDAO Context
         {
-            // get { return (currentContext) ?? (currentContext = new ENETCareDAO()); }
-            get { return (currentContext = new ENETCareDAO()); }
+            get { return (currentContext) ?? (currentContext = new ENETCareDAO()); }
+            // get { return (currentContext = new ENETCareDAO()); }
         }
 
         private string GetConnectionString()

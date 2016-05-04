@@ -89,7 +89,7 @@ namespace ENETCare.IMS.Interventions
             {
                 if (ID == 0)
                     throw new IndexOutOfRangeException("ENETCare data is 1-indexed, but an index of 0 was requested.");
-                return InterventionList.First<Intervention>(
+                return interventions.First<Intervention>(
                     intervention => intervention.ID == ID);
             }
         }
@@ -112,6 +112,16 @@ namespace ENETCare.IMS.Interventions
         {
             return InterventionList
                 .Where(x => x.ApprovalState == state)
+                .ToList<Intervention>();
+        }
+
+        public List<Intervention> FilterForUserDisplay(IInterventionApprover user)
+        {
+            return InterventionList
+                .Where(x =>
+                    (x.District == user.District ||
+                    x.SiteEngineer == user ||
+                    x.ApprovingUser == user))
                 .ToList<Intervention>();
         }
 

@@ -229,11 +229,6 @@ namespace ENETCare.IMS.Interventions
                 DateTime date
                 )
             {
-                // The Client must exist in the same district as the Engineer.
-                // The User Interface should disallow this operation.
-                if (client.District != siteEngineer.District)
-                    throw new ArgumentException("Cannot create Intervention.\nThe Client must exist in the same district as the Site Engineer.");
-
                 // Populate labour and cost with type defaults if they are not defined
                 if (labour == null) labour = type.Labour;
                 if (cost == null) cost = type.Cost;
@@ -261,6 +256,11 @@ namespace ENETCare.IMS.Interventions
                 DateTime date
                 )
             {
+                // The Client must exist in the same district as the Engineer.
+                // The User Interface should disallow this operation.
+                if (client.District != siteEngineer.District)
+                    throw new ArgumentException("Cannot create Intervention.\nThe Client must exist in the same district as the Site Engineer.");
+
                 var intervention = RawCreateIntervention(
                     ID, type, client, siteEngineer, labour, cost, date);
 

@@ -21,6 +21,14 @@ namespace ENETCare.IMS.Users
         /// </summary>
         public abstract string HomePage { get; }
 
+        public override bool Equals(object obj)
+        {
+            if (!(obj is EnetCareUser))
+                return false;
+
+            return ((EnetCareUser)obj).ID == this.ID;
+        }
+
         protected EnetCareUser(int ID, string name)
         {
             this.ID = ID;
