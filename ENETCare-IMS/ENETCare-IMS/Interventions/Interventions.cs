@@ -119,9 +119,15 @@ namespace ENETCare.IMS.Interventions
         {
             return new Interventions(application, InterventionList
                 .Where(x =>
-                    (x.District == user.District ||
-                    x.SiteEngineer == user ||
-                    x.ApprovingUser == user))
+                {
+                    bool sameDistrict = x.District == user.District;
+                    bool sameProposer = x.SiteEngineer.ID == user.ID;
+
+                    bool sameApprover = x.ApprovingUser == null? false :
+                        x.ApprovingUser.ID == user.ID;
+
+                    return sameDistrict || sameProposer || sameApprover;
+                })
                 .ToList<Intervention>());
         }
 
